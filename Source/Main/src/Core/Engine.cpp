@@ -2,9 +2,12 @@
 #include <fmt/color.h>
 
 Engine::Engine( )
-	: mGSM(std::make_unique<GameStateManager>(*this))
 {
-	Init( );
+	Init( );   // Init only SDL2 libs
+
+	mGSM = std::make_unique<GameStateManager>(*this);
+	mGSM->SetIsRunning(true);
+
 	Loop( );
 }
 
@@ -21,7 +24,7 @@ Engine::~Engine( )
 
 void Engine::Init( )
 {
-	/* Init Everything */
+	/* #################### Init SDL2 #################### */
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
@@ -59,7 +62,7 @@ void Engine::Init( )
 
 	/* ------------------------------------------------------------------- */
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
-			   "+++ Success all libs!!! +++\n");
+			   "\n\n+++ Success all libs!!! +++\n\n");
 	// Turn ON the game
 
 	mWindow = SDL_CreateWindow("SDL Pikuma",
@@ -106,8 +109,7 @@ void Engine::Init( )
 		exit(1);
 	}
 
-	// mIsRunning = true;
-	mGSM->SetIsRunning(true);
+	/* #################### Init SDL2 #################### */
 }
 
 void Engine::Loop( )

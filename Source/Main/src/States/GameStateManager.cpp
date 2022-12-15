@@ -24,9 +24,13 @@ void GameStateManager::Update(const float& deltaTime)
 	{
 		Events( );
 		std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
-		std::cout << "Update:\n tmp: " << tmp << "\n";
+		std::cout << "\n---Update --- tmp: " << tmp << "\n";
 		Render( );
-		if (tmp) SetState(tmp);
+		if (tmp)
+		{
+			std::cout << "\n+++ Updating:\n tmp: " << tmp << "\n";
+			SetState(tmp);
+		}
 	}
 }
 
