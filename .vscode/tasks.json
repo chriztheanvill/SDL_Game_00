@@ -1,0 +1,245 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Clear_Workspaces",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files/vs_ClearWorkspaces; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Build Cmake Test",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder}/build ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Build ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; cmake --build . --config Debug --target all -- -j 2 ; ctest -j2 -C Debug -T test --output-on-failure echo ; echo ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Finish ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Build CMake",
+			"type": "shell",
+			"command": [
+				"kitty sh -c ' cd ${workspaceFolder} ; echo ; cmake --build ${workspaceFolder}/build/Debug --config Debug --target all -- -j 2 ; echo ; echo ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Finish ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent",
+				"close": true
+			}
+		},
+		{
+			"label": "Build and Run CMake && STOP TERMINAL",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; echo ; cmake --build ${workspaceFolder}/build --config Debug --target all -- -j 2 ; echo ;${command:cmake.launchTargetPath} ; echo ; echo ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Finish ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": {
+				"owner": "cpp",
+				"fileLocation": [
+					"relative",
+					"${workspaceRoot}"
+				],
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
+				}
+			},
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Bash Run",
+			"type": "shell",
+			"command": [
+				"kitty sh -c ' cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_c_Cmake_run ${workspaceFolder} ${command:cmake.getLaunchTargetPath} ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": true,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Bash Compile Run D",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_Cmake_CDr ${workspaceFolder} ${command:cmake.getLaunchTargetPath} ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": true,
+				"panel": "shared",
+				"reveal": "silent",
+				"close": true
+			}
+		},
+		// {
+		// 	"label": "Bash Compile Run D",
+		// 	"type": "shell",
+		// 	"command": [
+		// 		"terminator -e '/bin/bash -c \" cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_Cmake_CDr ${workspaceFolder} ${command:cmake.getLaunchTargetPath} ; read  -n 1 ; exit ; exec bash \"'"
+		// 	],
+		// 	"args": [],
+		// 	"group": "build",
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"presentation": {
+		// 		"focus": true,
+		// 		"panel": "shared",
+		// 		"reveal": "silent",
+		// 		"close": true
+		// 	}
+		// },
+		// {
+		// 	"label": "Open Gnome Terminal",
+		// 	"type": "shell",
+		// 	"command": [
+		// 		"gnome-terminal -- cd ${workspaceFolder} ; read  -n 1 ; exit ; exec bash"
+		// 	],
+		// 	"args": [],
+		// 	"group": "build",
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"presentation": {
+		// 		"focus": true,
+		// 		"panel": "shared",
+		// 		"reveal": "silent",
+		// 		"close": true
+		// 	}
+		// },
+		// {
+		// 	"label": "Gnome Compile Run D",
+		// 	"type": "shell",
+		// 	"command": [
+		// 		"gnome-terminal -- ${workspaceFolder}/SH_files_VS/vs_Cmake_CDr ${workspaceFolder} ${command:cmake.getLaunchTargetPath} ; exit ; exec bash"
+		// 	],
+		// 	"args": [],
+		// 	"group": "build",
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"presentation": {
+		// 		"focus": true,
+		// 		"panel": "shared",
+		// 		"reveal": "silent",
+		// 		"close": true
+		// 	}
+		// },
+		{
+			"label": "Bash Generate",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_c_Cmake_gen ${workspaceFolder} ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": true,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Bash Clean & Generate",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_c_Cmake_clean_gen ${workspaceFolder} ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": true,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Bash New Class",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_s_h ${fileDirname} '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+		{
+			"label": "Bash New Class FileName",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_File_Name ${fileDirname} ${fileBasenameNoExtension} ; '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": false,
+				"panel": "shared",
+				"reveal": "silent"
+			}
+		},
+	]
+}
