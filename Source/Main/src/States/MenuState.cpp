@@ -13,14 +13,22 @@ MenuState::MenuState(GameStateManager& gsm)
 
 MenuState::~MenuState( ) {}
 
-std::shared_ptr<State> MenuState::Update(const float& deltaTime)
+State* MenuState::Update(const float& deltaTime)
+// std::unique_ptr<State> MenuState::Update(const float& deltaTime)
+// std::shared_ptr<State> MenuState::Update(const float& deltaTime)
 {
 	std::cout << "\nMenuState::Update";
-	if (GetGSM( ).GetGameState( ))
+	if (&GetGSM( ).GetGameState( ))
 	{
 		std::cout << "\nMenuState::Update::Return GetGameState;";
-		return GetGSM( ).GetGameState( );
+		return &GetGSM( ).GetGameState( );
+		// return std::make_unique<State>(GetGSM( ).GetGameState( ));
 	}
+	// if (GetGSM( ).GetGameState( ))
+	// {
+	// 	std::cout << "\nMenuState::Update::Return GetGameState;";
+	// 	return GetGSM( ).GetGameState( );
+	// }
 	return nullptr;
 }
 

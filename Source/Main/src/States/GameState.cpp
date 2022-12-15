@@ -19,7 +19,9 @@ GameState::GameState(GameStateManager& gsm)
 
 GameState::~GameState( ) {}
 
-std::shared_ptr<State> GameState::Update(const float& deltaTime)
+State* GameState::Update(const float& deltaTime)
+// std::unique_ptr<State> GameState::Update(const float& deltaTime)
+// std::shared_ptr<State> GameState::Update(const float& deltaTime)
 {
 	std::cout << "\nGameState::Update";
 
@@ -29,10 +31,11 @@ std::shared_ptr<State> GameState::Update(const float& deltaTime)
 	player.TransformX(velocity.GetPos( ).GetX( ));
 	player.TransformY(velocity.GetPos( ).GetY( ));
 
-	// if (gsm.GetMenuState( ))
+	return this;
+	// if (GetGSM( ).GetMenuState( ))
 	// {
 	// 	std::cout << "\nGameState::Update::Return mMenuState;";
-	// 	return gsm.GetMenuState( );
+	// 	return GetGSM( ).GetMenuState( );
 	// }
 	return nullptr;
 }

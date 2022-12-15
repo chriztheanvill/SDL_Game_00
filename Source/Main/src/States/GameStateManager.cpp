@@ -6,16 +6,24 @@
 #include <iostream>
 
 GameStateManager::GameStateManager(Engine& engine)
-	: mGameState(std::make_shared<GameState>(*this))
-	, mMenuState(std::make_shared<MenuState>(*this))
+	: mGameState(std::make_unique<GameState>(*this))
+	, mMenuState(std::make_unique<MenuState>(*this))
+	// Shared
+	// : mGameState(std::make_shared<GameState>(*this))
+	// , mMenuState(std::make_shared<MenuState>(*this))
 	, mEngine(engine)
 // , mStartState(std::make_shared<State>( ))
 {
 	Load( );
-	SetState(mGameState);
+	SetState(mGameState.get( ));
+	// SetState(mGameState); // Shared
 }
 
-GameStateManager::~GameStateManager( ) { mCurrent->ExitState( ); }
+GameStateManager::~GameStateManager( )
+{
+	mCurrent->ExitState( );
+	std::cout << "\n\n--- ~GameStateManager \n";
+}
 
 void GameStateManager::Update(const float& deltaTime)
 {
@@ -23,12 +31,15 @@ void GameStateManager::Update(const float& deltaTime)
 	if (mCurrent && mIsRunning)
 	{
 		Events( );
-		std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
-		std::cout << "\n---Update --- tmp: " << tmp << "\n";
+		State* tmp = mCurrent->Update(deltaTime);
+		// std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
+		// std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
+		std::cout << "\n---GameStateManager::Update --- tmp: " << tmp << "\n";
 		Render( );
 		if (tmp)
 		{
-			std::cout << "\n+++ Updating:\n tmp: " << tmp << "\n";
+			// std::cout << "\n+++ GameStateManager::Update Updating +++ tmp: "
+			//   << tmp << "\n";
 			SetState(tmp);
 		}
 	}
@@ -82,11 +93,19 @@ void GameStateManager::Events( )
 	//
 }
 
-void GameStateManager::SetState(std::shared_ptr<State>& state)
+void GameStateManager::SetState(State* state)
+// void GameStateManager::SetState(std::unique_ptr<State>& state)
+// void GameStateManager::SetState(std::shared_ptr<State>& state)
 {
-	mPrev = mCurrent;
-	mCurrent = state;
-	// mCurrent = std::move(state);
+	mPrev = std::move(mCurrent);
+	mCurrent = std::move(state);
+
+	// mPrev = mCurrent;
+	// mCurrent = state;
+	// // mCurrent = std::move(state);
+
+	std::cout << "\n *** GameStateManager::SetState *** \nmCurrent: "
+			  << mCurrent << "\nmPrev: " << mPrev << "\n";
 
 	if (mPrev) mPrev->ExitState( );
 	if (mCurrent) mCurrent->EnterState( );

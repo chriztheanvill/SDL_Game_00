@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author Cristian Nieto (chriztheanvill@gmail.com)
- * @brief Just a Game
+ * @brief A 2D Game Engine
  * @version 0.1
  * @date 2022-14-12
  *

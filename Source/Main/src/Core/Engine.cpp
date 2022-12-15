@@ -13,6 +13,9 @@ Engine::Engine( )
 
 Engine::~Engine( )
 {
+	mGSM = nullptr;
+
+	// SDL System
 	SDL_DestroyRenderer(mRender);
 	SDL_DestroyWindow(mWindow);
 
