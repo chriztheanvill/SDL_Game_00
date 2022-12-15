@@ -44,80 +44,6 @@
 		f10 = exit
 */
 
-#include <iostream>
-
-class Base
-{
-  public:
-	Base( ) {}
-	Base(int age, char* name)
-		: mAge(age)
-	{
-		mName = name;
-		// size = sizeof(mName) / sizeof(mName[0]);
-
-		size = strlen(mName);
-		std::cout << "\nsize: " << size << "\n";
-	}
-
-	Base(const Base& b)
-	{
-		std::cout << "\nCopy constructor\n";
-		mName = b.mName;
-		mAge = b.mAge;
-		size = b.size;
-	}
-
-	Base(Base&& b)
-	{
-		std::cout << "\nMove constructor\n";
-		this->mName = b.mName;
-		mAge = b.mAge;
-		size = b.size;
-		b.mName = nullptr;
-		b.mAge = 0;
-		b.size = 0;
-	}
-
-	void operator=(const Base& b)
-	{
-		std::cout << "\nCopy\n";
-		mName = b.mName;
-		mAge = b.mAge;
-		size = b.size;
-	}
-
-	void operator=(Base&& b)
-	{
-		std::cout << "\nMove\n";
-		this->mName = b.mName;
-		mAge = b.mAge;
-		size = b.size;
-		b.mName = nullptr;
-		b.mAge = 0;
-		b.size = 0;
-	}
-
-	~Base( )
-	{
-		// delete mName;
-		mName = nullptr;
-	}
-
-	void Print( )
-	{
-		if (size == 0) return;
-		std::cout << "\n" << mAge << "\n\n";
-		for (int i { }; i < size; i++) { std::cout << mName[i] << "\n"; }
-	}
-
-  private:
-	int mAge;
-	char* mName;
-
-	int size { };
-};
-
 /* Main */
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
@@ -128,8 +54,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 	e->Init( ); */
 
 	// Delete a smart pointer
-	// 	std::unique_ptr<Engine> mEngine { std::make_unique<Engine>( ) };
-	// 	mEngine = nullptr;
+	std::unique_ptr<Engine> mEngine { std::make_unique<Engine>( ) };
+	mEngine = nullptr;
 
 	// 	// Delete a pointer
 	// 	// Engine* mEngine = new Engine( );
@@ -139,11 +65,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 	// 	/* ################################################# */
 	// 	fmt::print("\n\nGame Exit!\n");
 
-	// #ifdef NDEBUG
-	// 	fmt::print("\n\n RELEASE!\n");
-	// #else
-	// 	fmt::print("\n\n Debug!\n");
-	// #endif
+#ifdef NDEBUG
+	fmt::print("\n\n RELEASE!\n");
+#else
+	fmt::print("\n\n Debug!\n");
+#endif
 
 	/* ################################################# */
 
@@ -153,15 +79,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 	// fmt::print("Size H: {} - W: {}\n", s->height, s->width);
 
 	/* ################################################# */
-
-	Base b(99, "123asdAa123----");
-	Base c;
-
-	c = (Base &&) b;
-
-	b.Print( );
-	c.Print( );
-	b.Print( );
 
 	return 0;
 }
