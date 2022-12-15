@@ -141,8 +141,10 @@ void Engine::Events( )
 	// 			{
 	// 				mIsRunning = false;
 	// 				// std::cout << "\n\nQuitting game by Q.\n";
-	// 				fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-	// 						   "--- Quitting game with Q --- ");
+	// 				fmt::print(fmt::emphasis::bold |
+	// fg(fmt::color::red),
+	// 						   "--- Quitting game with Q ---
+	// ");
 	// 			}
 	// 	}
 	// 	/* ======== ~SYSTEM ======== */

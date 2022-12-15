@@ -12,7 +12,6 @@ googletest/
 .idea/
 cmake-build-debug/
 cmake-build-release/
-.clang-format
 
 ## QtCreator
 CMakeLists.txt.user
