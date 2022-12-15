@@ -24,6 +24,7 @@ void GameStateManager::Update(const float& deltaTime)
 	{
 		Events( );
 		std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
+		std::cout << "Update:\n tmp: " << tmp << "\n";
 		Render( );
 		if (tmp) SetState(tmp);
 	}
@@ -36,13 +37,18 @@ void GameStateManager::Load( )
 
 void GameStateManager::Render( )
 {
-	//
+	// System
 	SDL_SetRenderDrawColor(mEngine.GetRender( ), 60, 60, 60, 255);
 	SDL_RenderClear(mEngine.GetRender( ));
 
+	/* ################################################# */
+	// Game
+
 	mCurrent->Render( );
 
-	//
+	/* ################################################# */
+
+	// System
 	SDL_RenderPresent(mEngine.GetRender( ));
 }
 

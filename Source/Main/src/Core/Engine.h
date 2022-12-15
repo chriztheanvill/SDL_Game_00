@@ -11,6 +11,8 @@
 
 #include "./Time.h"
 
+#include <fmt/color.h>
+
 class Engine
 {
   public:

@@ -3,25 +3,20 @@
  * @author Cristian Nieto (chriztheanvill@gmail.com)
  * @brief Just a Game
  * @version 0.1
- * @date 2021-02-09
+ * @date 2022-14-12
  *
  * @copyright Copyright (c) 2021
  *
  */
 
-// My libs
-
 // System
-// #include <iostream>
-// #include <memory>
-#include <fmt/color.h>
 
 // // For this, in Cmake on Graphics, enable X11
 // // #include <X11/Xlib.h>
 
-// #include "./src/Engine.h"
 #include "./src/Core/Engine.h"
 
+// Just for show the icons in VS Code
 // NOTE
 // DONE
 // WARNING
@@ -49,21 +44,22 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
 	/* ################################################# */
 
-	/* NOTE: Do not use statics
-	Engine* e = Engine::GetInstance( );
-	e->Init( ); */
+	/* NOTE: Do not use Singleton
+		Engine* e = Engine::GetInstance( );
+		e->Init( );
+	*/
 
-	// Delete a smart pointer
+	// Smart pointer
 	std::unique_ptr<Engine> mEngine { std::make_unique<Engine>( ) };
 	mEngine = nullptr;
 
-	// 	// Delete a pointer
+	// 	// FIXME (Obsolete)
 	// 	// Engine* mEngine = new Engine( );
 	// 	// delete mEngine;
 	// 	// mEngine = nullptr;
 
-	// 	/* ################################################# */
-	// 	fmt::print("\n\nGame Exit!\n");
+	/* ################################################# */
+	fmt::print("\n\nGame Exit!\n");
 
 #ifdef NDEBUG
 	fmt::print("\n\n RELEASE!\n");

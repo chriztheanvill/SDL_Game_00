@@ -120,7 +120,7 @@ set(
 
 	# # LUA
 	# lua5.2 ## Debian SID
-	lua5.4 # # Fedora
+	lua # # Fedora
 	m
 	dl
 
