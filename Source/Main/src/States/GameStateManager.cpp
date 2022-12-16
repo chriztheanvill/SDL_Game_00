@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+int a = 2;
+
 GameStateManager::GameStateManager(Engine& engine)
 	: mGameState(std::make_unique<GameState>(*this))
 	, mMenuState(std::make_unique<MenuState>(*this))
@@ -22,12 +24,18 @@ GameStateManager::GameStateManager(Engine& engine)
 GameStateManager::~GameStateManager( )
 {
 	mCurrent->ExitState( );
+	mCurrent = nullptr;
+	mPrev = nullptr;
+	mGameState = nullptr;
+	mMenuState = nullptr;
 	std::cout << "\n\n--- ~GameStateManager \n";
 }
 
 void GameStateManager::Update(const float& deltaTime)
 {
 	// std::cout << "\nDeltaTime: " << deltaTime;
+	if (a < 0) mIsRunning = false;
+
 	if (mCurrent && mIsRunning)
 	{
 		Events( );
@@ -40,6 +48,7 @@ void GameStateManager::Update(const float& deltaTime)
 		{
 			// std::cout << "\n+++ GameStateManager::Update Updating +++ tmp: "
 			//   << tmp << "\n";
+			a--;
 			SetState(tmp);
 		}
 	}
