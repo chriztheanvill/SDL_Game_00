@@ -15,7 +15,7 @@ GameStateManager::GameStateManager(Engine& engine)
 // , mStartState(std::make_shared<State>( ))
 {
 	Load( );
-	SetState(mGameState.get( ));
+	SetState(mGameState.get( ));   // Unique
 	// SetState(mGameState); // Shared
 }
 

@@ -1,15 +1,13 @@
 /**
  * @file main.cpp
  * @author Cristian Nieto (chriztheanvill@gmail.com)
- * @brief A 2D Game Engine
+ * @brief A 2D Game Engine, made in C++
  * @version 0.1
  * @date 2022-14-12
  *
  * @copyright Copyright (c) 2021
  *
  */
-
-// System
 
 // // For this, in Cmake on Graphics, enable X11
 // // #include <X11/Xlib.h>
@@ -39,7 +37,6 @@
 		f10 = exit
 */
 
-/* Main */
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
 	/* ################################################# */

@@ -49,7 +49,7 @@ class GameStateManager
 };
 
 /*
-	SHARED
+	shared_ptr
 */
 // class GameStateManager
 // {
