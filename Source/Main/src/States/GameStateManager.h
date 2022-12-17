@@ -36,8 +36,8 @@ class GameStateManager
 	std::unique_ptr<State> mMenuState;
 	// std::unique_ptr<State> mStartState;
 
-	State* mCurrent;
-	State* mPrev;
+	State* mCurrent { };
+	State* mPrev { };
 	// std::unique_ptr<State> mCurrent;
 	// std::unique_ptr<State> mPrev;
 

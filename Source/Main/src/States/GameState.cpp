@@ -31,7 +31,7 @@ State* GameState::Update(const float& deltaTime)
 	player.TransformX(velocity.GetPos( ).GetX( ));
 	player.TransformY(velocity.GetPos( ).GetY( ));
 
-	return this;
+	// return this;
 	// if (GetGSM( ).GetMenuState( ))
 	// {
 	// 	std::cout << "\nGameState::Update::Return mMenuState;";
