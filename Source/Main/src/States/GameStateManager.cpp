@@ -60,6 +60,7 @@ void GameStateManager::Load( )
 void GameStateManager::Render( )
 {
 	// System
+	// Paint color
 	SDL_SetRenderDrawColor(mEngine.GetRender( ), 60, 60, 60, 255);
 	SDL_RenderClear(mEngine.GetRender( ));
 
@@ -71,6 +72,7 @@ void GameStateManager::Render( )
 	/* ################################################# */
 
 	// System
+	// Clean the screen
 	SDL_RenderPresent(mEngine.GetRender( ));
 }
 
