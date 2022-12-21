@@ -119,8 +119,9 @@ set(
 	# #   sfml‑main // NO
 
 	# # LUA
-	# lua5.2 ## Debian SID
-	lua # # Fedora
+	lua5.3 # # Debian SID
+
+	# lua # # Fedora
 	m
 	dl
 

@@ -13,27 +13,28 @@
 
 #include <fmt/color.h>
 
-class Engine {
-public:
-  Engine();
-  ~Engine();
+class Engine
+{
+  public:
+	Engine( );
+	~Engine( );
 
-  SDL_Window *GetWindow() const { return mWindow; }
-  SDL_Renderer *GetRender() const { return mRender; }
+	SDL_Window* GetWindow( ) const { return mWindow; }
+	SDL_Renderer* GetRender( ) const { return mRender; }
 
-private:
-  void Init();
-  void Loop();
-  void Events();
+  private:
+	void Init( );
+	void Loop( );
+	void Events( );
 
-  bool mIsRunning{};
-  std::unique_ptr<GameStateManager> mGSM;
-  Cris::Time mTime;
+	bool mIsRunning { };
+	std::unique_ptr<GameStateManager> mGSM;
+	Cris::Time mTime;
 
-  // std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> mWindow;
-  // std::unique_ptr<SDL_Renderer> mRender;
-  SDL_Window *mWindow;
-  SDL_Renderer *mRender;
+	// std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> mWindow;
+	// std::unique_ptr<SDL_Renderer> mRender;
+	SDL_Window* mWindow;
+	SDL_Renderer* mRender;
 };
 
-#endif // ENGINE_H
+#endif	 // ENGINE_H
