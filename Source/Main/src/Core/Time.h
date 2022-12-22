@@ -23,7 +23,7 @@ namespace Cris
 		float mLastTime { };
 		// int mLastTime { };
 		float mFPS = 30;
-		float mFPSLimit = 1.5F;
+		float mFPSLimit = 1.0F;
 		float TARGET_FPS = SECONDS / mFPS;
 
 		float mDeltaTime { };

@@ -23,9 +23,9 @@ class Engine
 	SDL_Renderer* GetRender( ) const { return mRender; }
 
   private:
-	void Init( );
+	bool Init( );
 	void Loop( );
-	void Events( );
+	// void Events( );
 
 	bool mIsRunning { };
 	std::unique_ptr<GameStateManager> mGSM;
@@ -35,6 +35,9 @@ class Engine
 	// std::unique_ptr<SDL_Renderer> mRender;
 	SDL_Window* mWindow;
 	SDL_Renderer* mRender;
+
+	int mWindowH;
+	int mWindowW;
 };
 
 #endif	 // ENGINE_H

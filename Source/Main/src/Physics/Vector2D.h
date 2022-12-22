@@ -108,6 +108,7 @@ class Vector2D
 		mX = vec.GetX( );
 		mY = vec.GetY( );
 	}
+
 	Vector2D GetVector( ) const { return { mX, mY }; }
 
 	void SetX(const float& x) { mX = x; }

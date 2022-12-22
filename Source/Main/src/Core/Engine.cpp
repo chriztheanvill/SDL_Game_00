@@ -3,10 +3,10 @@
 
 Engine::Engine( )
 {
-	Init( );   // Init only SDL2 libs
+	if (!Init( )) return;	// Init only SDL2 libs
 
 	mGSM = std::make_unique<GameStateManager>(*this);
-	mGSM->SetIsRunning(true);
+	// mGSM->SetIsRunning(true);
 
 	Loop( );
 }
@@ -25,7 +25,7 @@ Engine::~Engine( )
 	SDL_Quit( );
 }
 
-void Engine::Init( )
+bool Engine::Init( )
 {
 	/* #################### Init SDL2 #################### */
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -33,7 +33,7 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! SDL_INIT_EVERYTHING --- {}",
 				   SDL_GetError( ));
-		exit(1);
+		return false;
 	}
 
 	/* Init Image */
@@ -44,7 +44,7 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! IMG_INIT PNG | JPG --- {}",
 				   IMG_GetError( ));
-		exit(1);
+		return false;
 	}
 
 	if (TTF_Init( ) != 0)
@@ -52,7 +52,7 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! TTF_Init --- {}",
 				   TTF_GetError( ));
-		exit(1);
+		return false;
 	}
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
@@ -60,20 +60,31 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! Music Mixer --- {}",
 				   Mix_GetError( ));
-		exit(1);
+		return false;
 	}
 
 	/* ------------------------------------------------------------------- */
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
-			   "\n\n+++ Success all libs!!! +++\n\n");
+			   "\n\n+++ Success all libs!!! +++\n");
 	// Turn ON the game
 
-	mWindow = SDL_CreateWindow("SDL Pikuma",
-							   SDL_WINDOWPOS_CENTERED,
-							   SDL_WINDOWPOS_CENTERED,
-							   800,
-							   600,
-							   SDL_WINDOW_OPENGL);
+	SDL_DisplayMode displayMode;
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+	mWindowH = displayMode.h;
+	mWindowW = displayMode.w;
+
+	fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
+			   "--- Display size --- H: {} x  w:{}\n\n",
+			   mWindowH,
+			   mWindowW);
+
+	mWindow = SDL_CreateWindow(
+		"SDL Pikuma",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		800,   // Colocar mWindowH, crea un FAKE full screen size
+		600,
+		SDL_WINDOW_OPENGL);
 	// mWindow.reset(SDL_CreateWindow("SDL Pikuma",
 	// 							   SDL_WINDOWPOS_CENTERED,
 	// 							   SDL_WINDOWPOS_CENTERED,
@@ -93,7 +104,7 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! Create Window --- {}",
 				   SDL_GetError( ));
-		exit(1);
+		return false;
 	}
 
 	mRender = SDL_CreateRenderer(mWindow,
@@ -109,10 +120,14 @@ void Engine::Init( )
 		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
 				   "--- Error!!! Create Render --- {}",
 				   SDL_GetError( ));
-		exit(1);
+		return false;
 	}
 
+	// Make Real fullscreen
+	// SDL_SetWindowFullscreen(mWindow, SDL_WINDOW_FULLSCREEN);
+
 	/* #################### Init SDL2 #################### */
+	return true;
 }
 
 void Engine::Loop( )
@@ -126,31 +141,31 @@ void Engine::Loop( )
 	// mGSM->Update(0);
 }
 
-void Engine::Events( )
-{
-	// SDL_Event event { };
-	// while (SDL_PollEvent(&event))
-	// {
-	// 	/* ======== SYSTEM ======== */
-	// 	switch (event.type)
-	// 	{
-	// 		case SDL_QUIT: mIsRunning = false; break;
-	// 		case SDL_KEYDOWN:
-	// 			if (event.key.keysym.sym == SDLK_q ||
-	// 				event.key.keysym.sym == SDLK_ESCAPE)
-	// 			{
-	// 				mIsRunning = false;
-	// 				// std::cout << "\n\nQuitting game by Q.\n";
-	// 				fmt::print(fmt::emphasis::bold |
-	// fg(fmt::color::red),
-	// 						   "--- Quitting game with Q ---
-	// ");
-	// 			}
-	// 	}
-	// 	/* ======== ~SYSTEM ======== */
+// void Engine::Events( )
+// {
+// 	// SDL_Event event { };
+// 	// while (SDL_PollEvent(&event))
+// 	// {
+// 	// 	/* ======== SYSTEM ======== */
+// 	// 	switch (event.type)
+// 	// 	{
+// 	// 		case SDL_QUIT: mIsRunning = false; break;
+// 	// 		case SDL_KEYDOWN:
+// 	// 			if (event.key.keysym.sym == SDLK_q ||
+// 	// 				event.key.keysym.sym == SDLK_ESCAPE)
+// 	// 			{
+// 	// 				mIsRunning = false;
+// 	// 				// std::cout << "\n\nQuitting game by Q.\n";
+// 	// 				fmt::print(fmt::emphasis::bold |
+// 	// fg(fmt::color::red),
+// 	// 						   "--- Quitting game with Q ---
+// 	// ");
+// 	// 			}
+// 	// 	}
+// 	// 	/* ======== ~SYSTEM ======== */
 
-	// 	// 	/* ======== Game ======== */
-	// 	// 	// mCurrent->Events(event);
-	// 	// 	/* ======== ~Game ======== */
-	// }
-}
+// 	// 	// 	/* ======== Game ======== */
+// 	// 	// 	// mCurrent->Events(event);
+// 	// 	// 	/* ======== ~Game ======== */
+// 	// }
+// }

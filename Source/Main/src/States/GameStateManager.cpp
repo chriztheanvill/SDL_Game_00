@@ -17,6 +17,8 @@ GameStateManager::GameStateManager(Engine& engine)
 	Load( );
 	SetState(mGameState.get( ));   // Unique
 	// SetState(mGameState); // Shared
+
+	mIsRunning = true;
 }
 
 GameStateManager::~GameStateManager( )

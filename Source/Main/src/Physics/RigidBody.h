@@ -3,20 +3,10 @@
 
 #include "./Vector2D.h"
 
-namespace
-{
-	const int16_t UNI_MASS = 1;
-	const float GRAVITY = 9.8F;
-}	// namespace
-
 class RigidBody
 {
   public:
-	RigidBody( )
-	{
-		mMass = UNI_MASS;
-		mGravity = GRAVITY;
-	}
+	RigidBody( ) = default;
 	// RigidBody(const RigidBody& other); // Copy
 	// RigidBody(RigidBody&& other) noexcept; // Move
 	// RigidBody& operator=(const RigidBody& other); // Copy Operator
@@ -40,7 +30,7 @@ class RigidBody
 	{
 		mAcceleration.SetX((mForce.GetX( ) + mFriction.GetX( )) / mMass);
 		mAcceleration.SetY(mGravity + mForce.GetY( ) / mMass);
-		mVelocity = mAcceleration * deltaTime;
+		mVelocity = (mAcceleration * deltaTime) * mTime;
 		mPosition = mVelocity * deltaTime;
 	}
 
@@ -50,8 +40,9 @@ class RigidBody
 	const Vector2D& GetAcceleration( ) const { return mAcceleration; }
 
   private:
-	float mMass;
-	float mGravity;
+	float mMass { 1 };
+	float mGravity { 9.8 };
+	int16_t mTime { 10 };
 
 	Vector2D mForce { 0, 0 };
 	Vector2D mFriction { 0, 0 };
