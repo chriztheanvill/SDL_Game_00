@@ -1,4 +1,6 @@
 #include "GameStateManager.h"
+
+#include "../States/State.h"
 #include "./GameState.h"
 #include "./MenuState.h"
 #include "../Core/Engine.h"
@@ -15,10 +17,9 @@ GameStateManager::GameStateManager(Engine& engine)
 // , mStartState(std::make_shared<State>( ))
 {
 	Load( );
+	mIsRunning = true;
 	SetState(mGameState.get( ));   // Unique
 	// SetState(mGameState); // Shared
-
-	mIsRunning = true;
 }
 
 GameStateManager::~GameStateManager( )
@@ -43,12 +44,13 @@ void GameStateManager::Update(const float& deltaTime)
 		State* tmp = mCurrent->Update(deltaTime);
 		// std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
 		// std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
-		std::cout << "\n---GameStateManager::Update --- tmp: " << tmp << "\n";
+		// std::cout << "\n---GameStateManager::Update --- tmp: " << tmp <<
+		// "\n";
 		Render( );
 		if (tmp)
 		{
-			// std::cout << "\n+++ GameStateManager::Update Updating +++ tmp: "
-			//   << tmp << "\n";
+			std::cout << "\n+++ GameStateManager::Update Updating +++ tmp: "
+					  << tmp << "\n";
 			SetState(tmp);
 		}
 	}

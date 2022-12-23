@@ -1,6 +1,11 @@
 [
 {
   "directory": "/home/cris/Workspace/VSCode/SDL_Game_00/build/Debug",
+  "command": "/usr/bin/g++ -DBOOST_ALL_NO_LIB -DLUA -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -I/usr/include/lua5.3 -isystem /usr/include/SDL2 -isystem /home/cris/.conan/data/docopt.cpp/0.6.3/_/_/package/0d3bb5ed760e15c5a25aef7935f438ad21054b16/include -isystem /home/cris/.conan/data/fmt/8.0.1/_/_/package/0d8b943d676dc202f180a2598d04457e173d7b97/include -isystem /home/cris/.conan/data/spdlog/1.9.2/_/_/package/0ad8763f0289ded6e39ff258ec01c35b1aac6aa2/include -isystem /home/cris/.conan/data/nlohmann_json/3.10.2/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -g -ffast-math -std=gnu++20 -o Source/Main/CMakeFiles/sdl2_Game_00.dir/src/Characters/Player.cpp.o -c /home/cris/Workspace/VSCode/SDL_Game_00/Source/Main/src/Characters/Player.cpp",
+  "file": "/home/cris/Workspace/VSCode/SDL_Game_00/Source/Main/src/Characters/Player.cpp"
+},
+{
+  "directory": "/home/cris/Workspace/VSCode/SDL_Game_00/build/Debug",
   "command": "/usr/bin/g++ -DBOOST_ALL_NO_LIB -DLUA -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -I/usr/include/lua5.3 -isystem /usr/include/SDL2 -isystem /home/cris/.conan/data/docopt.cpp/0.6.3/_/_/package/0d3bb5ed760e15c5a25aef7935f438ad21054b16/include -isystem /home/cris/.conan/data/fmt/8.0.1/_/_/package/0d8b943d676dc202f180a2598d04457e173d7b97/include -isystem /home/cris/.conan/data/spdlog/1.9.2/_/_/package/0ad8763f0289ded6e39ff258ec01c35b1aac6aa2/include -isystem /home/cris/.conan/data/nlohmann_json/3.10.2/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include -g -ffast-math -std=gnu++20 -o Source/Main/CMakeFiles/sdl2_Game_00.dir/src/Core/Engine.cpp.o -c /home/cris/Workspace/VSCode/SDL_Game_00/Source/Main/src/Core/Engine.cpp",
   "file": "/home/cris/Workspace/VSCode/SDL_Game_00/Source/Main/src/Core/Engine.cpp"
 },

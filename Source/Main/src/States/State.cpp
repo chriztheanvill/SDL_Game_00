@@ -1,4 +1,5 @@
 #include "State.h"
+#include "./GameStateManager.h"
 
 State::State(GameStateManager& gsm)
 	: mGSM(gsm)

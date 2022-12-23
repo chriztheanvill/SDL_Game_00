@@ -1,14 +1,16 @@
 #ifndef GAMESTATEMANAGER_H
 #define GAMESTATEMANAGER_H
 
-// #include <memory>
+#include <memory>
 
-#include "../States/State.h"
+// #include "../States/State.h"
 // class State;
 // class GameState;
 // class MenuState;
+// #include "../Core/Engine.h"
 
 class Engine;
+class State;
 
 class GameStateManager
 {

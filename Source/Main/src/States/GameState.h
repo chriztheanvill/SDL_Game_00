@@ -3,6 +3,8 @@
 
 #include "./State.h"
 
+#include "../Characters/Player.h"
+
 class GameState : public State
 {
   public:
@@ -19,6 +21,7 @@ class GameState : public State
 	void ExitState( ) override;
 
   private:
+	Player mPlayer;
 };
 
 #endif	 // GAMESTATE_H

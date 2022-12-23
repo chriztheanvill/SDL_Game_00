@@ -34,10 +34,10 @@ class RigidBody
 		mPosition = mVelocity * deltaTime;
 	}
 
-	const float& GetMass( ) const { return mMass; }
-	const Vector2D& GetPos( ) const { return mPosition; }
-	const Vector2D& GetVelocity( ) const { return mVelocity; }
-	const Vector2D& GetAcceleration( ) const { return mAcceleration; }
+	const float& Mass( ) const { return mMass; }
+	const Vector2D& Pos( ) const { return mPosition; }
+	const Vector2D& Velocity( ) const { return mVelocity; }
+	const Vector2D& Acceleration( ) const { return mAcceleration; }
 
   private:
 	float mMass { 1 };

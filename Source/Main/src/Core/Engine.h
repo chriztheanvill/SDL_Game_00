@@ -7,11 +7,13 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../States/GameStateManager.h"
+// #include "../States/GameStateManager.h"
 
 #include "./Time.h"
 
 #include <fmt/color.h>
+
+class GameStateManager;
 
 class Engine
 {
