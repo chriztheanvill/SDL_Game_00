@@ -26,11 +26,11 @@ class State
 	void SetIsRunning(const bool& running) { mIsRunning = running; }
 
   protected:
-	GameStateManager& GetGSM( ) const { return mGSM; }
+	GameStateManager& GetGameStateManager( ) const { return mGameStateManager; }
 
   private:
 	bool mIsRunning;
-	GameStateManager& mGSM;
+	GameStateManager& mGameStateManager;
 };
 
 #endif	 // STATE_H

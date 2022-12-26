@@ -4,15 +4,21 @@
 #include "../Core/Engine.h"
 
 Player::Player(GameStateManager& gsm)
-	: mGSM(gsm)
+	: mGameStateManager(gsm)
 {
-	// mPosition.SetVector(Vector2D::Zero());
-	mPosition.SetVector({ 50, 10 });
+	fmt::print(fmt::emphasis::bold | fg(fmt::color::aqua),
+			   "\n--- Player::Constructor ---\n");
+	mPosition.SetVector(Vector2D::Zero( ));
+	// mPosition.SetVector({ 50, 10 });
 
 	mCollision = { static_cast<int>(mPosition.GetX( )),
 				   static_cast<int>(mPosition.GetX( )),
 				   20,
 				   20 };
+
+	mPlayerTexture = mGameStateManager.TextureManagerGame( ).Load(
+		"Vivian",
+		"assets/images/Vivian.jpg");
 }
 
 Player::~Player( ) {}
@@ -25,18 +31,28 @@ void Player::Update(const float& deltaTime)
 	fmt::print("\nPlayer::mPlayer x: {}, y: {}",
 			   Position( ).GetX( ),
 			   Position( ).GetY( ));
+
+	mCollision = SDL_Rect { static_cast<int>(mPosition.GetX( )),
+							static_cast<int>(mPosition.GetY( )),
+							100,
+							150 };
 }
 
 void Player::Render( )
 {
-	mCollision = SDL_Rect { static_cast<int>(mPosition.GetX( )),
-							static_cast<int>(mPosition.GetY( )),
-							20,
-							20 };
+	SDL_SetRenderDrawColor(mGameStateManager.GetEngine( ).GetRender( ),
+						   255,
+						   255,
+						   255,
+						   255);
 
-	SDL_SetRenderDrawColor(mGSM.GetEngine( ).GetRender( ), 255, 255, 255, 255);
+	SDL_RenderFillRect(mGameStateManager.GetEngine( ).GetRender( ),
+					   &mCollision);
 
-	SDL_RenderFillRect(mGSM.GetEngine( ).GetRender( ), &mCollision);
+	SDL_RenderCopy(mGameStateManager.GetEngine( ).GetRender( ),
+				   mPlayerTexture,
+				   nullptr,
+				   &mCollision);
 }
 
 void Player::Events(SDL_Event& event)

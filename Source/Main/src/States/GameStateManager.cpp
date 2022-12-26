@@ -4,11 +4,16 @@
 #include "./GameState.h"
 #include "./MenuState.h"
 #include "../Core/Engine.h"
+#include "../Core/TextureManager.h"
 
 #include <iostream>
 
 GameStateManager::GameStateManager(Engine& engine)
-	: mGameState(std::make_unique<GameState>(*this))
+	: mTextureManagerMenu(engine)
+	, mTextureManagerSystem(engine)
+	, mTextureManagerGame(engine)
+	//
+	, mGameState(std::make_unique<GameState>(*this))
 	, mMenuState(std::make_unique<MenuState>(*this))
 	// Shared
 	// : mGameState(std::make_shared<GameState>(*this))
@@ -33,6 +38,12 @@ GameStateManager::~GameStateManager( )
 	std::cout << "\n\n--- ~GameStateManager \n";
 }
 
+void GameStateManager::Load( )
+{
+	//
+	mTextureManagerSystem.Load("");	  // ERROR: Assert
+}
+
 void GameStateManager::Update(const float& deltaTime)
 {
 	// std::cout << "\nDeltaTime: " << deltaTime;
@@ -54,11 +65,6 @@ void GameStateManager::Update(const float& deltaTime)
 			SetState(tmp);
 		}
 	}
-}
-
-void GameStateManager::Load( )
-{
-	//
 }
 
 void GameStateManager::Render( )

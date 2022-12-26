@@ -2,7 +2,7 @@
 #include "./GameStateManager.h"
 
 State::State(GameStateManager& gsm)
-	: mGSM(gsm)
+	: mGameStateManager(gsm)
 {
 }
 State::~State( ) {}

@@ -9,6 +9,8 @@
 // class MenuState;
 // #include "../Core/Engine.h"
 
+#include "../Core/TextureManager.h"
+
 class Engine;
 class State;
 
@@ -25,6 +27,10 @@ class GameStateManager
 	State& GetGameState( ) { return *mGameState; }
 	State& GetMenuState( ) const { return *mMenuState; }
 
+	TextureManager& TextureManagerSystem( ) { return mTextureManagerSystem; }
+	TextureManager& TextureManagerMenu( ) { return mTextureManagerMenu; }
+	TextureManager& TextureManagerGame( ) { return mTextureManagerGame; }
+
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
 	inline const bool& GetIsRunning( ) const { return mIsRunning; }
 
@@ -34,6 +40,10 @@ class GameStateManager
 	bool mIsRunning { };
 
 	Engine& mEngine;
+	TextureManager mTextureManagerSystem;
+	TextureManager mTextureManagerMenu;
+	TextureManager mTextureManagerGame;
+
 	std::unique_ptr<State> mGameState;
 	std::unique_ptr<State> mMenuState;
 	// std::unique_ptr<State> mStartState;

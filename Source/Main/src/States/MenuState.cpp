@@ -2,6 +2,7 @@
 
 #include "GameStateManager.h"
 #include "../Core/Engine.h"
+#include "../Core/TextureManager.h"
 
 #include <iostream>
 
@@ -18,10 +19,10 @@ State* MenuState::Update(const float& deltaTime)
 // std::shared_ptr<State> MenuState::Update(const float& deltaTime)
 {
 	std::cout << "\nMenuState::Update";
-	if (&GetGSM( ).GetGameState( ))
+	if (&GetGameStateManager( ).GetGameState( ))
 	{
 		std::cout << "\nMenuState::Update::Return GetGameState;";
-		return &GetGSM( ).GetGameState( );
+		return &GetGameStateManager( ).GetGameState( );
 		// return std::make_unique<State>(GetGSM( ).GetGameState( ));
 	}
 	// if (GetGSM( ).GetGameState( ))

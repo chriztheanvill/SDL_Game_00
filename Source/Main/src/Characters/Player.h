@@ -27,7 +27,9 @@ class Player
 	RigidBody mRigidBody { };
 	Vector2D mPosition { };
 
-	GameStateManager& mGSM;
+	SDL_Texture* mPlayerTexture;
+
+	GameStateManager& mGameStateManager;
 };
 
 #endif	 // PLAYER_H

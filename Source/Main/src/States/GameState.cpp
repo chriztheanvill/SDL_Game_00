@@ -10,6 +10,9 @@ GameState::GameState(GameStateManager& gsm)
 	, mPlayer(gsm)
 {
 	std::cout << "\n ### GameState::Constructor ### \n";
+	GetGameStateManager( ).TextureManagerGame( ).Load(
+		"test",
+		"assets/images/bkBlue.png");
 }
 
 GameState::~GameState( ) {}

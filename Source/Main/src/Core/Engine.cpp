@@ -3,8 +3,20 @@
 #include "../States/GameStateManager.h"
 // #include "./Time.h"
 
+void CheckCPPVersion( )
+{
+	std::cout << "Check C++ version: ";
+	if (__cplusplus == 202002L) { std::cout << "C++20\n"; }
+	else if (__cplusplus == 201703L) { std::cout << "C++17\n"; }
+	else if (__cplusplus == 201402L) { std::cout << "C++14\n"; }
+	else if (__cplusplus == 201103L) { std::cout << "C++11\n"; }
+	else if (__cplusplus == 199711L) { std::cout << "C++98\n"; }
+	else { std::cout << "pre-standard C++\n"; }
+}
+
 Engine::Engine( )
 {
+	CheckCPPVersion( );
 	if (!Init( )) return;	// Init only SDL2 libs
 
 	mGSM = std::make_unique<GameStateManager>(*this);
@@ -142,32 +154,3 @@ void Engine::Loop( )
 	}
 	// mGSM->Update(0);
 }
-
-// void Engine::Events( )
-// {
-// 	// SDL_Event event { };
-// 	// while (SDL_PollEvent(&event))
-// 	// {
-// 	// 	/* ======== SYSTEM ======== */
-// 	// 	switch (event.type)
-// 	// 	{
-// 	// 		case SDL_QUIT: mIsRunning = false; break;
-// 	// 		case SDL_KEYDOWN:
-// 	// 			if (event.key.keysym.sym == SDLK_q ||
-// 	// 				event.key.keysym.sym == SDLK_ESCAPE)
-// 	// 			{
-// 	// 				mIsRunning = false;
-// 	// 				// std::cout << "\n\nQuitting game by Q.\n";
-// 	// 				fmt::print(fmt::emphasis::bold |
-// 	// fg(fmt::color::red),
-// 	// 						   "--- Quitting game with Q ---
-// 	// ");
-// 	// 			}
-// 	// 	}
-// 	// 	/* ======== ~SYSTEM ======== */
-
-// 	// 	// 	/* ======== Game ======== */
-// 	// 	// 	// mCurrent->Events(event);
-// 	// 	// 	/* ======== ~Game ======== */
-// 	// }
-// }
