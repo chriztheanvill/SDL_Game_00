@@ -20,7 +20,7 @@ SDL_Texture* TextureManager::Load(const std::string& name,
 								  //   const std::string& path)
 								  const std::string& path)
 {
-	// assert(!path.empty( ) && "\n--- TextureManager::Load EMPTY!!! ---");
+	assert(!path.empty( ) && "\n--- TextureManager::Load EMPTY!!! ---");
 	// If Path is empty, return null
 	if (path.empty( ))
 	{

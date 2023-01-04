@@ -5,14 +5,15 @@
 
 #include "../Characters/Player.h"
 
-class GameState : public State
+class GameState : public State, public Node
 {
   public:
 	GameState(GameStateManager& gsm);
 	~GameState( ) override;
 
-	State* Update(const float& deltaTime) override;
-	// std::unique_ptr<State> Update(const float& deltaTime) override;
+	void Load( ) override;
+	// State* Update(const float& deltaTime) override;
+	std::unique_ptr<State> Update(const float& deltaTime) override;
 	// std::shared_ptr<State> Update(const float& deltaTime) override;
 	void Render( ) override;
 	void Events(SDL_Event& event) override;

@@ -2,16 +2,26 @@
 #define RIGIDBODY_H
 
 #include "./Vector2D.h"
+#include "../Core/Node.h"
 
-class RigidBody
+class RigidBody : public Node
 {
   public:
-	RigidBody( ) = default;
+	RigidBody(Node* parent)
+		: Node(parent)
+	{
+		SetName("RigidBody::Player");
+	}
+	// RigidBody( ) = default;
 	// RigidBody(const RigidBody& other); // Copy
 	// RigidBody(RigidBody&& other) noexcept; // Move
 	// RigidBody& operator=(const RigidBody& other); // Copy Operator
 	// RigidBody& operator=(RigidBody&& other) noexcept; // Move Operator
-	~RigidBody( ) = default;   // Virtual is Expensive
+
+	~RigidBody( ) override
+	{
+		std::cout << "\n~GameState::Player::RigidBody::Destructor";
+	}
 
 	void SetMass(const float& m) { mMass = m; }
 	void SetGravity(const float& g) { mGravity = g; }
@@ -30,7 +40,8 @@ class RigidBody
 	{
 		mAcceleration.SetX((mForce.GetX( ) + mFriction.GetX( )) / mMass);
 		mAcceleration.SetY(mGravity + mForce.GetY( ) / mMass);
-		mVelocity = (mAcceleration * deltaTime) * mTime;
+		mVelocity = mAcceleration * deltaTime;
+		// mVelocity = (mAcceleration * deltaTime) * mTime;
 		mPosition = mVelocity * deltaTime;
 	}
 

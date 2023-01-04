@@ -11,10 +11,11 @@ class MenuState : public State
 	MenuState(GameStateManager& gsm);
 	~MenuState( ) override;
 
-	State* Update(const float& deltaTime) override;
-	// std::unique_ptr<State> Update(const float& deltaTime) override;
+	// State* Update(const float& deltaTime) override;
+	std::unique_ptr<State> Update(const float& deltaTime) override;
 	// std::shared_ptr<State> Update(const float& deltaTime) override;
 	void Render( ) override;
+	void Load( ) override;
 	void Events(SDL_Event& event) override;
 
 	void EnterState( ) override;

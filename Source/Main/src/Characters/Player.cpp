@@ -3,9 +3,13 @@
 #include "../States/GameStateManager.h"
 #include "../Core/Engine.h"
 
-Player::Player(GameStateManager& gsm)
+Player::Player(Node* node, GameStateManager& gsm)
 	: mGameStateManager(gsm)
+	, mRigidBody(this)
+	, Node(node)
 {
+	SetName("Player");
+
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::aqua),
 			   "\n--- Player::Constructor ---\n");
 	mPosition.SetVector(Vector2D::Zero( ));
@@ -15,17 +19,25 @@ Player::Player(GameStateManager& gsm)
 				   static_cast<int>(mPosition.GetX( )),
 				   20,
 				   20 };
-
-	mPlayerTexture = mGameStateManager.TextureManagerGame( ).Load(
-		"Vivian",
-		"assets/images/Vivian.jpg");
 }
 
-Player::~Player( ) {}
+Player::~Player( )
+{
+	std::cout << "\n~GameState::Player::Destructor";
+	// DeleteChildren( );
+}
+
+void Player::SetSprite(const std::string& name, const std::string& path)
+{
+	mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
+	// mPlayerTexture = mGameStateManager.TextureManagerGame( ).Load(name,
+	// path);
+}
 
 void Player::Update(const float& deltaTime)
 {
 	mRigidBody.Update(deltaTime);
+	// mPosition.Transform(mRigidBody.Pos( ));
 	mPosition.Transform(mRigidBody.Velocity( ));
 
 	fmt::print("\nPlayer::mPlayer x: {}, y: {}",

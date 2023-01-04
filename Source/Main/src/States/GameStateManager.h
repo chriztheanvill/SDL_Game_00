@@ -24,12 +24,17 @@ class GameStateManager
 
 	// State* GetGameState( ) { return mGameState.get( ); }
 	// State* GetMenuState( ) const { return mMenuState.get( ); }
-	State& GetGameState( ) { return *mGameState; }
-	State& GetMenuState( ) const { return *mMenuState; }
+	// State* GetGameState( );
+	// State& GetGameState( )
+	std::unique_ptr<State> GetGameState( );
 
-	TextureManager& TextureManagerSystem( ) { return mTextureManagerSystem; }
-	TextureManager& TextureManagerMenu( ) { return mTextureManagerMenu; }
-	TextureManager& TextureManagerGame( ) { return mTextureManagerGame; }
+	// State& GetGameState( ) { return *mGameState; }
+	// State& GetMenuState( ) const { return *mMenuState; }
+
+	// TextureManager& TextureManagerSystem( ) { return mTextureManagerSystem; }
+	// TextureManager& TextureManagerMenu( ) { return mTextureManagerMenu; }
+	// TextureManager& TextureManagerGame( ) { return mTextureManagerGame; }
+	TextureManager& GetTextureManager( ) { return mTextureManager; }
 
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
 	inline const bool& GetIsRunning( ) const { return mIsRunning; }
@@ -40,12 +45,14 @@ class GameStateManager
 	bool mIsRunning { };
 
 	Engine& mEngine;
-	TextureManager mTextureManagerSystem;
-	TextureManager mTextureManagerMenu;
-	TextureManager mTextureManagerGame;
+	// TextureManager mTextureManagerSystem;
+	// TextureManager mTextureManagerMenu;
+	// TextureManager mTextureManagerGame;
+	TextureManager mTextureManager;
 
 	std::unique_ptr<State> mGameState;
-	std::unique_ptr<State> mMenuState;
+	// std::unique_ptr<State> mGameState;
+	// std::unique_ptr<State> mMenuState;
 	// std::unique_ptr<State> mStartState;
 
 	State* mCurrent { };
@@ -57,6 +64,7 @@ class GameStateManager
 	void Events( );
 	void Render( );
 	void SetState(State* state);
+	// void SetState(std::unique_ptr<State> state);
 	// void SetState(std::unique_ptr<State>& state);
 };
 

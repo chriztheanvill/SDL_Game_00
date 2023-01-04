@@ -13,10 +13,11 @@ class State
 	State(GameStateManager& gsm);
 	virtual ~State( );
 
-	virtual State* Update(const float& deltaTime) = 0;
-	// virtual std::unique_ptr<State> Update(const float& deltaTime) = 0;
+	// virtual State* Update(const float& deltaTime) = 0;
+	virtual std::unique_ptr<State> Update(const float& deltaTime) = 0;
 	// virtual std::shared_ptr<State> Update(const float& deltaTime) = 0;
 	virtual void Render( ) = 0;
+	virtual void Load( ) = 0;
 	virtual void Events(SDL_Event& event) = 0;
 
 	virtual void EnterState( ) = 0;

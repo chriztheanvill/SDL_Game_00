@@ -9,21 +9,25 @@
 #include <iostream>
 
 GameStateManager::GameStateManager(Engine& engine)
-	: mTextureManagerMenu(engine)
-	, mTextureManagerSystem(engine)
-	, mTextureManagerGame(engine)
+	// : mTextureManagerMenu(engine)
+	// , mTextureManagerSystem(engine)
+	// , mTextureManagerGame(engine)
+	: mTextureManager(engine)
 	//
-	, mGameState(std::make_unique<GameState>(*this))
-	, mMenuState(std::make_unique<MenuState>(*this))
+	// , mGameState(std::make_unique<GameState>(*this))
+	// , mGameState(std::make_unique<MenuState>(*this))
+	// , mMenuState(std::make_unique<MenuState>(*this))
 	// Shared
 	// : mGameState(std::make_shared<GameState>(*this))
 	// , mMenuState(std::make_shared<MenuState>(*this))
 	, mEngine(engine)
 // , mStartState(std::make_shared<State>( ))
 {
+	std::cout << "\n--- GameStateManager::Constructor --- \n";
 	Load( );
 	mIsRunning = true;
-	SetState(mGameState.get( ));   // Unique
+	SetState(mGameState.release( ));   // Unique
+	// SetState(mGameState.get( ));   // Unique
 	// SetState(mGameState); // Shared
 }
 
@@ -34,15 +38,31 @@ GameStateManager::~GameStateManager( )
 	mCurrent = nullptr;
 	mPrev = nullptr;
 	mGameState = nullptr;
-	mMenuState = nullptr;
+	// mMenuState = nullptr;
 	std::cout << "\n\n--- ~GameStateManager \n";
+}
+
+std::unique_ptr<State> GameStateManager::GetGameState( )
+{
+	// return new GameState(*this);
+	// return std::unique_ptr<GameState>(this);
+	return std::make_unique<GameState>(*this);
 }
 
 void GameStateManager::Load( )
 {
+	mGameState = std::make_unique<MenuState>(*this);
+
 	//
-	mTextureManagerSystem.Load("");	  // ERROR: Assert
+	// mTextureManagerSystem.Load("");	  // ERROR: Assert
 }
+
+// State* GameStateManager::GetGameState( )
+// {
+// 	// return new GameState(*this);
+// 	return std::unique_ptr<GameState>(*this);
+// 	// return std::make_unique<GameState>(*this);
+// }
 
 void GameStateManager::Update(const float& deltaTime)
 {
@@ -52,8 +72,8 @@ void GameStateManager::Update(const float& deltaTime)
 	{
 		Events( );
 		// Switching between Game modes: (Main menu, Game, Pause)
-		State* tmp = mCurrent->Update(deltaTime);
-		// std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
+		// State* tmp = mCurrent->Update(deltaTime);
+		std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
 		// std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
 		// std::cout << "\n---GameStateManager::Update --- tmp: " << tmp <<
 		// "\n";
@@ -62,7 +82,9 @@ void GameStateManager::Update(const float& deltaTime)
 		{
 			std::cout << "\n+++ GameStateManager::Update Updating +++ tmp: "
 					  << tmp << "\n";
-			SetState(tmp);
+			// SetState(tmp);
+			SetState(tmp.release( ));
+			// SetState(tmp.get( ));
 		}
 	}
 }
@@ -114,6 +136,7 @@ void GameStateManager::Events( )
 
 void GameStateManager::SetState(State* state)
 // void GameStateManager::SetState(std::unique_ptr<State>& state)
+// void GameStateManager::SetState(std::unique_ptr<State> state)
 // void GameStateManager::SetState(std::shared_ptr<State>& state)
 {
 	mPrev = std::move(mCurrent);
@@ -123,8 +146,10 @@ void GameStateManager::SetState(State* state)
 	// mCurrent = state;
 	// // mCurrent = std::move(state);
 
-	std::cout << "\n *** GameStateManager::SetState *** \nmCurrent: "
-			  << mCurrent << "\nmPrev: " << mPrev << "\n";
+	std::cout
+		<< "\n ################################### GameStateManager::SetState "
+		   "################################### \nmCurrent: "
+		<< mCurrent << "\nmPrev: " << mPrev << "\n";
 
 	if (mPrev) mPrev->ExitState( );
 	if (mCurrent) mCurrent->EnterState( );

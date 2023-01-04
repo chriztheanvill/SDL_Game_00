@@ -14,17 +14,26 @@ MenuState::MenuState(GameStateManager& gsm)
 
 MenuState::~MenuState( ) {}
 
-State* MenuState::Update(const float& deltaTime)
-// std::unique_ptr<State> MenuState::Update(const float& deltaTime)
+void MenuState::Load( )
+{
+	// mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
+}
+
+// State* MenuState::Update(const float& deltaTime)
+std::unique_ptr<State> MenuState::Update(const float& deltaTime)
 // std::shared_ptr<State> MenuState::Update(const float& deltaTime)
 {
 	std::cout << "\nMenuState::Update";
-	if (&GetGameStateManager( ).GetGameState( ))
-	{
-		std::cout << "\nMenuState::Update::Return GetGameState;";
-		return &GetGameStateManager( ).GetGameState( );
-		// return std::make_unique<State>(GetGSM( ).GetGameState( ));
-	}
+	std::cout << "\nMenuState::Update::Return GetGameState;";
+	return GetGameStateManager( ).GetGameState( );
+	// return std::make_unique<State>(GetGSM( ).GetGameState( ));
+
+	// if (&GetGameStateManager( ).GetGameState( )) // Reference, if is alive
+	// {
+	// 	std::cout << "\nMenuState::Update::Return GetGameState;";
+	// 	return &GetGameStateManager( ).GetGameState( );
+	// 	// return std::make_unique<State>(GetGSM( ).GetGameState( ));
+	// }
 	// if (GetGSM( ).GetGameState( ))
 	// {
 	// 	std::cout << "\nMenuState::Update::Return GetGameState;";
@@ -42,6 +51,14 @@ void MenuState::Render( )
 
 void MenuState::Events(SDL_Event& event) {}
 
-void MenuState::EnterState( ) { std::cout << "\nMenuState::EnterState"; }
+void MenuState::EnterState( )
+{
+	std::cout
+		<< "\n==================MenuState::EnterState==================\n\n";
+}
 
-void MenuState::ExitState( ) { std::cout << "\nMenuState::ExitState"; }
+void MenuState::ExitState( )
+{
+	std::cout
+		<< "\n==================MenuState::ExitState==================\n\n";
+}

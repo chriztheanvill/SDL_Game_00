@@ -19,8 +19,11 @@
 // DONE
 // WARNING
 // BUG
+// ERR
 // ERROR
+// DEPRECATED
 // FIXME
+// FIX
 // TODO(cris):
 
 /* NOTE to check the program process:
@@ -75,3 +78,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 
 	return 0;
 }
+
+/* TODO
+ * 	GameStateManager::Update
+ * 	* Cambiar el estilo de State Machine Finite de apuntadores a usar Enums
+ *	* * De la primer manera, se crea el estado, mientras el otro estado esta en
+ *uso
+ *	* * De la nueva manera, se elimina el estado en uso, y se crea el nuevo
+ *
+ * asdas
+ * asd
+ */

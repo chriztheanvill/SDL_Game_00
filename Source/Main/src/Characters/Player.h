@@ -6,17 +6,21 @@
 
 #include <SDL2/SDL.h>
 
+#include "../Core/Node.h"
+
 class GameStateManager;
 
-class Player
+class Player : public Node
 {
   public:
-	Player(GameStateManager& gsm);
-	~Player( );
+	Player(Node* node, GameStateManager& gsm);
+	~Player( ) override;
 
 	void Update(const float& deltaTime);
 	void Render( );
 	void Events(SDL_Event& event);
+
+	void SetSprite(const std::string& name, const std::string& path);
 
 	SDL_Rect& Collision( ) { return mCollision; }
 	RigidBody& Body( ) { return mRigidBody; }
@@ -24,7 +28,7 @@ class Player
 
   private:
 	SDL_Rect mCollision { };
-	RigidBody mRigidBody { };
+	RigidBody mRigidBody;
 	Vector2D mPosition { };
 
 	SDL_Texture* mPlayerTexture;
