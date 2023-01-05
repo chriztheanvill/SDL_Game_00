@@ -19,7 +19,8 @@ Engine::Engine( )
 	CheckCPPVersion( );
 	if (!Init( )) return;	// Init only SDL2 libs
 
-	mGSM = std::make_unique<GameStateManager>(*this);
+	mGSM = std::make_unique<GameStateManager>(*mRender);
+	// mGSM = std::make_unique<GameStateManager>(*this);
 	// mGSM->SetIsRunning(true);
 
 	Loop( );
@@ -82,15 +83,15 @@ bool Engine::Init( )
 			   "\n\n+++ Success all libs!!! +++\n");
 	// Turn ON the game
 
-	SDL_DisplayMode displayMode;
-	SDL_GetCurrentDisplayMode(0, &displayMode);
-	mWindowH = displayMode.h;
-	mWindowW = displayMode.w;
+	// SDL_DisplayMode displayMode;
+	// SDL_GetCurrentDisplayMode(0, &displayMode);
+	// mWindowH = displayMode.h;
+	// mWindowW = displayMode.w;
 
-	fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
-			   "--- Display size --- H: {} x  w:{}\n\n",
-			   mWindowH,
-			   mWindowW);
+	// fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
+	// 		   "--- Display size --- H: {} x  w:{}\n\n",
+	// 		   mWindowH,
+	// 		   mWindowW);
 
 	mWindow = SDL_CreateWindow(
 		"SDL Pikuma",

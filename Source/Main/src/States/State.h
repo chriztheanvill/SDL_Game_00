@@ -4,13 +4,16 @@
 #include <SDL2/SDL.h>
 
 #include <memory>
+
+#include "../Core/Node.h"
+
 // #include "./GameStateManager.h"
 class GameStateManager;
 
-class State
+class State : public Node
 {
   public:
-	State(GameStateManager& gsm);
+	State(GameStateManager& gsm, const std::string& name = nullptr);
 	virtual ~State( );
 
 	// virtual State* Update(const float& deltaTime) = 0;
@@ -23,14 +26,14 @@ class State
 	virtual void EnterState( ) = 0;
 	virtual void ExitState( ) = 0;
 
-	inline bool GetIsRunning( ) const { return mIsRunning; }
-	void SetIsRunning(const bool& running) { mIsRunning = running; }
+	// inline bool GetIsRunning( ) const { return mIsRunning; }
+	// void SetIsRunning(const bool& running) { mIsRunning = running; }
 
   protected:
 	GameStateManager& GetGameStateManager( ) const { return mGameStateManager; }
 
   private:
-	bool mIsRunning;
+	// bool mIsRunning;
 	GameStateManager& mGameStateManager;
 };
 

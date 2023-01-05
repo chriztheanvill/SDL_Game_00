@@ -7,12 +7,19 @@
 #include <iostream>
 
 MenuState::MenuState(GameStateManager& gsm)
-	: State(gsm)
+	: State(gsm, "MenuState")
 {
-	std::cout << "\n ### MenuState::Constructor ### \n";
+	SetName("MenuStateNode");
+	std::cout << "\n\n ### MenuState::Constructor : " << GetName( )
+			  << " : ### \n";
 }
 
-MenuState::~MenuState( ) {}
+MenuState::~MenuState( )
+{
+	std::cout << "\n\n ### ~MenuState::Destructor : " << GetName( )
+			  << " : ### \n";
+	// NodeLogComplete( );
+}
 
 void MenuState::Load( )
 {

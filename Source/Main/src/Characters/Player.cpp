@@ -6,12 +6,13 @@
 Player::Player(Node* node, GameStateManager& gsm)
 	: mGameStateManager(gsm)
 	, mRigidBody(this)
-	, Node(node)
+	, Node(node, "Player")
 {
-	SetName("Player");
-
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::aqua),
 			   "\n--- Player::Constructor ---\n");
+
+	SetName("Player");
+
 	mPosition.SetVector(Vector2D::Zero( ));
 	// mPosition.SetVector({ 50, 10 });
 
@@ -23,15 +24,13 @@ Player::Player(Node* node, GameStateManager& gsm)
 
 Player::~Player( )
 {
-	std::cout << "\n~GameState::Player::Destructor";
-	// DeleteChildren( );
+	std::cout << "\n\n~GameState::Player::Destructor";
+	// NodeLogComplete( );
 }
 
 void Player::SetSprite(const std::string& name, const std::string& path)
 {
-	mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
-	// mPlayerTexture = mGameStateManager.TextureManagerGame( ).Load(name,
-	// path);
+	// mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
 }
 
 void Player::Update(const float& deltaTime)
@@ -52,16 +51,14 @@ void Player::Update(const float& deltaTime)
 
 void Player::Render( )
 {
-	SDL_SetRenderDrawColor(mGameStateManager.GetEngine( ).GetRender( ),
-						   255,
-						   255,
-						   255,
-						   255);
+	// SDL_SetRenderDrawColor(mGameStateManager.GetEngine( ).GetRender( ),
+	SDL_SetRenderDrawColor(&mGameStateManager.GetRender( ), 255, 255, 255, 255);
 
-	SDL_RenderFillRect(mGameStateManager.GetEngine( ).GetRender( ),
-					   &mCollision);
+	// SDL_RenderFillRect(mGameStateManager.GetEngine( ).GetRender( ),
+	SDL_RenderFillRect(&mGameStateManager.GetRender( ), &mCollision);
 
-	SDL_RenderCopy(mGameStateManager.GetEngine( ).GetRender( ),
+	// SDL_RenderCopy(mGameStateManager.GetEngine( ).GetRender( ),
+	SDL_RenderCopy(&mGameStateManager.GetRender( ),
 				   mPlayerTexture,
 				   nullptr,
 				   &mCollision);

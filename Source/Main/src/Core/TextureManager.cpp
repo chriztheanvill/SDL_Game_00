@@ -5,15 +5,28 @@
 #include <fmt/color.h>
 
 // -----------------------------------------------------------------------------------
-TextureManager::TextureManager(Engine& engine)
-	: mEngine(engine)
+// TextureManager::TextureManager(Engine& engine)
+// 	: mEngine(engine)
+TextureManager::TextureManager(Node* parent)
+	: Node(parent, "TextureManager")
 {
+	// Setting NODE
+	SetName("TextureManager");
+	// SetChild(&mPlayer);
+
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::azure),
-			   "\n--- TextureManager::Constructor Get a texture --- \n\n");
+			   "\n--- TextureManager::Constructor {}--- \n\n",
+			   GetName( ));
 }
 
 // -----------------------------------------------------------------------------------
-TextureManager::~TextureManager( ) {}
+TextureManager::~TextureManager( )
+{
+	std::cout << "\n\n~TextureManager::"
+				 "Destructor : "
+			  << GetName( ) << " : \n";
+	// NodeLogComplete( );
+}
 
 // -----------------------------------------------------------------------------------
 SDL_Texture* TextureManager::Load(const std::string& name,
@@ -52,8 +65,8 @@ SDL_Texture* TextureManager::Load(const std::string& name,
 		return nullptr;
 	}
 
-	SDL_Texture* tmpTexture =
-		SDL_CreateTextureFromSurface(mEngine.GetRender( ), tmpSurface);
+	SDL_Texture* tmpTexture = SDL_CreateTextureFromSurface(mRender, tmpSurface);
+	// SDL_CreateTextureFromSurface(mEngine.GetRender( ), tmpSurface);
 	// IMG_LoadTexture(mEngine.GetRender( ), name.c_str( ));
 	if (!tmpTexture)
 	{
@@ -68,8 +81,9 @@ SDL_Texture* TextureManager::Load(const std::string& name,
 	SDL_FreeSurface(tmpSurface);
 
 	fmt::print(fmt::emphasis::bold | fg(fmt::color::aqua),
-			   "--- TextureManager::Load Adding a new texture --- \nname: "
+			   "--- TextureManager::Load Adding a new texture {} --- \nname: "
 			   "{}\npath: {}",
+			   GetName( ),
 			   name,
 			   path);
 

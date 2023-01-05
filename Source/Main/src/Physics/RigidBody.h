@@ -7,8 +7,8 @@
 class RigidBody : public Node
 {
   public:
-	RigidBody(Node* parent)
-		: Node(parent)
+	RigidBody(Node* parent = nullptr)
+		: Node(parent, "RigidBody")
 	{
 		SetName("RigidBody::Player");
 	}

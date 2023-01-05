@@ -119,6 +119,24 @@
 				"close": true
 			}
 		},
+		{
+			"label": "Bash Compile Run D Valgrind",
+			"type": "shell",
+			"command": [
+				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/vs_Cmake_CDrValgrind ${workspaceFolder} ${command:cmake.getLaunchTargetPath} ; read  -n 1 ; exit ; exec bash '"
+			],
+			"args": [],
+			"group": "build",
+			"problemMatcher": [
+				"$gcc"
+			],
+			"presentation": {
+				"focus": true,
+				"panel": "shared",
+				"reveal": "silent",
+				"close": true
+			}
+		},
 		// {
 		// 	"label": "Bash Compile Run D",
 		// 	"type": "shell",
@@ -207,39 +225,39 @@
 				"reveal": "silent"
 			}
 		},
-		{
-			"label": "Bash New Class",
-			"type": "shell",
-			"command": [
-				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_s_h ${fileDirname} '"
-			],
-			"args": [],
-			"group": "build",
-			"problemMatcher": [
-				"$gcc"
-			],
-			"presentation": {
-				"focus": false,
-				"panel": "shared",
-				"reveal": "silent"
-			}
-		},
-		{
-			"label": "Bash New Class FileName",
-			"type": "shell",
-			"command": [
-				"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_File_Name ${fileDirname} ${fileBasenameNoExtension} ; '"
-			],
-			"args": [],
-			"group": "build",
-			"problemMatcher": [
-				"$gcc"
-			],
-			"presentation": {
-				"focus": false,
-				"panel": "shared",
-				"reveal": "silent"
-			}
-		},
+		// {
+		// 	"label": "Bash New Class",
+		// 	"type": "shell",
+		// 	"command": [
+		// 		"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_s_h ${fileDirname} '"
+		// 	],
+		// 	"args": [],
+		// 	"group": "build",
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"presentation": {
+		// 		"focus": false,
+		// 		"panel": "shared",
+		// 		"reveal": "silent"
+		// 	}
+		// },
+		// {
+		// 	"label": "Bash New Class FileName",
+		// 	"type": "shell",
+		// 	"command": [
+		// 		"kitty sh -c 'cd ${workspaceFolder} ; ${workspaceFolder}/SH_files_VS/New_Class_File_Name ${fileDirname} ${fileBasenameNoExtension} ; '"
+		// 	],
+		// 	"args": [],
+		// 	"group": "build",
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"presentation": {
+		// 		"focus": false,
+		// 		"panel": "shared",
+		// 		"reveal": "silent"
+		// 	}
+		// },
 	]
 }

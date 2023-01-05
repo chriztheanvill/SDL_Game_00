@@ -6,22 +6,30 @@
 #include <iostream>
 
 GameState::GameState(GameStateManager& gsm)
-	: State(gsm)
-	, mPlayer(this, gsm)
-	, Node(nullptr)
-// , mPlayer(nullptr, gsm)
+	: State(gsm, "GameState")
+	, mPlayer(std::make_unique<Player>(this, gsm))
+// , mPlayer(this, gsm)
+// , Node(nullptr, "GameState")
 {
 	// Setting NODE
 	SetName("GameState");
-	SetChild(&mPlayer);
+	// SetChild(&mPlayer);
 
 	// TextureManager
-	// GetGameStateManager( ).GetTextureManager( ) =
-	// 	TextureManager(GetGameStateManager( ).GetEngine( ));
+	// TextureManager tm;
+	// tm.SetName("TextureManager GameState");
+	// tm.SetRender(*GetGameStateManager( ).GetEngine( ).GetRender( ));
 
-	// TextureManager tm(GetGameStateManager( ).GetEngine( ));
+	// GetGameStateManager( ).GetTextureManager( ) = tm;
 
-	std::cout << "\n ### GameState::Constructor ### \n";
+	// tm = std::make_unique<TextureManager>( );
+	// // std::unique_ptr<TextureManager> tm = std::make_unique<TextureManager>(
+	// ); tm->SetName("TextureManager GameState");
+	// tm->SetRender(*GetGameStateManager( ).GetEngine( ).GetRender( ));
+	// GetGameStateManager( ).GetTextureManager( ) = *tm;
+
+	std::cout << "\n\n ### GameState::Constructor : " << GetName( )
+			  << " : ### \n";
 
 	Load( );
 }
@@ -29,18 +37,18 @@ GameState::GameState(GameStateManager& gsm)
 GameState::~GameState( )
 {
 	//
-	std::cout << "\n~GameState::Destructor";
-	// DeleteChildren( );
+	std::cout << "\n\n~GameState::Destructor : " << GetName( ) << " :";
+	// NodeLogComplete( );
 }
 
 void GameState::Load( )
 {
-	// GetGameStateManager( ).TextureManagerGame( ).Load(
-	GetGameStateManager( ).GetTextureManager( ).Load(
-		"test",
-		"assets/images/bkBlue.png");
+	// GetGameStateManager( ).GetTextureManager( ).Load(
+	// 	"test",
+	// 	"assets/images/bkBlue.png");
 
-	mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
+	// mPlayer->SetSprite("Vivian", "assets/images/Vivian.jpg");
+	// mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
 }
 
 // State* GameState::Update(const float& deltaTime)
@@ -49,7 +57,8 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 {
 	std::cout << "\nGameState::Update";
 
-	mPlayer.Update(deltaTime);
+	mPlayer->Update(deltaTime);
+	// mPlayer.Update(deltaTime);
 
 	// return this;
 	// if (GetGSM( ).GetMenuState( ))
@@ -60,12 +69,16 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 	return nullptr;
 }
 
-void GameState::Render( ) { mPlayer.Render( ); }
+void GameState::Render( )
+{
+	// mPlayer->Render( );
+	// mPlayer.Render( );
+}
 
 void GameState::Events(SDL_Event& event)
 {
 	std::cout << "\nGameState::Events";
-	mPlayer.Events(event);
+	// mPlayer.Events(event);
 }
 
 void GameState::EnterState( )

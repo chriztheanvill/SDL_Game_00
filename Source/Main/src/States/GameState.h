@@ -5,7 +5,9 @@
 
 #include "../Characters/Player.h"
 
-class GameState : public State, public Node
+class TextureManager;
+
+class GameState : public State
 {
   public:
 	GameState(GameStateManager& gsm);
@@ -22,7 +24,10 @@ class GameState : public State, public Node
 	void ExitState( ) override;
 
   private:
-	Player mPlayer;
+	std::unique_ptr<Player> mPlayer;
+	// Player mPlayer;
+	// TextureManager* mTextureManager;
+	std::unique_ptr<TextureManager> tm;
 };
 
 #endif	 // GAMESTATE_H

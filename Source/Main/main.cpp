@@ -38,6 +38,9 @@
 	# htop
 	# htop --filter=program_name
 		f10 = exit
+
+	Check address:
+	valgrind build/Debug/bin/sdl2_Game_00
 */
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])

@@ -17,55 +17,44 @@ class State;
 class GameStateManager
 {
   public:
-	GameStateManager(Engine& engine);
+	GameStateManager(SDL_Renderer& render);
+	// GameStateManager(Engine& engine);
 	~GameStateManager( );
 
 	void Update(const float& deltaTime);
 
-	// State* GetGameState( ) { return mGameState.get( ); }
-	// State* GetMenuState( ) const { return mMenuState.get( ); }
-	// State* GetGameState( );
-	// State& GetGameState( )
 	std::unique_ptr<State> GetGameState( );
 
-	// State& GetGameState( ) { return *mGameState; }
-	// State& GetMenuState( ) const { return *mMenuState; }
-
-	// TextureManager& TextureManagerSystem( ) { return mTextureManagerSystem; }
-	// TextureManager& TextureManagerMenu( ) { return mTextureManagerMenu; }
-	// TextureManager& TextureManagerGame( ) { return mTextureManagerGame; }
-	TextureManager& GetTextureManager( ) { return mTextureManager; }
+	TextureManager& GetTextureManager( ) { return *mTextureManager; }	//
+	// THIS
 
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
 	inline const bool& GetIsRunning( ) const { return mIsRunning; }
 
-	inline Engine& GetEngine( ) const { return mEngine; }
+	// Engine& GetEngine( ) const { return mEngine; }
+
+	SDL_Renderer& GetRender( ) const { return mRender; }
+	// SDL_Renderer& GetRender( ) const { return *mRender; }
 
   private:
+	SDL_Renderer& mRender;
+	// SDL_Renderer* mRender;
+	// Engine& mEngine;
 	bool mIsRunning { };
 
-	Engine& mEngine;
-	// TextureManager mTextureManagerSystem;
-	// TextureManager mTextureManagerMenu;
-	// TextureManager mTextureManagerGame;
-	TextureManager mTextureManager;
+	std::unique_ptr<TextureManager>
+		mTextureManager;   // --------------------- THIS
+	// TextureManager* mTextureManager;   // --------------------- THIS
 
 	std::unique_ptr<State> mGameState;
-	// std::unique_ptr<State> mGameState;
-	// std::unique_ptr<State> mMenuState;
-	// std::unique_ptr<State> mStartState;
 
 	State* mCurrent { };
 	State* mPrev { };
-	// std::unique_ptr<State> mCurrent;
-	// std::unique_ptr<State> mPrev;
 
 	void Load( );
 	void Events( );
 	void Render( );
 	void SetState(State* state);
-	// void SetState(std::unique_ptr<State> state);
-	// void SetState(std::unique_ptr<State>& state);
 };
 
 /*

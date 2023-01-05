@@ -3,7 +3,7 @@
 
 #include "./State.h"
 
-class TextureManager;
+// class TextureManager;
 
 class MenuState : public State
 {
