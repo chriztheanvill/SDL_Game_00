@@ -25,7 +25,12 @@ class GameStateManager
 
 	std::unique_ptr<State> GetGameState( );
 
-	TextureManager& GetTextureManager( ) { return *mTextureManager; }	//
+	std::unique_ptr<TextureManager>& GetTextureManager( )
+	{
+		return mTextureManager;
+		// return *mTextureManager;
+	}	//
+	// TextureManager& GetTextureManager( ) { return *mTextureManager; }	//
 	// THIS
 
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
@@ -48,13 +53,17 @@ class GameStateManager
 
 	std::unique_ptr<State> mGameState;
 
-	State* mCurrent { };
-	State* mPrev { };
+	std::unique_ptr<State> mCurrent { };
+	std::unique_ptr<State> mPrev { };
+
+	// State* mCurrent { };
+	// State* mPrev { };
 
 	void Load( );
 	void Events( );
 	void Render( );
-	void SetState(State* state);
+	void SetState(std::unique_ptr<State>& state);
+	// void SetState(State* state);
 };
 
 /*

@@ -27,8 +27,8 @@ GameStateManager::~GameStateManager( )
 {
 	if (mCurrent) mCurrent->ExitState( );
 
-	delete mCurrent;
-	delete mPrev;
+	// delete mCurrent;
+	// delete mPrev;
 	// delete mTextureManager;
 	mCurrent = nullptr;
 	mPrev = nullptr;
@@ -38,24 +38,17 @@ GameStateManager::~GameStateManager( )
 
 void GameStateManager::Load( )
 {
-	// if (!mRender)
-	// {
-	// 	std::cout << "\n\nGameStateManager::Load No Render!!! \n";
-	// 	return;
-	// }
 	mGameState = std::make_unique<MenuState>(*this);
 	mGameState->SetName("MenuState");
-	// mTextureManager.SetRender(*mEngine.GetRender( ));
 	// mTextureManager.SetParent(mGameState.get( ));
-	// mTextureManager->SetName("Texture Manager MenuState");
-	// mTextureManager->SetRender(*mEngine.GetRender( ));
-	// mTextureManager->SetParent(mGameState.get( ));
-
-	// mTextureManagerSystem.Load("");	  // ERROR: Assert
+	mTextureManager->SetName("Texture Manager MenuState");
+	mTextureManager->SetRender(mRender);
+	mTextureManager->SetParent(mGameState.get( ));
 
 	mIsRunning = true;
 
-	if (mGameState) SetState(mGameState.release( ));   // Unique
+	if (mGameState) { SetState(mGameState); }	// Unique
+	// if (mGameState) SetState(mGameState.release( ));   // Unique
 	// if (mGameState) SetState(mGameState.get( ));   // Unique
 	else
 	{
@@ -71,7 +64,6 @@ std::unique_ptr<State> GameStateManager::GetGameState( )
 	// return new GameState(*this);
 	// return std::unique_ptr<GameState>(this);
 	std::unique_ptr<GameState> tmp = std::make_unique<GameState>(*this);
-	// tmp->SetParent(*this);
 	return tmp;
 	// return std::make_unique<GameState>(*this);
 }
@@ -102,8 +94,8 @@ void GameStateManager::Update(const float& deltaTime)
 			std::cout
 				<< "\n+++ GameStateManager::Update Updating +++ tmp: "	 //
 				<< tmp << " - " << tmp->GetName( ) << "\n";
-			// SetState(tmp);
-			SetState(tmp.release( ));
+			SetState(tmp);
+			// SetState(tmp.release( ));
 			// SetState(tmp.get( ));
 		}
 	}
@@ -160,8 +152,8 @@ void GameStateManager::Events( )
 	//
 }
 
-void GameStateManager::SetState(State* state)
-// void GameStateManager::SetState(std::unique_ptr<State>& state)
+// void GameStateManager::SetState(State* state)
+void GameStateManager::SetState(std::unique_ptr<State>& state)
 // void GameStateManager::SetState(std::unique_ptr<State> state)
 // void GameStateManager::SetState(std::shared_ptr<State>& state)
 {

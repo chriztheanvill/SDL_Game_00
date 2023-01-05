@@ -22,11 +22,13 @@ GameState::GameState(GameStateManager& gsm)
 
 	// GetGameStateManager( ).GetTextureManager( ) = tm;
 
-	// tm = std::make_unique<TextureManager>( );
-	// // std::unique_ptr<TextureManager> tm = std::make_unique<TextureManager>(
-	// ); tm->SetName("TextureManager GameState");
-	// tm->SetRender(*GetGameStateManager( ).GetEngine( ).GetRender( ));
-	// GetGameStateManager( ).GetTextureManager( ) = *tm;
+	tm = std::make_unique<TextureManager>( );
+	// std::unique_ptr<TextureManager> tm = std::make_unique<TextureManager>( );
+	tm->SetName("TextureManager GameState");
+	tm->SetRender(GetGameStateManager( ).GetRender( ));
+	// GetGameStateManager( ).GetTextureManager( ) = tm.get( );
+	GetGameStateManager( ).GetTextureManager( ) = std::move(tm);
+	// GetGameStateManager( ).GetTextureManager( ) = tm.release( );
 
 	std::cout << "\n\n ### GameState::Constructor : " << GetName( )
 			  << " : ### \n";
@@ -44,10 +46,11 @@ GameState::~GameState( )
 void GameState::Load( )
 {
 	// GetGameStateManager( ).GetTextureManager( ).Load(
-	// 	"test",
-	// 	"assets/images/bkBlue.png");
+	GetGameStateManager( ).GetTextureManager( )->Load(
+		"test",
+		"assets/images/bkBlue.png");
 
-	// mPlayer->SetSprite("Vivian", "assets/images/Vivian.jpg");
+	mPlayer->SetSprite("Vivian", "assets/images/Vivian.jpg");
 	// mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
 }
 
@@ -71,7 +74,7 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 
 void GameState::Render( )
 {
-	// mPlayer->Render( );
+	mPlayer->Render( );
 	// mPlayer.Render( );
 }
 
