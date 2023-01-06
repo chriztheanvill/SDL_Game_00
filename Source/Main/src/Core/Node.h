@@ -13,9 +13,9 @@ class Node
 		: mParent(parent)
 		, mName(name)
 	{
-		std::cout << "\n\n  ******** Constructor : " << mName;
+		std::cout << "\n\n  ******** Node Constructor : " << mName;
 		if (!parent) return;
-		std::cout << "\n  ***** mParent : " << mParent->mName;
+		std::cout << "\n  ***** Node mParent : " << mParent->mName;
 		parent->AddChild(this);
 	}
 

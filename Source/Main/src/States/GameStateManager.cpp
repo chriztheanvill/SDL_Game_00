@@ -32,7 +32,7 @@ GameStateManager::~GameStateManager( )
 	// delete mTextureManager;
 	mCurrent = nullptr;
 	mPrev = nullptr;
-	// mTextureManager = nullptr;
+	mTextureManager = nullptr;
 	std::cout << "\n\n--- ~GameStateManager \n";
 }
 

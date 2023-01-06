@@ -26,8 +26,6 @@ class GameState : public State
   private:
 	std::unique_ptr<Player> mPlayer;
 	// Player mPlayer;
-	// TextureManager* mTextureManager;
-	std::unique_ptr<TextureManager> tm;
 };
 
 #endif	 // GAMESTATE_H
