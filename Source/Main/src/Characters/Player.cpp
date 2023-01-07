@@ -30,8 +30,9 @@ Player::~Player( )
 
 void Player::SetSprite(const std::string& name, const std::string& path)
 {
-	mPlayerTexture = mGameStateManager.GetTextureManager( )->Load(name, path);
-	// mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
+	// mPlayerTexture = mGameStateManager.GetTextureManager( )->Load(name,
+	// path);
+	mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
 }
 
 void Player::Update(const float& deltaTime)

@@ -15,19 +15,23 @@ GameState::GameState(GameStateManager& gsm)
 	SetName("GameState");
 	// SetChild(&mPlayer);
 
-	TextureManager tm(this);
-	tm.SetName("TextureManager GameState Simple");
-	tm.SetRender(GetGameStateManager( ).GetRender( ));
-	*GetGameStateManager( ).GetTextureManager( ) =
-		static_cast<TextureManager&&>(tm);
-	// *GetGameStateManager( ).GetTextureManager( ) = tm;
+	// TextureManager tm(this);
+	// tm.SetName("TextureManager GameState Simple");
+	// tm.SetRender(GetGameStateManager( ).GetRender( ));
+	// GetGameStateManager( ).GetTextureManager( ) = tm;
 
-	// std::unique_ptr<TextureManager> tm = std::make_unique<TextureManager>( );
+	// *GetGameStateManager( ).GetTextureManager( ) =
+	// 	static_cast<TextureManager&&>(tm);	 // unique_ptr
+
 	//
-	// tm = std::make_unique<TextureManager>(this);
-	// tm->SetName("TextureManager GameState");
-	// tm->SetRender(GetGameStateManager( ).GetRender( ));
-	// GetGameStateManager( ).GetTextureManager( ) = std::move(tm);
+	// std::unique_ptr<TextureManager> tm =
+	// std::make_unique<TextureManager>(this);
+	TextureManager* tm = new TextureManager(this);
+
+	tm->SetName("TextureManager GameState Unique_ptr");
+	tm->SetRender(GetGameStateManager( ).GetRender( ));
+	GetGameStateManager( ).GetTextureManager( ) = *tm;
+	// GetGameStateManager( ).GetTextureManager( ) = *tm.release( ); // Unique
 
 	std::cout << "\n\n ### GameState::Constructor : " << GetName( )
 			  << " : ### \n";
@@ -44,8 +48,8 @@ GameState::~GameState( )
 
 void GameState::Load( )
 {
-	// GetGameStateManager( ).GetTextureManager( ).Load(
-	GetGameStateManager( ).GetTextureManager( )->Load(
+	// GetGameStateManager( ).GetTextureManager( )->Load(
+	GetGameStateManager( ).GetTextureManager( ).Load(
 		"test",
 		"assets/images/bkBlue.png");
 
