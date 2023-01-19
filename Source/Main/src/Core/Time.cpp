@@ -9,21 +9,9 @@ namespace Cris
 	Time::Time( ) { Tick( ); }
 	void Time::Tick( )
 	{
-		// // New way
-		// while (!SDL_TICKS_PASSED(SDL_GetTicks( ), mLastTime + TARGET_FPS))
-		// 	;
-
-		// mLastTime = SDL_GetTicks( );
-
-		// ======================================================
-		// // Old way
-
 		// De esta manera: Limita (forza) a usar los FPS seleccionados
-		// int timeToWait =
-		// 	static_cast<int>(TARGET_FPS - (SDL_GetTicks( ) - mLastTime));
 		timeToWait =
 			static_cast<int>(TARGET_FPS - (SDL_GetTicks( ) - mLastTime));
-
 		// fmt::print("\n\ntimeToWait: {}\n", timeToWait);
 
 		if (timeToWait > 0 && timeToWait <= TARGET_FPS)
@@ -32,9 +20,9 @@ namespace Cris
 			SDL_Delay(timeToWait);
 		}
 
-		// mDeltaTime = (SDL_GetTicks( ) - mLastTime);
+		// Formula de Delta time:
+		// DeltaTime = Velocidad * Tiempo
 		mDeltaTime = (SDL_GetTicks( ) - mLastTime) / SECONDS;
-		// fmt::print("SDL_GetTicks: {}\n", SDL_GetTicks( ));
 		// fmt::print("deltaTime: {}\n", mDeltaTime);
 
 		// Debug

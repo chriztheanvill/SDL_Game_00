@@ -20,7 +20,7 @@ namespace Cris
 	  private:
 		const float SECONDS = 1000.0F;
 
-		int timeToWait;	  // 0.033
+		int timeToWait;
 		float mLastTime { };
 		float mFPS = 30;
 		float mFPSLimit = 1.0F;
