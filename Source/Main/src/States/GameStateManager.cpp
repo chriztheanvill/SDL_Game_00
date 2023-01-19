@@ -66,7 +66,8 @@ TextureManager& GameStateManager::GetTextureManager( )
 
 void GameStateManager::Update(const float& deltaTime)
 {
-	// std::cout << "\nDeltaTime: " << deltaTime;
+	std::cout << "\n=======================================DeltaTime: "
+			  << deltaTime;
 
 	if (mCurrent && mIsRunning)
 	{

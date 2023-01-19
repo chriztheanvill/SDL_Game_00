@@ -9,8 +9,19 @@ namespace Cris
 	Time::Time( ) { Tick( ); }
 	void Time::Tick( )
 	{
+		// // New way
+		// while (!SDL_TICKS_PASSED(SDL_GetTicks( ), mLastTime + TARGET_FPS))
+		// 	;
+
+		// mLastTime = SDL_GetTicks( );
+
+		// ======================================================
+		// // Old way
+
 		// De esta manera: Limita (forza) a usar los FPS seleccionados
-		int timeToWait =
+		// int timeToWait =
+		// 	static_cast<int>(TARGET_FPS - (SDL_GetTicks( ) - mLastTime));
+		timeToWait =
 			static_cast<int>(TARGET_FPS - (SDL_GetTicks( ) - mLastTime));
 
 		// fmt::print("\n\ntimeToWait: {}\n", timeToWait);
