@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author Cristian Nieto (chriztheanvill@gmail.com)
- * @brief A 2D Game Engine, made in C++
+ * @brief A 2D Game Engine, made in C++ Test
  * @date 2022-14-12
  *
  * @copyright Copyright (c) 2021
