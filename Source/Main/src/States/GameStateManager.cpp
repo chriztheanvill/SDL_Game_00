@@ -82,7 +82,7 @@ void GameStateManager::Update(const float& deltaTime)
 		{
 			std::cout
 				<< "\n+++ GameStateManager::Update Updating +++ tmp: "	 //
-				<< tmp << " - " << tmp->GetName( ) << "\n";
+				<< &tmp << " - " << tmp->GetName( ) << "\n";
 			SetState(tmp);
 		}
 	}
@@ -152,13 +152,14 @@ void GameStateManager::SetState(std::unique_ptr<State>& state)
 
 	if (mPrev)
 	{
-		std::cout << "\nmPrev: " << mPrev << " - " << mPrev->GetName( ) << "\n";
+		std::cout << "\nmPrev: " << &mPrev << " - " << mPrev->GetName( )
+				  << "\n";
 		mPrev->ExitState( );
 	}
 	if (mCurrent)
 	{
-		std::cout << "\nmCurrent: " << mCurrent << " - " << mCurrent->GetName( )
-				  << "\n";
+		std::cout << "\nmCurrent: " << &mCurrent << " - "
+				  << mCurrent->GetName( ) << "\n";
 		mCurrent->EnterState( );
 	}
 }

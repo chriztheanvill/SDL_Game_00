@@ -18,7 +18,7 @@
 
 # # Main CMAKE file
 # # CMAKE version minimun required 3.16.3
-cmake_minimum_required(VERSION 3.22.0)
+cmake_minimum_required(VERSION 3.25.1)
 
 # cmake_minimum_required(VERSION 3.19.2)
 
@@ -175,9 +175,8 @@ endif()
 # set(CMAKE_CXX_STANDARD 11)
 # set(CMAKE_CXX_STANDARD 14)
 # set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD 20)
-
-# set(CMAKE_CXX_STANDARD 23)
+# set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 # # Debug flags.
 set(CMAKE_BUILD_TYPE Debug)
@@ -273,10 +272,10 @@ target_compile_features(
 	# C++17 ENABLED
 	# cxx_std_17
 	# C++20 ENABLED
-	cxx_std_20
+	# cxx_std_20
 
 	# C++23 ENABLED
-	# cxx_std_23
+	cxx_std_23
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)

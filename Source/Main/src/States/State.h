@@ -13,7 +13,7 @@ class GameStateManager;
 class State : public Node
 {
   public:
-	State(GameStateManager& gsm, const std::string& name = nullptr);
+	State(GameStateManager& gsm, const std::string& name = "");
 	virtual ~State( );
 
 	// virtual State* Update(const float& deltaTime) = 0;
