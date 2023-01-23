@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @author Cristian Nieto (chriztheanvill@gmail.com)
- * @brief A 2D Game Engine, made in C++ in Fedora
+ * @brief A 2D Game Engine, made in C++
  * @date 2022-14-12
  *
  * @copyright Copyright (c) 2021
