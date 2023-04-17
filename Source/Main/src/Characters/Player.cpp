@@ -1,96 +1,106 @@
 #include "Player.h"
-#include <fmt/color.h>
-#include "../States/GameStateManager.h"
-#include "../Core/Engine.h"
+#include "../Core/TextureManager.h"
 
-Player::Player(Node* node, GameStateManager& gsm)
-	: mGameStateManager(gsm)
-	, mRigidBody(this)
-	, Node(node, "Player")
+Player::Player(Node* node, TextureManager& tm)
+	: Character(node, "Player")
 {
-	fmt::print(fmt::emphasis::bold | fg(fmt::color::aqua),
-			   "\n--- Player::Constructor ---\n");
+	Logger::Debug(LogType::Log,
+				  "--- GameState::Character::Player::Constructor ---");
 
 	SetName("Player");
 
-	mPosition.SetVector(Vector2D::Zero( ));
+	Position( ).SetVector(Vector2D::Zero( ));
 	// mPosition.SetVector({ 50, 10 });
 
-	mCollision = { static_cast<int>(mPosition.GetX( )),
-				   static_cast<int>(mPosition.GetX( )),
-				   20,
-				   20 };
+	Collision( ) = { static_cast<int>(Position( ).GetX( )),
+					 static_cast<int>(Position( ).GetY( )),
+					 20,
+					 20 };
+
+	Size( ) = { static_cast<int>(GetSprite( ).GetSrc( ).x),
+				static_cast<int>(GetSprite( ).GetSrc( ).y),
+				0,
+				0 };
+
+	GetSprite( ).SetRenderer(tm.GetRender( ));
+	GetSprite( ).SetTexture(tm.Load("Vivian", "assets/images/Vivian.jpg"));
+	GetSprite( ).SetSrc({ 0, 0, 0, 0 });
+	GetSprite( ).SetDst({ 0, 0, 100, 500 });
+	// GetSprite( ).SetRenderer(tm->GetRender( ));
+	// GetSprite( ).SetTexture(tm->Load("Vivian", "assets/images/Vivian.jpg"));
 }
 
 Player::~Player( )
 {
-	std::cout << "\n\n~GameState::Player::Destructor";
+	Logger::Debug(LogType::Log, "~GameState::Character::Player::Destructor");
 	// NodeLogComplete( );
 }
 
-void Player::SetSprite(const std::string& name, const std::string& path)
+/*
+#######################################################################################
+#######################################################################################
+#######################################################################################
+#######################################################################################
+*/
+
+void Player::SetSprite(SDL_Texture* texture)
 {
-	// mPlayerTexture = mGameStateManager.GetTextureManager( )->Load(name,
-	// path);
-	mPlayerTexture = mGameStateManager.GetTextureManager( ).Load(name, path);
+	GetSprite( ).SetTexture(texture);
 }
 
 void Player::Update(const float& deltaTime)
 {
-	mRigidBody.Update(deltaTime);
-	// mPosition.Transform(mRigidBody.Pos( ));
-	mPosition.Transform(mRigidBody.Velocity( ));
+	GetRigidBody( ).Update(deltaTime);
+	Position( ).Transform(GetRigidBody( ).Velocity( ));
 
-	fmt::print("\nPlayer::mPlayer x: {}, y: {}",
-			   Position( ).GetX( ),
-			   Position( ).GetY( ));
+	Logger::Debug(LogType::Debug,
+				  "Player::mPlayer:",
+				  " x: "sv,
+				  Position( ).GetX( ),
+				  " - y: "sv,
+				  Position( ).GetY( ));
 
-	mCollision = SDL_Rect { static_cast<int>(mPosition.GetX( )),
-							static_cast<int>(mPosition.GetY( )),
-							100,
-							150 };
+	Collision( ) = SDL_Rect { static_cast<int>(Position( ).GetX( )),
+							  static_cast<int>(Position( ).GetY( )),
+							  100,
+							  150 };
 }
 
 void Player::Render( )
 {
 	// SDL_SetRenderDrawColor(mGameStateManager.GetEngine( ).GetRender( ),
-	SDL_SetRenderDrawColor(&mGameStateManager.GetRender( ), 255, 255, 255, 255);
-
-	// SDL_RenderFillRect(mGameStateManager.GetEngine( ).GetRender( ),
-	SDL_RenderFillRect(&mGameStateManager.GetRender( ), &mCollision);
-
-	// SDL_RenderCopy(mGameStateManager.GetEngine( ).GetRender( ),
-	SDL_RenderCopy(&mGameStateManager.GetRender( ),
-				   mPlayerTexture,
-				   nullptr,
-				   &mCollision);
+	GetSprite( ).Render( );
 }
 
 void Player::Events(SDL_Event& event)
 {
-	std::cout << "\nGameState::Events::Player";
+	Logger::Debug(LogType::Debug, "GameState::Events::Player");
 	switch (event.type)
 	{
 		// case SDL_PRESSED:
 		case SDL_KEYDOWN:
 			if (event.key.keysym.sym == SDLK_d)
 			{
-				std::cout << "\nGameState::Events::Player::Input::KeyDown::d";
-				mRigidBody.ApplyForceX(50);
+				Logger::Debug(LogType::Log,
+							  "GameState::Events::Player::Input::KeyDown::d");
+				GetRigidBody( ).ApplyForceX(50);
 			}
 			else if (event.key.keysym.sym == SDLK_a)
 			{
-				std::cout << "\nGameState::Events::Player::Input::KeyDown::a";
-				mRigidBody.ApplyForceX(-50);
+				Logger::Debug(LogType::Log,
+							  "GameState::Events::Player::Input::KeyDown::a");
+				GetRigidBody( ).ApplyForceX(-50);
 			}
 			break;
+
 		case SDL_KEYUP:
 			if (event.key.keysym.sym == SDLK_d ||
 				event.key.keysym.sym == SDLK_a)
 			{
-				std::cout
-					<< "\n++++++++++++++++GameState::Events::Player::UnsetX";
-				mRigidBody.UnsetForceX( );
+				Logger::Debug(
+					LogType::Log,
+					"++++++++++++++++GameState::Events::Player::UnsetX");
+				GetRigidBody( ).UnsetForceX( );
 			}
 			break;
 

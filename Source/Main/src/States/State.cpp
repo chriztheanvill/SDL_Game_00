@@ -1,17 +1,26 @@
 #include "State.h"
-#include "./GameStateManager.h"
+#include "../Core/TextureManager.h"
 
-State::State(GameStateManager& gsm, const std::string& name)
-	: mGameStateManager(gsm)
-	, Node(nullptr, name)
+// State::State(GameStateManager& gsm, const std::string& name)
+State::State(std::string_view name, GameStateManager& gsm, TextureManager& tm)
+	: Node(nullptr, name)
+	, mGameStateManager(gsm)
+	, mTextureManager(tm)
 {
-	std::cout << "\n\n ### State::Destructor : " << GetName( ) << " : ###";
+	Logger::Debug(LogType::Log, "### State::Constructor :", GetName( ));
 }
+
 State::~State( )
 {
-	//
-	std::cout << "\n\n ### ~State::Destructor : " << GetName( ) << " : ###";
+	Logger::Debug(LogType::Log, "### ~State::Destructor :", GetName( ));
 }
+
+/*
+#######################################################################################
+#######################################################################################
+#######################################################################################
+#######################################################################################
+*/
 
 // State* State::Update(const float& deltaTime) { return nullptr; }
 std::unique_ptr<State> State::Update(const float& deltaTime) { return nullptr; }
@@ -19,8 +28,19 @@ std::unique_ptr<State> State::Update(const float& deltaTime) { return nullptr; }
 // nullptr; }
 
 void State::Render( ) {}
-void State::Load( ) {}
+void State::Load( ) { Logger::Debug(LogType::Debug, "### State::Load :"); }
 void State::Events(SDL_Event& event) {}
 
-void State::EnterState( ) {}
+void State::SetTextureManager(TextureManager& tm, std::string_view name)
+{
+	mTextureManager = tm;
+	mTextureManager.SetName(name);
+}
+
+void State::NewTextureManager(TextureManager* tm)
+{
+	mTextureManager = new TextureManager( );
+}
+
+void State::EnterState( ) { Load( ); }
 void State::ExitState( ) {}

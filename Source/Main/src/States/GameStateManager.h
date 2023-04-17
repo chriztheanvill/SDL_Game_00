@@ -1,8 +1,6 @@
 #ifndef GAMESTATEMANAGER_H
 #define GAMESTATEMANAGER_H
 
-#include <memory>
-
 // #include "../States/State.h"
 // class State;
 // class GameState;
@@ -11,49 +9,38 @@
 
 #include "../Core/TextureManager.h"
 
-class Engine;
 class State;
 
 class GameStateManager
 {
   public:
-	GameStateManager(SDL_Renderer& render);
-	// GameStateManager(Engine& engine);
+	GameStateManager( );
 	~GameStateManager( );
 
 	void Update(const float& deltaTime);
 
-	std::unique_ptr<State> GetGameState( );
+	std::unique_ptr<State> NewGameState( );
 
-	// std::unique_ptr<TextureManager>& GetTextureManager( )
-	// {
-	// 	return mTextureManager;
-	// }
-
-	TextureManager& GetTextureManager( );
-	// TextureManager& GetTextureManager( ) { return *mTextureManager; }
+	void SetTextureManagerRenderer(SDL_Renderer* render)
+	{
+		mTextureManager.SetRender(*render);
+	}
+	TextureManager& GetTextureManager( ) { return mTextureManager; }
 
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
 	inline const bool& GetIsRunning( ) const { return mIsRunning; }
 
-	// Engine& GetEngine( ) const { return mEngine; }
-
-	SDL_Renderer& GetRender( ) const { return mRender; }
-	// SDL_Renderer& GetRender( ) const { return *mRender; }
+	void Load( );
 
   private:
-	SDL_Renderer& mRender;
-	// SDL_Renderer* mRender;
-	// Engine& mEngine;
 	bool mIsRunning { };
 
-	std::unique_ptr<TextureManager> mTextureManager;
+	TextureManager mTextureManager;
 
 	std::unique_ptr<State> mGameState;
 	std::unique_ptr<State> mCurrent { };
 	std::unique_ptr<State> mPrev { };
 
-	void Load( );
 	void Events( );
 	void Render( );
 	void SetState(std::unique_ptr<State>& state);

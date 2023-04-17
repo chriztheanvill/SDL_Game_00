@@ -28,14 +28,10 @@ target_link_libraries(
 	# # Options
 	# project_options
 	# project_warnings
-	# # Conan
-	CONAN_PKG::docopt.cpp
-	CONAN_PKG::fmt
-	CONAN_PKG::spdlog
-
-	# CONAN_PKG::glew # OpenGL
-	# CONAN_PKG::glad # OpenGL
-	CONAN_PKG::nlohmann_json
+	Catch2::Catch2
+	fmt::fmt
+	range-v3::range-v3
+	nlohmann_json::nlohmann_json
 
 	# CONAN_PKG::imgui-sfml
 	# CONAN_PKG::sdl2
@@ -43,6 +39,18 @@ target_link_libraries(
 
 	# Component
 	# Engine
+
+	# ####################################
+	# # Conan v1
+	# CONAN_PKG::docopt.cpp
+	# CONAN_PKG::fmt
+	# CONAN_PKG::spdlog
+	# CONAN_PKG::range-v3
+
+	# CONAN_PKG::glew # OpenGL
+	# CONAN_PKG::glad # OpenGL
+	# CONAN_PKG::nlohmann_json
+	#
 )
 
 # ## Add LINKS

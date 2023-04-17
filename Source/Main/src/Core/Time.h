@@ -26,6 +26,8 @@ namespace Cris
 		float mFPSLimit = 1.0F;
 		float TARGET_FPS = SECONDS / mFPS;
 
+		// Amount of time elapsed since last frame
+		// Note: How many pixels changed per second, Not per frame
 		float mDeltaTime { };
 		float mLastUpdate { };
 		float mCurrentUpdate { };

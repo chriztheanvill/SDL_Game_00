@@ -1,16 +1,15 @@
 #!/bin/bash
 
 ## Assing Vars
-workspaceFolder=$1
-program=$2
+program=$programName
 
 echo -e "\e[1m--------- ------------------------------ ---------"
-echo -e "--------- Build | Run | Terminal | Cmake | Debug ---------"
+echo -e "--------- Build | Run | Terminal | Cmake ---------"
 echo -e "--------- ------------------------------ ---------";
 echo -e "\e[100m \e[1m"
 echo -e "WorkSpace Directory: \e[0m"
 # echo $1	## Bash/File/Program input
-echo $workspaceFolder	## Bash/File/Program input
+pwd	## Bash/File/Program input
 echo -e "\e[100m \e[1m"
 echo -e "Program Directory: \e[0m"
 # echo $2	## Bash/File/Program input
@@ -26,28 +25,19 @@ echo
 ##
 ### Compile
 echo -e "\e[1m\e[100m####### ####### ####### ####### ####### ####### #######" ; 
-echo "####### ####### ####### Compile Debug ####### ####### #######" ; 
+echo "####### ####### ####### Compile ####### ####### #######" ; 
 echo "####### ####### ####### ####### ####### ####### #######" ; 
 echo -e "\e[0m"
 echo ;
-# konsole -e /bin/bash -c "cmake --build $workspaceFolder/build --config Debug --target all -- -j 2 ; 
-# 	echo $?;
-# 	read  -n 1; 
-# 	exit; 
-# 	exec bash;";
-
-# time konsole -e  /bin/bash -c "$workspaceFolder/SH_files_VS/Cmake_Compile_D $workspaceFolder ";
-
-# gnome-terminal -- $workspaceFolder/SH_files_VS/Cmake_Compile_D $workspaceFolder
-
-# terminator -e " /bin/bash -c \"$workspaceFolder/SH_files_VS/Cmake_Compile_D $workspaceFolder \" " &
 
 
-# program_rr=$(konsole -e /bin/bash -c "$workspaceFolder/SH_files/Cmake_Compile $workspaceFolder");
+# cmake --build ./build --config Debug --target all -- -j `nproc` ;
 
-# cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j 1 ;
-cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j `nproc` ;
+time konsole --workdir . -e /bin/bash -c "./SH_files/sh_Cmake_Compile .";
 
+# konsole --workdir . -e /bin/bash -c "cmake --build build --config Debug --target all -- -j `nproc`; read -n 1; exit;  exec bash;"
+
+# cmake --build $workspaceFolder/build --config Debug --target all -- -j 2 
 
 ##
 ### Run
@@ -63,8 +53,11 @@ echo -e "\e[1m\e[100m|||||| |||||| |||||| ||||||| |||||| |||||| ||||||" ;
 echo "|||||| |||||| |||||| ||||||| |||||| |||||| ||||||" ; 
 echo -e "\e[0m"
 echo ;
+echo ;
+
 ##
 ###
+echo ; 
 echo ; 
 echo -e "\e[1m***** ***** ***** ****** ***** ***** *****" ; 
 echo "***** ***** ***** Finish ***** ***** *****" ; 

@@ -18,12 +18,10 @@
 
 # # Main CMAKE file
 # # CMAKE version minimun required 3.16.3
-cmake_minimum_required(VERSION 3.25.1)
-
-# cmake_minimum_required(VERSION 3.19.2)
+cmake_minimum_required(VERSION 3.25.0)
 
 # # Name System proyect ##
-project(sdl2_Game_00 VERSION 1.0.0 LANGUAGES C CXX)
+project(SDL_Game_00 VERSION 1.0.0 LANGUAGES C CXX)
 
 add_compile_options(
 
@@ -83,30 +81,27 @@ enable_doxygen()
 # allow for static analysis options
 include(My_Cmake/Static_Analyzers.cmake)
 
-# Enable Boost
-include(My_Cmake/Boost.cmake)
+# ###############################################################
+# Enable Boost (Please NO)
+# include(My_Cmake/Boost.cmake)
 
+# ###############################################################
 # Enable MyLibs
 include(My_Cmake/MyLibs.cmake)
 
-# Set up some extra Conan dependencies based on our needs
-# before loading Conan
-set(CONAN_EXTRA_REQUIRES "")
-set(CONAN_EXTRA_OPTIONS "")
+# ###############################################################
+# # Conan config (Old)
+# include(My_Cmake/Conan_v1.cmake)
+# run_conan()
+# ###############################################################
+# # Conan config (New)
+include(My_Cmake/Conan_v2.cmake)
 
-# if(CPP_STARTER_USE_IMGUI)
-# set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
-# imgui-sfml/2.1@bincrafters/stable)
+# ###############################################################
+# # vcpkg
+# include(My_Cmake/Vcpkg_Find.cmake)
 
-# set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sfml:shared=False
-# sfml:graphics=True sfml:audio=False sfml:window=True
-# libalsa:disable_python=True)
-# endif()
-
-# # Conan config
-include(My_Cmake/Conan.cmake)
-run_conan()
-
+# ###############################################################
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" ON)
 
@@ -147,7 +142,7 @@ if(ENABLE_PCH)
 		<glm/glm.hpp>
 
 		# Boost
-		<boost/format.hpp>
+		# <boost/format.hpp>
 
 		# <boost/filesystem
 	)
@@ -175,8 +170,9 @@ endif()
 # set(CMAKE_CXX_STANDARD 11)
 # set(CMAKE_CXX_STANDARD 14)
 # set(CMAKE_CXX_STANDARD 17)
-# set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
+
+# set(CMAKE_CXX_STANDARD 23)
 
 # # Debug flags.
 set(CMAKE_BUILD_TYPE Debug)
@@ -230,20 +226,24 @@ target_link_libraries(
 	${LUA_LIBRARY}
 	${THREAD_LIBRARIES}
 	${OPENGL_VIDEO_LIBRARIES}
-	${Boost_LIBRARIES}
+
+	# ${Boost_LIBRARIES}
 )
 
-# ###################################################
+# ###############################################################
 
 # message(STATUS "\n -- CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}")
 # message(STATUS "\n -- CMAKE_CURRENT_LIST_DIR ${CMAKE_CURRENT_LIST_DIR}")
-add_custom_target(
-	copy-compile-commands ALL
-	${CMAKE_COMMAND} -E copy
-	${CMAKE_BINARY_DIR}/compile_commands.json
-	${CMAKE_CURRENT_LIST_DIR}
-)
 
+# # <==================================== The Original
+# add_custom_target(
+# copy-compile-commands ALL
+# ${CMAKE_COMMAND} -E copy
+# ${CMAKE_BINARY_DIR}/compile_commands.json
+# ${CMAKE_CURRENT_LIST_DIR}
+# )
+
+# # Only when are changes
 # add_custom_target(
 # copy-compile-commands ALL
 # ${CMAKE_COMMAND} -E copy_if_different
@@ -256,11 +256,11 @@ add_custom_target(
 # DESTINATION
 # ${CMAKE_CURRENT_LIST_DIR})
 
-# ###################################################
+# ###############################################################
 message(STATUS "\n -- MY -- CMake C FLAGS ${CMAKE_C_FLAGS}")
 message(STATUS " -- MY -- CMake C++ FLAGS ${CMAKE_CXX_FLAGS} \n\n")
 
-# ###################################################
+# ###############################################################
 # # Features
 # ## Lambdas
 target_compile_features(
@@ -272,50 +272,58 @@ target_compile_features(
 	# C++17 ENABLED
 	# cxx_std_17
 	# C++20 ENABLED
-	# cxx_std_20
+	cxx_std_20
 
 	# C++23 ENABLED
-	cxx_std_23
+	# cxx_std_23
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
 	message(STATUS " -- Build Type ${CMAKE_BUILD_TYPE} \n\n")
 
-	# message(STATUS " -- PROJECT SOURCE DIR ${PROJECT_SOURCE_DIR} \n\n")
-	# message(STATUS " -- BINARY DIR ${CMAKE_BINARY_DIR} \n\n")
-	# add_custom_command(TARGET ${PROJECT_NAME}
-	# POST_BUILD
-	# COMMAND mkdir -p ${CMAKE_BINARY_DIR}/bin/
-	# COMMAND ln -s ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
-	# )
+	# # Conan v1
 	message(STATUS "++ Creating Symbolic Links ++\n")
 	add_custom_target(
 		linking_assets
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
+
+		# COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
 	)
 	add_dependencies(${PROJECT_NAME} linking_assets)
+
+# # Conan v2
+# message(STATUS " -- Copy assets")
+
+# message(STATUS " -- PROJECT SOURCE DIR ${PROJECT_SOURCE_DIR} \n\n")
+# message(STATUS " -- BINARY DIR ${CMAKE_BINARY_DIR} \n\n")
+# add_custom_command(TARGET ${PROJECT_NAME}
+# POST_BUILD
+# COMMAND mkdir -p ${CMAKE_BINARY_DIR}/Source/Main/assets
+# COMMAND ln -s ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
+# )
+# file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/Source/Main/)
 else()
 	message(STATUS " -- Build Type RELEASE \n\n")
 	message(STATUS "++ Copying files ++\n")
 	file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 endif()
 
-# ###################################################
+# ###############################################################
 
 # # Packaging
 # ## LINUX, COMPRESSOR
 include(My_Cmake/Packaging.cmake)
 
-# ###################################################
+# ###############################################################
 # # Install
 # install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin) # $(CMAKE_INSTALL_PREFIX) / bin
 # install(FILES "src/main.cpp" DESTINATION src) # $(CMAKE_INSTALL_PREFIX) / bin
 # target_link_libraries(${PROJECT_NAME} PRIVATE son_library)
 
 # install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-# ###################################################
-# ###################################################
+# ###############################################################
+# ###############################################################
 
 # install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-# ###################################################
-# ###################################################
+# ###############################################################
+# ###############################################################

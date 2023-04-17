@@ -6,18 +6,16 @@
 
 #include <iostream>
 
-MenuState::MenuState(GameStateManager& gsm)
-	: State(gsm, "MenuState")
+MenuState::MenuState(GameStateManager& gsm, TextureManager& tm)
+	: State("MenuState", gsm, tm)
 {
 	SetName("MenuStateNode");
-	std::cout << "\n\n ### MenuState::Constructor : " << GetName( )
-			  << " : ### \n";
+	Logger::Debug(LogType::Log, "### MenuState::Constructor : ", GetName( ));
 }
 
 MenuState::~MenuState( )
 {
-	std::cout << "\n\n ### ~MenuState::Destructor : " << GetName( )
-			  << " : ### \n";
+	Logger::Debug(LogType::Log, "### MenuState::Destructor : ", GetName( ));
 	// NodeLogComplete( );
 }
 
@@ -30,9 +28,9 @@ void MenuState::Load( )
 std::unique_ptr<State> MenuState::Update(const float& deltaTime)
 // std::shared_ptr<State> MenuState::Update(const float& deltaTime)
 {
-	std::cout << "\nMenuState::Update";
-	std::cout << "\nMenuState::Update::Return GetGameState;";
-	return GetGameStateManager( ).GetGameState( );
+	Logger::Debug(LogType::Debug, "MenuState::Update");
+	Logger::Debug(LogType::Debug, "MenuState::Update::Return GetGameState");
+	return GetGameStateManager( ).NewGameState( );
 	// return std::make_unique<State>(GetGSM( ).GetGameState( ));
 
 	// if (&GetGameStateManager( ).GetGameState( )) // Reference, if is alive
@@ -60,12 +58,12 @@ void MenuState::Events(SDL_Event& event) {}
 
 void MenuState::EnterState( )
 {
-	std::cout
-		<< "\n==================MenuState::EnterState==================\n\n";
+	Logger::Debug(LogType::Debug,
+				  "==================MenuState::EnterState==================");
 }
 
 void MenuState::ExitState( )
 {
-	std::cout
-		<< "\n==================MenuState::ExitState==================\n\n";
+	Logger::Debug(LogType::Debug,
+				  "==================MenuState::ExitState==================");
 }

@@ -42,6 +42,9 @@
 	valgrind build/Debug/bin/sdl2_Game_00
 */
 
+// #include <range/v3/view/filter.hpp>
+// #include <nlohmann/json.hpp>
+
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
 	/* ################################################# */
@@ -51,14 +54,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 		e->Init( );
 	*/
 
-	// Smart pointer
-	std::unique_ptr<Engine> mEngine { std::make_unique<Engine>( ) };
-	mEngine = nullptr;
-
-	// 	// FIXME (Obsolete)
-	// 	// Engine* mEngine = new Engine( );
-	// 	// delete mEngine;
-	// 	// mEngine = nullptr;
+	Engine mEngine;
 
 	/* ################################################# */
 	fmt::print("\n\nGame Exit!\n");

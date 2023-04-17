@@ -8,7 +8,7 @@
 class MenuState : public State
 {
   public:
-	MenuState(GameStateManager& gsm);
+	MenuState(GameStateManager& gsm, TextureManager& tm);
 	~MenuState( ) override;
 
 	// State* Update(const float& deltaTime) override;

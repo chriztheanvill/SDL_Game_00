@@ -5,20 +5,42 @@
 
 #include <iostream>
 
-GameState::GameState(GameStateManager& gsm)
-	: State(gsm, "GameState")
-	, mPlayer(std::make_unique<Player>(this, gsm))
-// , mPlayer(this, gsm)
-// , Node(nullptr, "GameState")
+GameState::GameState(GameStateManager& gsm, TextureManager& tm)
+	: State("GameState", gsm, tm)
+	, mLevel00(GetTextureManager( ))
 {
 	// Setting NODE
 	SetName("GameState");
 	// SetChild(&mPlayer);
 
-	// TextureManager tm(this);
-	// tm.SetName("TextureManager GameState Simple");
-	// tm.SetRender(GetGameStateManager( ).GetRender( ));
-	// GetGameStateManager( ).GetTextureManager( ) = tm;
+	Logger::Debug(LogType::Log, "### GameState::Constructor :", GetName( ));
+
+	// Load( );
+}
+
+GameState::~GameState( )
+{
+	//
+	Logger::Debug(LogType::Log, "### ~GameState::Destructor :", GetName( ));
+	// NodeLogComplete( );
+}
+
+/*
+#######################################################################################
+#######################################################################################
+#######################################################################################
+#######################################################################################
+*/
+
+void GameState::Load( )
+{
+	// ---------------------------------------------------------------
+	// Texture Manager
+	Logger::Debug(LogType::Debug, "GameState::Load");
+	TextureManager tm;
+	tm.SetName("TextureManager GameState Simple");
+	tm.SetRender(*GetTextureManager( ).GetRender( ));
+	GetTextureManager( ) = tm;
 
 	// *GetGameStateManager( ).GetTextureManager( ) =
 	// 	static_cast<TextureManager&&>(tm);	 // unique_ptr
@@ -26,45 +48,30 @@ GameState::GameState(GameStateManager& gsm)
 	//
 	// std::unique_ptr<TextureManager> tm =
 	// std::make_unique<TextureManager>(this);
-	TextureManager* tm = new TextureManager(this);
 
-	tm->SetName("TextureManager GameState Unique_ptr");
-	tm->SetRender(GetGameStateManager( ).GetRender( ));
-	GetGameStateManager( ).GetTextureManager( ) = *tm;
+	// TextureManager* tm = new TextureManager;
+
+	// tm->SetName("TextureManager GameState Unique_ptr");
+	// tm->SetRender(GetGameStateManager( ).GetRender( ));
+	// GetGameStateManager( ).GetTextureManager( ) = *tm;
 	// GetGameStateManager( ).GetTextureManager( ) = *tm.release( ); // Unique
 
-	std::cout << "\n\n ### GameState::Constructor : " << GetName( )
-			  << " : ### \n";
+	GetTextureManager( ).Load("test", "assets/images/bkBlue.png");
 
-	Load( );
-}
-
-GameState::~GameState( )
-{
-	//
-	std::cout << "\n\n~GameState::Destructor : " << GetName( ) << " :";
-	// NodeLogComplete( );
-}
-
-void GameState::Load( )
-{
-	// GetGameStateManager( ).GetTextureManager( )->Load(
-	GetGameStateManager( ).GetTextureManager( ).Load(
-		"test",
-		"assets/images/bkBlue.png");
-
-	mPlayer->SetSprite("Vivian", "assets/images/Vivian.jpg");
-	// mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
+	// ---------------------------------------------------------------
+	// Levels
+	mLevel00.SetTextureManager(&GetTextureManager( ));
+	mLevel00.Init( );
 }
 
 // State* GameState::Update(const float& deltaTime)
 std::unique_ptr<State> GameState::Update(const float& deltaTime)
 // std::shared_ptr<State> GameState::Update(const float& deltaTime)
 {
-	std::cout << "\nGameState::Update";
+	Logger::Debug(LogType::Debug, "GameState::Update");
 
-	mPlayer->Update(deltaTime);
-	// mPlayer.Update(deltaTime);
+	mLevel00.Update(deltaTime);
+	// mPlayer->Update(deltaTime);
 
 	// return this;
 	// if (GetGSM( ).GetMenuState( ))
@@ -77,24 +84,25 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 
 void GameState::Render( )
 {
-	mPlayer->Render( );
-	// mPlayer.Render( );
+	//
+	mLevel00.Render( );
 }
 
 void GameState::Events(SDL_Event& event)
 {
-	std::cout << "\nGameState::Events";
-	// mPlayer.Events(event);
+	Logger::Debug(LogType::Debug, "GameState::Events");
+	mLevel00.Events(event);
 }
 
 void GameState::EnterState( )
 {
-	std::cout
-		<< "\n==================GameState::EnterState==================\n\n";
+	Logger::Debug(LogType::Log,
+				  "==================GameState::EnterState==================");
+	Load( );
 }
 
 void GameState::ExitState( )
 {
-	std::cout
-		<< "\n==================GameState::ExitState==================\n\n";
+	Logger::Debug(LogType::Log,
+				  "==================GameState::ExitState==================");
 }

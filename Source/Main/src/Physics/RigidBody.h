@@ -11,6 +11,7 @@ class RigidBody : public Node
 		: Node(parent, "RigidBody")
 	{
 		SetName("RigidBody::Player");
+		Logger::Debug(LogType::Log, "RigidBody::Constructor ", GetName( ));
 	}
 	// RigidBody( ) = default;
 	// RigidBody(const RigidBody& other); // Copy
@@ -20,7 +21,7 @@ class RigidBody : public Node
 
 	~RigidBody( ) override
 	{
-		std::cout << "\n~GameState::Player::RigidBody::Destructor";
+		Logger::Debug(LogType::Log, "~RigidBody::Destructor", GetName( ));
 	}
 
 	void SetMass(const float& m) { mMass = m; }

@@ -8,17 +8,16 @@
 #include "../Core/Node.h"
 
 // #include "./GameStateManager.h"
+class TextureManager;
 class GameStateManager;
 
 class State : public Node
 {
   public:
-	State(GameStateManager& gsm, const std::string& name = "");
+	State(std::string_view name, GameStateManager& gsm, TextureManager& tm);
 	virtual ~State( );
 
-	// virtual State* Update(const float& deltaTime) = 0;
 	virtual std::unique_ptr<State> Update(const float& deltaTime) = 0;
-	// virtual std::shared_ptr<State> Update(const float& deltaTime) = 0;
 	virtual void Render( ) = 0;
 	virtual void Load( ) = 0;
 	virtual void Events(SDL_Event& event) = 0;
@@ -26,14 +25,18 @@ class State : public Node
 	virtual void EnterState( ) = 0;
 	virtual void ExitState( ) = 0;
 
-	// inline bool GetIsRunning( ) const { return mIsRunning; }
-	// void SetIsRunning(const bool& running) { mIsRunning = running; }
+	void SetTextureManager(TextureManager& tm, std::string_view name = "new");
+
+	void NewTextureManager(TextureManager* tm);
+
+	GameStateManager& GetGameStateManager( ) const { return mGameStateManager; }
 
   protected:
-	GameStateManager& GetGameStateManager( ) const { return mGameStateManager; }
+	TextureManager& GetTextureManager( ) const { return mTextureManager; }
 
   private:
 	// bool mIsRunning;
+	TextureManager& mTextureManager;
 	GameStateManager& mGameStateManager;
 };
 

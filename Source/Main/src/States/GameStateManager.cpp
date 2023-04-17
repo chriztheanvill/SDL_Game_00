@@ -3,86 +3,90 @@
 #include "../States/State.h"
 #include "./GameState.h"
 #include "./MenuState.h"
-#include "../Core/Engine.h"
-#include "../Core/TextureManager.h"
 
-#include <iostream>
-
-GameStateManager::GameStateManager(SDL_Renderer& render)
-	:	//
-	// Shared
-	// : mGameState(std::make_shared<GameState>(*this))
-	mRender(render)
-	// mRender(&render)
-	, mTextureManager(std::make_unique<TextureManager>( ))
+GameStateManager::GameStateManager( )
 {
-	std::cout << "\n--- GameStateManager::Constructor --- \n";
-	Load( );
+	Logger::Debug(LogType::Log, "--- GameStateManager::Constructor ---");
 }
 
 GameStateManager::~GameStateManager( )
 {
 	if (mCurrent) mCurrent->ExitState( );
 
-	// delete mCurrent;
-	// delete mPrev;
-	// delete mTextureManager;
 	mCurrent = nullptr;
 	mPrev = nullptr;
-	mTextureManager = nullptr;
-	std::cout << "\n\n--- ~GameStateManager \n";
+	Logger::Debug(LogType::Log, "--- ~GameStateManager ---");
 }
+
+/*
+#######################################################################################
+#######################################################################################
+#######################################################################################
+#######################################################################################
+*/
 
 void GameStateManager::Load( )
 {
-	mGameState = std::make_unique<MenuState>(*this);
+	// Graphics
+	// mTextureManager->SetName("Texture Manager MenuState");
+	// mTextureManager->SetRender(*mGraphics.GetRender( ));
+	// mTextureManager->SetParent(mGameState.get( ));
+
+	mTextureManager.SetName("TextureManager::MenuState");
+
+	// Game States
+	mGameState = std::make_unique<MenuState>(*this, mTextureManager);
 	mGameState->SetName("MenuState");
-	mTextureManager->SetName("Texture Manager MenuState");
-	mTextureManager->SetRender(mRender);
-	mTextureManager->SetParent(mGameState.get( ));
 
 	mIsRunning = true;
 
 	if (mGameState) { SetState(mGameState); }
 	else
 	{
-		std::cout
-			<< "\n--- GameStateManager::Constructor ERROR!!! No state --- \n";
+		Logger::Debug(LogType::Error,
+					  "GameStateManager::Constructor ERROR!!! No state ---");
 		exit(1);
 	}
 }
 
-std::unique_ptr<State> GameStateManager::GetGameState( )
+// --------------------------------------------------------------------------------------
+std::unique_ptr<State> GameStateManager::NewGameState( )
 {
-	// std::unique_ptr<GameState> tmp = std::make_unique<GameState>(*this);
-	// return tmp;
-	return std::make_unique<GameState>(*this);
+	// TODO Checar esta funcion
+	// Seria mas limpio
+	// mGameState = std::make_unique<GameState>(*this, mTextureManager);
+	// Seria mas limpio
+
+	mTextureManager.SetName("TextureManager::GameState");
+	std::unique_ptr<GameState> tmpReturn =
+		std::make_unique<GameState>(*this, mTextureManager);
+	// tmpReturn->SetTextureManager(mTextureManager,
+	// "GameState::TextureManager");
+
+	return tmpReturn;
+	// return std::make_unique<GameState>( );
 }
 
-TextureManager& GameStateManager::GetTextureManager( )
-{
-	return *mTextureManager;
-}
-
+// --------------------------------------------------------------------------------------
 void GameStateManager::Update(const float& deltaTime)
 {
-	std::cout << "\n=======================================DeltaTime: "
-			  << deltaTime;
+	Logger::Debug(LogType::Log, "DeltaTime: ", deltaTime);
 
 	if (mCurrent && mIsRunning)
 	{
 		Events( );
+
 		// Switching between Game modes: (Main menu, Game, Pause)
 		std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
-		// std::shared_ptr<State> tmp = mCurrent->Update(deltaTime);
-		// std::cout << "\n---GameStateManager::Update --- tmp: " << tmp <<
-		// "\n";
 		Render( );
 		if (tmp)
 		{
-			std::cout
-				<< "\n+++ GameStateManager::Update Updating +++ tmp: "	 //
-				<< &tmp << " - " << tmp->GetName( ) << "\n";
+			Logger::Debug(LogType::Debug,
+						  "GameStateManager::Update Updating +++ tmp: ",
+						  &tmp,
+						  " - ",
+						  tmp->GetName( ));
+
 			SetState(tmp);
 		}
 	}
@@ -90,24 +94,18 @@ void GameStateManager::Update(const float& deltaTime)
 
 void GameStateManager::Render( )
 {
-	// System
 	// Paint color
-	SDL_SetRenderDrawColor(&mRender, 60, 60, 60, 255);
-	// SDL_SetRenderDrawColor(mRender, 60, 60, 60, 255);
-	SDL_RenderClear(&mRender);
-	// SDL_RenderClear(mRender);
+	SDL_SetRenderDrawColor(mTextureManager.GetRender( ), 60, 60, 60, 255);
+	SDL_RenderClear(mTextureManager.GetRender( ));
 
 	/* ################################################# */
-	// Game
 
 	mCurrent->Render( );
 
 	/* ################################################# */
 
-	// System
 	// Clean the screen
-	SDL_RenderPresent(&mRender);
-	// SDL_RenderPresent(mRender);
+	SDL_RenderPresent(mTextureManager.GetRender( ));
 }
 
 void GameStateManager::Events( )
@@ -124,7 +122,7 @@ void GameStateManager::Events( )
 					event.key.keysym.sym == SDLK_ESCAPE)
 				{
 					mIsRunning = false;
-					std::cout << "\n\nQuitting game by Q.\n";
+					Logger::Debug(LogType::Log, "Quitting game by Q.");
 				}
 		}
 		/* ======== ~SYSTEM ======== */
@@ -136,7 +134,6 @@ void GameStateManager::Events( )
 	//
 }
 
-// void GameStateManager::SetState(std::shared_ptr<State>& state)
 void GameStateManager::SetState(std::unique_ptr<State>& state)
 {
 	mPrev = std::move(mCurrent);
@@ -146,20 +143,29 @@ void GameStateManager::SetState(std::unique_ptr<State>& state)
 	// mCurrent = state;
 	// // mCurrent = std::move(state);
 
-	std::cout
-		<< "\n ################################### GameStateManager::SetState "
-		   "################################### \n";
+	Logger::Debug(LogType::Log, "GameStateManager::SetState");
 
 	if (mPrev)
 	{
-		std::cout << "\nmPrev: " << &mPrev << " - " << mPrev->GetName( )
-				  << "\n";
+		Logger::Debug(LogType::Debug,
+					  "GameStateManager::SetState mPrev: ",
+					  &mPrev,
+					  " - "s,
+					  mPrev->GetName( ));
+		// std::cout << "\nmPrev: " << &mPrev << " - " << mPrev->GetName( )
+		// 		  << "\n";
 		mPrev->ExitState( );
 	}
+
 	if (mCurrent)
 	{
-		std::cout << "\nmCurrent: " << &mCurrent << " - "
-				  << mCurrent->GetName( ) << "\n";
+		Logger::Debug(LogType::Debug,
+					  "GameStateManager::SetState mCurrent: ",
+					  &mCurrent,
+					  " - "s,
+					  mCurrent->GetName( ));
+		// std::cout << "\nmCurrent: " << &mCurrent << " - "
+		// 		  << mCurrent->GetName( ) << "\n";
 		mCurrent->EnterState( );
 	}
 }

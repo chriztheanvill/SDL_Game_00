@@ -1,33 +1,47 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <iostream>
-#include <vector>
-#include <memory>
 #include <algorithm>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <span>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include "../Utils/Logger.h"
+
+#include <fmt/color.h>
 
 class Node
 {
   public:
-	Node(Node* parent = nullptr, const std::string& name = "")
+	Node(Node* parent = nullptr, std::string_view name = "")
 		: mParent(parent)
 		, mName(name)
 	{
-		std::cout << "\n\n  ******** Node Constructor : " << mName;
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::azure),
+		// 		   "\n\n ******** Node Constructor : {}",
+		// 		   mName);
+
+		Logger::Debug(LogType::Log, "******** Node Constructor : ", mName);
 		if (!parent) return;
-		std::cout << "\n  ***** Node mParent : " << mParent->mName;
+		Logger::Debug(LogType::Log, "***** Node mParent : ", mParent->mName);
 		parent->AddChild(this);
 	}
 
 	virtual ~Node( )
 	{
-		std::cout << "\n\n ---- NODE Destructor : " << mName;
-		std::cout << "\n ---- Address : " << this;
+		Logger::Debug(LogType::Log, "---- NODE Destructor : ", mName);
+		Logger::Debug(LogType::Debug, "---- Address : ", this);
+		// std::cout << "---- Address : " << this;
 
 		// Delete from parent
 		if (mParent)
 		{
-			std::cout << "\n	Parent Name: " << mParent->mName;
+			Logger::Debug(LogType::Debug, "Parent Name: ", mParent->mName);
 			// std::cout << "\n	Parent: " << mParent;
 
 			// auto aaa = std::find_if(mParent->mChildren.begin( ),
@@ -58,28 +72,35 @@ class Node
 			// mParent->mName; }
 		}
 
-		if (mChildren.empty( )) { std::cout << "\n	Children: EMPTY \n"; }
+		if (mChildren.empty( ))
+		{
+			Logger::Debug(LogType::Debug, "Children: EMPTY");
+		}
 		else
 		{
-			std::cout << "\n	Delete Children: " << mChildren.capacity( );
+			Logger::Debug(LogType::Log,
+						  "Delete Children: ",
+						  mChildren.capacity( ));
 			for (Node* fc : mChildren)
 			{
 				// std::cout << "\n		Parent: " << mParent;
 				// std::cout << "\n		Child: " << fc;
 				if (fc)
 				{
-					std::cout << "\n		Child name: " << fc->mName;
-					std::cout << "\n		Child address: " << fc;
+					Logger::Debug(LogType::Debug, "Child name: ", fc->mName);
+					Logger::Debug(LogType::Debug, "Child address: ", fc);
 					if (fc->mParent)
 					{
-						std::cout << "\n		Parent name: "
-								  << fc->mParent->mName;
+						Logger::Debug(LogType::Log,
+									  "Parent name: {}",
+									  fc->mParent->mName);
 						// delete fc;
 						// std::erase(mChildren, fc);	 // C++20
 						if (fc->mParent == this)
 						{
-							std::cout << "\n		Delete Parent from child: "
-									  << fc->mParent;
+							Logger::Debug(LogType::Debug,
+										  "Delete Parent from child: ",
+										  fc->mParent);
 							fc->mParent = nullptr;
 						}
 					}
@@ -95,35 +116,46 @@ class Node
 		}
 	}
 
-	std::string GetName( ) const { return mName; }
-	void SetName(const std::string& name) { mName = name; }
+	std::string_view GetName( ) const { return mName; }
+	// std::string GetName( ) const { return static_cast<std::string>(mName); }
+	void SetName(std::string_view name) { mName = name; }
 	void AddChild(Node* node) { mChildren.emplace_back(node); }
 	void SetParent(Node* node)
 	{
 		mParent = node;
 		mParent->AddChild(this);
+
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::azure),
+		// 		   "\n--- Node::SetParent --- \n");
+		// for (auto* const c : mChildren)
+		// {
+		// 	fmt::print("- Parent: {} - Child: {} \n", mParent->mName, c->mName);
+		// }
 	}
 
   protected:
 	Node& GetChild(int index) { return *mChildren.at(index); }
 	Node& GetParent( ) const { return *mParent; }
 
-	void NodeLog( ) const { std::cout << "\n\nLog: " << mName << "\n"; }
+	void NodeLog( ) const { Logger::Debug(LogType::Log, "Log: ", mName); }
 	void NodeLogComplete( ) const
 	{
-		std::cout << "\n	Log-Complete: " << mName;	//
-		if (mParent) { std::cout << "\n	Parent: " << mParent->mName; }
-		else { std::cout << "\n	Parent: EMPTY ---"; }
+		Logger::Debug(LogType::Log, "Log-Complete: ", mName);
+		if (mParent)
+		{
+			Logger::Debug(LogType::Log, "Parent: ", mParent->mName);
+		}
+		else { Logger::Debug(LogType::Log, "Parent: EMPTY ---"); }
 
-		std::cout << "\n	Children: " << mChildren.capacity( );
+		Logger::Debug(LogType::Log, "Children: ", mChildren.capacity( ));
 		for (const auto& fc : mChildren)
 		{
-			std::cout << "\n		Child name: " << fc->mName;
+			Logger::Debug(LogType::Log, "Child name: ", fc->mName);
 		}
 	}
 
   private:
-	std::string mName;
+	std::string_view mName;
 	std::vector<Node*> mChildren;
 	Node* mParent;
 };

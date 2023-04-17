@@ -3,14 +3,14 @@
 
 #include "./State.h"
 
-#include "../Characters/Player.h"
+#include "../Levels/Level.h"
 
 class TextureManager;
 
 class GameState : public State
 {
   public:
-	GameState(GameStateManager& gsm);
+	GameState(GameStateManager& gsm, TextureManager& tm);
 	~GameState( ) override;
 
 	void Load( ) override;
@@ -24,8 +24,7 @@ class GameState : public State
 	void ExitState( ) override;
 
   private:
-	std::unique_ptr<Player> mPlayer;
-	// Player mPlayer;
+	Level mLevel00;
 };
 
 #endif	 // GAMESTATE_H

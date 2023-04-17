@@ -1,6 +1,6 @@
 #include "Engine.h"
-#include <fmt/color.h>
-#include "../States/GameStateManager.h"
+#include "../Utils/Logger.h"
+// #include "../States/GameStateManager.h"
 // #include "./Time.h"
 
 void CheckCPPVersion( )
@@ -17,18 +17,17 @@ void CheckCPPVersion( )
 Engine::Engine( )
 {
 	CheckCPPVersion( );
-	if (!Init( )) return;	// Init only SDL2 libs
-
-	mGSM = std::make_unique<GameStateManager>(*mRender);
-	// mGSM = std::make_unique<GameStateManager>(*this);
-	// mGSM->SetIsRunning(true);
+	if (!Init( )) return;
 
 	Loop( );
 }
 
 Engine::~Engine( )
 {
-	mGSM = nullptr;
+	// 	// NOTE (Obsolete)
+	//	// Engine* mEngine = new Engine();
+	// 	// delete mEngine;
+	// 	// mEngine = nullptr;
 
 	// SDL System
 	SDL_DestroyRenderer(mRender);
@@ -38,16 +37,34 @@ Engine::~Engine( )
 	IMG_Quit( );
 	Mix_Quit( );
 	SDL_Quit( );
+	Logger::Debug(LogType::Log, "--- ~Engine ---");
 }
 
 bool Engine::Init( )
 {
+	if (!SDL2( )) return false;	  // Init SDL2 libs
+	if (!InitGraphics( )) return false;	  // Init Window & Render
+
+	Logger::Debug(LogType::Log, "--- Init Game --- ");
+
+	// Init GameStateManager, adding the renderer
+	mGSM.SetTextureManagerRenderer(mRender);
+	mGSM.Load( );
+
+	return true;
+}
+
+bool Engine::SDL2( )
+{
 	/* #################### Init SDL2 #################### */
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! SDL_INIT_EVERYTHING --- {}",
-				   SDL_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! SDL_INIT_EVERYTHING --- ",
+					  SDL_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! SDL_INIT_EVERYTHING --- {}",
+		// 		   SDL_GetError( ));
 		return false;
 	}
 
@@ -56,33 +73,49 @@ bool Engine::Init( )
 	int initted = IMG_Init(flags);
 	if ((initted & flags) != flags)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! IMG_INIT PNG | JPG --- {}",
-				   IMG_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! IMG_INIT PNG | JPG --- ",
+					  IMG_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! IMG_INIT PNG | JPG --- {}",
+		// 		   IMG_GetError( ));
 		return false;
 	}
 
 	if (TTF_Init( ) != 0)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! TTF_Init --- {}",
-				   TTF_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! TTF_Init --- ",
+					  TTF_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! TTF_Init --- {}",
+		// 		   TTF_GetError( ));
 		return false;
 	}
 
 	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! Music Mixer --- {}",
-				   Mix_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! Music Mixer --- ",
+					  Mix_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! Music Mixer --- {}",
+		// 		   Mix_GetError( ));
 		return false;
 	}
 
 	/* ------------------------------------------------------------------- */
-	fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
-			   "\n\n+++ Success all libs!!! +++\n");
+	Logger::Debug(LogType::Log, "+++ Success all libs!!! +++");
+	// fmt::print(fmt::emphasis::bold | fg(fmt::color::alice_blue),
+	// 		   "\n\n+++ Success all libs!!! +++\n");
 	// Turn ON the game
 
+	/* #################### Init SDL2 #################### */
+	return true;
+}
+
+bool Engine::InitGraphics( )
+{
 	// SDL_DisplayMode displayMode;
 	// SDL_GetCurrentDisplayMode(0, &displayMode);
 	// mWindowH = displayMode.h;
@@ -116,42 +149,49 @@ bool Engine::Init( )
 
 	if (!mWindow)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! Create Window --- {}",
-				   SDL_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! Create Window --- ",
+					  SDL_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! Create Window --- {}",
+		// 		   SDL_GetError( ));
 		return false;
 	}
+	Logger::Debug(LogType::Log, "--- Success New Window --- ");
+
+	SDL_SetWindowIcon(mWindow, IMG_Load("assets/images/icon.png"));
 
 	mRender = SDL_CreateRenderer(mWindow,
 								 -1,
 								 SDL_RENDERER_ACCELERATED |
 									 SDL_RENDERER_PRESENTVSYNC);
-	// mRender.reset(
-	// 	SDL_CreateRenderer(mWindow.get( ), -1, SDL_RENDERER_ACCELERATED));
-	// mRender = std::unique_ptr<SDL_Renderer>(
-	// 	SDL_CreateRenderer(mWindow.get( ), -1, SDL_RENDERER_ACCELERATED));
 	if (!mRender)
 	{
-		fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
-				   "--- Error!!! Create Render --- {}",
-				   SDL_GetError( ));
+		Logger::Debug(LogType::Error,
+					  "--- Error!!! Create Render --- ",
+					  SDL_GetError( ));
+		// fmt::print(fmt::emphasis::bold | fg(fmt::color::red),
+		// 		   "--- Error!!! Create Render --- {}",
+		// 		   SDL_GetError( ));
 		return false;
 	}
 
 	// Make Real fullscreen
 	// SDL_SetWindowFullscreen(mWindow, SDL_WINDOW_FULLSCREEN);
 
-	/* #################### Init SDL2 #################### */
+	Logger::Debug(LogType::Log, "--- Success New Render --- ");
+
 	return true;
 }
 
 void Engine::Loop( )
 {
-	while (mGSM->GetIsRunning( ))
+	Logger::Debug(LogType::Log, "--- Enter to the loop --- ");
+	while (mGSM.GetIsRunning( ))
 	{
 		// fmt::print("\nEngine::Loop deltaTime: {}", mTime.GetDeltaTime( ));
 		mTime.Tick( );
-		mGSM->Update(mTime.GetDeltaTime( ));
+		mGSM.Update(mTime.GetDeltaTime( ));
 	}
 	// mGSM->Update(0);
 }
