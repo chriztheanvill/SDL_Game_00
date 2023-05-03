@@ -1,11 +1,10 @@
 #include "Engine.h"
-#include "../Utils/Logger.h"
 // #include "../States/GameStateManager.h"
 // #include "./Time.h"
 
 void CheckCPPVersion( )
 {
-	std::cout << "Check C++ version: ";
+	std::cout << "\n\nCheck C++ version: ";
 	if (__cplusplus == 202002L) { std::cout << "C++20\n"; }
 	else if (__cplusplus == 201703L) { std::cout << "C++17\n"; }
 	else if (__cplusplus == 201402L) { std::cout << "C++14\n"; }
@@ -16,8 +15,13 @@ void CheckCPPVersion( )
 
 Engine::Engine( )
 {
+	Logger::Debug(LogType::Log, "--- Engine ---");
 	CheckCPPVersion( );
-	if (!Init( )) return;
+	if (!Init( ))
+	{
+		Logger::Debug(LogType::Error, "Error, Cant load SDL2 framework !!!");
+		return;
+	}
 
 	Loop( );
 }
@@ -25,8 +29,8 @@ Engine::Engine( )
 Engine::~Engine( )
 {
 	// 	// NOTE (Obsolete)
-	//	// Engine* mEngine = new Engine();
 	// 	// delete mEngine;
+	//
 	// 	// mEngine = nullptr;
 
 	// SDL System
@@ -44,12 +48,6 @@ bool Engine::Init( )
 {
 	if (!SDL2( )) return false;	  // Init SDL2 libs
 	if (!InitGraphics( )) return false;	  // Init Window & Render
-
-	Logger::Debug(LogType::Log, "--- Init Game --- ");
-
-	// Init GameStateManager, adding the renderer
-	mGSM.SetTextureManagerRenderer(mRender);
-	mGSM.Load( );
 
 	return true;
 }
@@ -159,8 +157,6 @@ bool Engine::InitGraphics( )
 	}
 	Logger::Debug(LogType::Log, "--- Success New Window --- ");
 
-	SDL_SetWindowIcon(mWindow, IMG_Load("assets/images/icon.png"));
-
 	mRender = SDL_CreateRenderer(mWindow,
 								 -1,
 								 SDL_RENDERER_ACCELERATED |
@@ -179,6 +175,8 @@ bool Engine::InitGraphics( )
 	// Make Real fullscreen
 	// SDL_SetWindowFullscreen(mWindow, SDL_WINDOW_FULLSCREEN);
 
+	SDL_SetWindowIcon(mWindow, IMG_Load("assets/images/icon.png"));
+
 	Logger::Debug(LogType::Log, "--- Success New Render --- ");
 
 	return true;
@@ -186,12 +184,23 @@ bool Engine::InitGraphics( )
 
 void Engine::Loop( )
 {
+	Logger::Debug(LogType::Log, "--- Init Game --- ");
+	mTime.DeltaTimeStart( );
+
+	GameStateManager mGSM;
+	mGSM.SetTextureManagerRenderer(mRender);
+
+	mTime.ResetClock( );   // Borrar
 	Logger::Debug(LogType::Log, "--- Enter to the loop --- ");
 	while (mGSM.GetIsRunning( ))
 	{
-		// fmt::print("\nEngine::Loop deltaTime: {}", mTime.GetDeltaTime( ));
-		mTime.Tick( );
+		mTime.DeltaTimeStart( );
 		mGSM.Update(mTime.GetDeltaTime( ));
+		// Logger::Debug(LogType::Log,
+		// 			  "--- Time passed milliseconds: ",
+		// 			  mTime.CurrentMilliSeconds( ));
+		// Logger::Debug(LogType::Log,
+		// 			  "--- Time passed seconds: ",
+		// 			  mTime.CurrentSeconds( ));
 	}
-	// mGSM->Update(0);
 }

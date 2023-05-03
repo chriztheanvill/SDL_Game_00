@@ -1,13 +1,9 @@
 #ifndef GAMESTATEMANAGER_H
 #define GAMESTATEMANAGER_H
 
-// #include "../States/State.h"
-// class State;
-// class GameState;
-// class MenuState;
-// #include "../Core/Engine.h"
+#include "../Input/Controller.h"
 
-#include "../Core/TextureManager.h"
+#include "../Graphics/TextureManager.h"
 
 class State;
 
@@ -30,18 +26,18 @@ class GameStateManager
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
 	inline const bool& GetIsRunning( ) const { return mIsRunning; }
 
-	void Load( );
-
   private:
 	bool mIsRunning { };
+	SDL_Event mEvent { };
 
+	Controller mController;
 	TextureManager mTextureManager;
 
 	std::unique_ptr<State> mGameState;
 	std::unique_ptr<State> mCurrent { };
 	std::unique_ptr<State> mPrev { };
 
-	void Events( );
+	void Load( );
 	void Render( );
 	void SetState(std::unique_ptr<State>& state);
 };

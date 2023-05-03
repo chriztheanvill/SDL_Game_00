@@ -42,9 +42,6 @@
 	valgrind build/Debug/bin/sdl2_Game_00
 */
 
-// #include <range/v3/view/filter.hpp>
-// #include <nlohmann/json.hpp>
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
 	/* ################################################# */
@@ -57,12 +54,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 	Engine mEngine;
 
 	/* ################################################# */
-	fmt::print("\n\nGame Exit!\n");
+	Logger::Debug(LogType::Debug, "Game Exit!");
 
 #ifdef NDEBUG
-	fmt::print("\n\n RELEASE!\n");
+	Logger::Debug(LogType::Debug, "Mode Release!");
 #else
-	fmt::print("\n\n Debug!\n");
+	Logger::Debug(LogType::Debug, "Mode Debug!");
 #endif
 
 	/* ################################################# */
@@ -84,6 +81,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
  *uso
  *	* * De la nueva manera, se elimina el estado en uso, y se crea el nuevo
  *
- * asdas
- * asd
+
+https://devblogs.microsoft.com/cppblog/documentation-for-cpp20-ranges/
  */

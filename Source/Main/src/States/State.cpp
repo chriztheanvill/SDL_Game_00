@@ -1,18 +1,18 @@
 #include "State.h"
-#include "../Core/TextureManager.h"
+#include "../Graphics/TextureManager.h"
 
 // State::State(GameStateManager& gsm, const std::string& name)
 State::State(std::string_view name, GameStateManager& gsm, TextureManager& tm)
-	: Node(nullptr, name)
+	: mName(name)
 	, mGameStateManager(gsm)
 	, mTextureManager(tm)
 {
-	Logger::Debug(LogType::Log, "### State::Constructor :", GetName( ));
+	Logger::Debug(LogType::Log, "### State::Constructor :", mName);
 }
 
 State::~State( )
 {
-	Logger::Debug(LogType::Log, "### ~State::Destructor :", GetName( ));
+	Logger::Debug(LogType::Log, "### ~State::Destructor :", mName);
 }
 
 /*
@@ -29,7 +29,7 @@ std::unique_ptr<State> State::Update(const float& deltaTime) { return nullptr; }
 
 void State::Render( ) {}
 void State::Load( ) { Logger::Debug(LogType::Debug, "### State::Load :"); }
-void State::Events(SDL_Event& event) {}
+void State::Events(Controller& controller) {}
 
 void State::SetTextureManager(TextureManager& tm, std::string_view name)
 {

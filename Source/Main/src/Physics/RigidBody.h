@@ -7,8 +7,8 @@
 class RigidBody : public Node
 {
   public:
-	RigidBody(Node* parent = nullptr)
-		: Node(parent, "RigidBody")
+	RigidBody(Node* parent = nullptr, std::string_view name = "")
+		: Node(parent, name)
 	{
 		SetName("RigidBody::Player");
 		Logger::Debug(LogType::Log, "RigidBody::Constructor ", GetName( ));

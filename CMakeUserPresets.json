@@ -4,6 +4,6 @@
         "conan": {}
     },
     "include": [
-        "/home/cris/Workspace/Cpp/SDL_Game_00/build/Debug/CMakePresets.json"
+        "/home/cris/Workspace/C++/SDL_Game_00/build/Debug/CMakePresets.json"
     ]
 }

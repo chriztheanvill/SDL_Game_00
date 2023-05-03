@@ -3,19 +3,21 @@
 #include "GameStateManager.h"
 #include "../Core/Engine.h"
 
+#include "../Levels/Level.h"
+
 #include <iostream>
 
 GameState::GameState(GameStateManager& gsm, TextureManager& tm)
 	: State("GameState", gsm, tm)
-	, mLevel00(GetTextureManager( ))
+	, mLevelManager(tm)
 {
 	// Setting NODE
-	SetName("GameState");
+	// SetName("GameState");
 	// SetChild(&mPlayer);
 
 	Logger::Debug(LogType::Log, "### GameState::Constructor :", GetName( ));
 
-	// Load( );
+	Load( );
 }
 
 GameState::~GameState( )
@@ -36,10 +38,13 @@ void GameState::Load( )
 {
 	// ---------------------------------------------------------------
 	// Texture Manager
+	// Crear un nuevo Texture Manager, NO se si sea buena idea.
+	// Solo probando
 	Logger::Debug(LogType::Debug, "GameState::Load");
 	TextureManager tm;
 	tm.SetName("TextureManager GameState Simple");
 	tm.SetRender(*GetTextureManager( ).GetRender( ));
+	GetTextureManager( ) = nullptr;	  // Just calling the Destructor
 	GetTextureManager( ) = tm;
 
 	// *GetGameStateManager( ).GetTextureManager( ) =
@@ -56,12 +61,12 @@ void GameState::Load( )
 	// GetGameStateManager( ).GetTextureManager( ) = *tm;
 	// GetGameStateManager( ).GetTextureManager( ) = *tm.release( ); // Unique
 
-	GetTextureManager( ).Load("test", "assets/images/bkBlue.png");
+	GetTextureManager( ).Load("test", "assets/images/bkBlue.png");	 // Test
 
 	// ---------------------------------------------------------------
 	// Levels
-	mLevel00.SetTextureManager(&GetTextureManager( ));
-	mLevel00.Init( );
+	// mLevel00.SetTextureManager(&GetTextureManager( ));
+	// mLevel00.Init( );
 }
 
 // State* GameState::Update(const float& deltaTime)
@@ -70,8 +75,7 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 {
 	Logger::Debug(LogType::Debug, "GameState::Update");
 
-	mLevel00.Update(deltaTime);
-	// mPlayer->Update(deltaTime);
+	mLevelManager.Update(deltaTime);
 
 	// return this;
 	// if (GetGSM( ).GetMenuState( ))
@@ -85,20 +89,20 @@ std::unique_ptr<State> GameState::Update(const float& deltaTime)
 void GameState::Render( )
 {
 	//
-	mLevel00.Render( );
+	mLevelManager.Render( );
 }
 
-void GameState::Events(SDL_Event& event)
+void GameState::Events(Controller& controller)
 {
-	Logger::Debug(LogType::Debug, "GameState::Events");
-	mLevel00.Events(event);
+	// Logger::Debug(LogType::Debug, "GameState::Events");
+	mLevelManager.Events(controller);
 }
 
 void GameState::EnterState( )
 {
 	Logger::Debug(LogType::Log,
 				  "==================GameState::EnterState==================");
-	Load( );
+	// Load( );
 }
 
 void GameState::ExitState( )

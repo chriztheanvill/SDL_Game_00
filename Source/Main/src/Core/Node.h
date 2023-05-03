@@ -6,14 +6,13 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <optional>
 #include <span>
 #include <string>
 #include <string_view>
 #include <vector>
 
 #include "../Utils/Logger.h"
-
-#include <fmt/color.h>
 
 class Node
 {
@@ -124,17 +123,10 @@ class Node
 	{
 		mParent = node;
 		mParent->AddChild(this);
-
-		// fmt::print(fmt::emphasis::bold | fg(fmt::color::azure),
-		// 		   "\n--- Node::SetParent --- \n");
-		// for (auto* const c : mChildren)
-		// {
-		// 	fmt::print("- Parent: {} - Child: {} \n", mParent->mName, c->mName);
-		// }
 	}
 
   protected:
-	Node& GetChild(int index) { return *mChildren.at(index); }
+	Node& GetChild(int index) const { return *mChildren.at(index); }
 	Node& GetParent( ) const { return *mParent; }
 
 	void NodeLog( ) const { Logger::Debug(LogType::Log, "Log: ", mName); }

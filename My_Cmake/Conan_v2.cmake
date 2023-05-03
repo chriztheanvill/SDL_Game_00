@@ -17,7 +17,7 @@ message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 # # $ conan profile detect --force
 # #
 # # Construir con conan2
-# # $ conan install . --output-folder=build/Debug --build=missing
+# # $ conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug
 # # $ conan install . --output-folder=build/Release --build=missing
 # #
 # #
@@ -32,7 +32,7 @@ message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 # #
 # # $ cd ../.. && rm -rf build
 # #
-# # $ conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug
+# # $ conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug && cd ../..
 # #
 # #
 

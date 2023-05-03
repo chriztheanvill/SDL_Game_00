@@ -3,7 +3,7 @@
 
 #include "./State.h"
 
-#include "../Levels/Level.h"
+#include "../Levels/LevelManager.hpp"
 
 class TextureManager;
 
@@ -18,13 +18,13 @@ class GameState : public State
 	std::unique_ptr<State> Update(const float& deltaTime) override;
 	// std::shared_ptr<State> Update(const float& deltaTime) override;
 	void Render( ) override;
-	void Events(SDL_Event& event) override;
+	void Events(Controller& controller) override;
 
 	void EnterState( ) override;
 	void ExitState( ) override;
 
   private:
-	Level mLevel00;
+	LevelManager mLevelManager;
 };
 
 #endif	 // GAMESTATE_H

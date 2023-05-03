@@ -7,7 +7,8 @@
 #include <SDL2/SDL.h>
 
 #include "../Core/Node.h"
-#include "../Graphics/Sprite.h"
+#include "../Components/Sprite.h"
+#include "../Input/Controller.h"
 
 class Character : public Node
 {
@@ -17,6 +18,7 @@ class Character : public Node
 	{
 		Logger::Debug(LogType::Log,
 					  "--- GameState::Character::Constructor ---");
+		mSprite.SetName(name);
 	}
 
 	~Character( ) override
@@ -26,7 +28,7 @@ class Character : public Node
 
 	virtual void Update(const float& deltaTime) = 0;
 	virtual void Render( ) = 0;
-	virtual void Events(SDL_Event& event) = 0;
+	virtual void Events(Controller& controller) = 0;
 
 	virtual void SetSprite(SDL_Texture* texture) = 0;
 	void SetSpriteRenderer(SDL_Renderer* render)
@@ -36,17 +38,22 @@ class Character : public Node
 
   protected:
 	SDL_Rect& Collision( ) { return mCollision; }
-	SDL_Rect& Size( ) { return mSize; }
+	SDL_Rect& Src( ) { return mSrc; }
+
+	void SetPosition(const Vector2D& vec) { mPosition = vec; }
 	Vector2D& Position( ) { return mPosition; }
-	RigidBody& GetRigidBody( ) { return mRigidBody; }
+
+	void SetSize(const Vector2D& vec) { mSize = vec; }
+	Vector2D& Size( ) { return mSize; }
+
 	Sprite& GetSprite( ) { return mSprite; }
 
   private:
 	SDL_Rect mCollision { };
-	SDL_Rect mSize { };
+	SDL_Rect mSrc { };
 
 	Vector2D mPosition { };
-	RigidBody mRigidBody { this };
+	Vector2D mSize { };
 
 	Sprite mSprite;
 };

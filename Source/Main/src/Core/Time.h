@@ -1,8 +1,16 @@
 #ifndef TIME_H
 #define TIME_H
 
+#include <time.h>
+// #include <chrono>
+
 namespace Cris
 {
+	// using std::chrono::duration_cast;
+	// using std::chrono::milliseconds;
+	// using std::chrono::seconds;
+	// using std::chrono::system_clock;
+
 	class Time
 	{
 	  public:
@@ -10,9 +18,14 @@ namespace Cris
 		// ~Time( );
 		[[nodiscard]] float GetDeltaTime( ) const { return mDeltaTime; }
 
-		void Tick( );
-		void SetFPS(float fps) { mFPS = fps; }
-		void SetFPSLimit(float fpsl) { mFPSLimit = fpsl; }
+		void DeltaTimeStart( );
+		void SetDeltaTimeFPS(float fps) { mFPS = fps; }
+		void SetDeltaTimeFPSLimit(float fpsl) { mFPSLimit = fpsl; }
+
+		void ResetClock( );
+		double CurrentMilliSeconds( );
+		double CurrentSeconds( );
+		time_t GetPrevClock( ) const;
 
 		/* Cast the class as a Float */
 		// operator float( ) const { return mTime; }
@@ -29,8 +42,14 @@ namespace Cris
 		// Amount of time elapsed since last frame
 		// Note: How many pixels changed per second, Not per frame
 		float mDeltaTime { };
-		float mLastUpdate { };
-		float mCurrentUpdate { };
+
+		// ------------
+		// time_t mCurrentClock { };
+		// time_t mPrevClock { };
+
+		clock_t mClockStart { };
+		clock_t mClockCurrent { };
+		clock_t mClockPrev { };
 	};
 }	// namespace Cris
 #endif	 // TIME_H

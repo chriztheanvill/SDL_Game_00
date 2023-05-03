@@ -10,7 +10,7 @@
 #include "../States/GameStateManager.h"
 
 #include "./Time.h"
-#include <fmt/color.h>
+#include "../Utils/Logger.h"
 
 class Engine
 {
@@ -25,8 +25,6 @@ class Engine
 	bool SDL2( );
 	bool InitGraphics( );
 
-	bool mIsRunning { };
-	GameStateManager mGSM;
 	Cris::Time mTime;
 
 	SDL_Window* mWindow;

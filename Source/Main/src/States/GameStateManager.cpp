@@ -5,8 +5,10 @@
 #include "./MenuState.h"
 
 GameStateManager::GameStateManager( )
+	: mController(mEvent)
 {
 	Logger::Debug(LogType::Log, "--- GameStateManager::Constructor ---");
+	Load( );
 }
 
 GameStateManager::~GameStateManager( )
@@ -36,7 +38,7 @@ void GameStateManager::Load( )
 
 	// Game States
 	mGameState = std::make_unique<MenuState>(*this, mTextureManager);
-	mGameState->SetName("MenuState");
+	mController.Detect( );
 
 	mIsRunning = true;
 
@@ -52,7 +54,7 @@ void GameStateManager::Load( )
 // --------------------------------------------------------------------------------------
 std::unique_ptr<State> GameStateManager::NewGameState( )
 {
-	// TODO Checar esta funcion
+	// TODO(cris): Checar esta funsion
 	// Seria mas limpio
 	// mGameState = std::make_unique<GameState>(*this, mTextureManager);
 	// Seria mas limpio
@@ -63,6 +65,8 @@ std::unique_ptr<State> GameStateManager::NewGameState( )
 	// tmpReturn->SetTextureManager(mTextureManager,
 	// "GameState::TextureManager");
 
+	mController.Detect( );
+
 	return tmpReturn;
 	// return std::make_unique<GameState>( );
 }
@@ -72,9 +76,25 @@ void GameStateManager::Update(const float& deltaTime)
 {
 	Logger::Debug(LogType::Log, "DeltaTime: ", deltaTime);
 
+	if (!mTextureManager.GetRender( ))
+	{
+		Logger::Debug(
+			LogType::Error,
+			"GameStateManager::Update Error !!! There is no Renderer set.");
+		exit(1);
+	}
+
 	if (mCurrent && mIsRunning)
 	{
-		Events( );
+		mController.Events( );
+		if (mController.Quit( ))
+		{
+			Logger::Debug(LogType::Error, " Return Events.");
+			mIsRunning = false;
+			return;
+		}
+
+		mCurrent->Events(mController);
 
 		// Switching between Game modes: (Main menu, Game, Pause)
 		std::unique_ptr<State> tmp = mCurrent->Update(deltaTime);
@@ -92,6 +112,7 @@ void GameStateManager::Update(const float& deltaTime)
 	}
 }
 
+// --------------------------------------------------------------------------------------
 void GameStateManager::Render( )
 {
 	// Paint color
@@ -108,32 +129,9 @@ void GameStateManager::Render( )
 	SDL_RenderPresent(mTextureManager.GetRender( ));
 }
 
-void GameStateManager::Events( )
-{
-	SDL_Event event { };
-	while (SDL_PollEvent(&event))
-	{
-		/* ======== SYSTEM ======== */
-		switch (event.type)
-		{
-			case SDL_QUIT: mIsRunning = false; break;
-			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_q ||
-					event.key.keysym.sym == SDLK_ESCAPE)
-				{
-					mIsRunning = false;
-					Logger::Debug(LogType::Log, "Quitting game by Q.");
-				}
-		}
-		/* ======== ~SYSTEM ======== */
+// --------------------------------------------------------------------------------------
 
-		/* ======== Game ======== */
-		mCurrent->Events(event);
-		/* ======== ~Game ======== */
-	}
-	//
-}
-
+// --------------------------------------------------------------------------------------
 void GameStateManager::SetState(std::unique_ptr<State>& state)
 {
 	mPrev = std::move(mCurrent);

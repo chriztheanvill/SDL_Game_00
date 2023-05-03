@@ -1,14 +1,15 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <iostream>
 #include <functional>
+#include <iostream>
+#include <optional>
+#include <string_view>
 #include <typeinfo>
 #include <utility>
 
 #include <fmt/core.h>
 #include <fmt/color.h>
-#include <string_view>
 
 using namespace std::literals;
 
