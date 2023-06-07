@@ -7,7 +7,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../States/GameStateManager.h"
+#include "../States/Engine/GameStateManager.h"
 
 #include "./Time.h"
 #include "../Utils/Logger.h"

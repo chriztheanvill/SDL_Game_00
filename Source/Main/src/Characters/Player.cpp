@@ -1,31 +1,33 @@
 #include "Player.h"
 #include "../Graphics/TextureManager.h"
 
-Player::Player(Node* node, TextureManager& tm)
-	: Character(node, "Player")
+Player::Player(TextureManager& tm)
+	: Character("Player")
 {
-	Logger::Debug(LogType::Log,
-				  "--- GameState::Character::Player::Constructor ---");
+	Logger::Debug(LogType::Log, "Player::Constructor: ", GetName( ));
 
-	Position( ).SetVector(Vector2D::Zero( ));
-	// mPosition.SetVector({ 50, 10 });
+	tc.position = Vector2D::Zero( );
+	tc.scale = { 100, 200 };
+	tc.rotation = 0.0;
 
-	Size( ) = { 100, 500 };
+	SetTransform(tc);
+	// SetTransform({ Vector2D::Zero( ), { 100, 200 }, 0.0 });
+
 	Collision( ) = {
-		static_cast<int>(Position( ).GetX( )),
-		static_cast<int>(Position( ).GetY( )),
-		static_cast<int>(Size( ).GetX( )),
-		static_cast<int>(Size( ).GetY( )),
+		static_cast<int>(GetTransform( ).position.GetX( )),
+		static_cast<int>(GetTransform( ).position.GetY( )),
+		static_cast<int>(GetTransform( ).scale.GetX( )),
+		static_cast<int>(GetTransform( ).scale.GetY( )),
 	};
 
 	GetSprite( ).SetName("Sprite::Player");
 	GetSprite( ).SetRenderer(tm.GetRender( ));
 	GetSprite( ).SetTexture(tm.Load("Vivian", "assets/images/Vivian.jpg"));
 	GetSprite( ).SetSrc({ });
-	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
-						  static_cast<int>(Position( ).GetY( )),
-						  static_cast<int>(Size( ).GetX( )),
-						  static_cast<int>(Size( ).GetY( )) });
+	GetSprite( ).SetDst({ static_cast<int>(GetTransform( ).position.GetX( )),
+						  static_cast<int>(GetTransform( ).position.GetY( )),
+						  static_cast<int>(GetTransform( ).scale.GetX( )),
+						  static_cast<int>(GetTransform( ).scale.GetY( )) });
 	// GetSprite( ).SetDst({ 0, 0, 100, 300 });
 
 	// GetSprite( ).SetRenderer(tm->GetRender( ));
@@ -34,7 +36,7 @@ Player::Player(Node* node, TextureManager& tm)
 
 Player::~Player( )
 {
-	Logger::Debug(LogType::Log, "~GameState::Character::Player::Destructor");
+	Logger::Debug(LogType::Log, "~Player::Destructor: ", GetName( ));
 	// NodeLogComplete( );
 }
 
@@ -52,27 +54,48 @@ void Player::SetSprite(SDL_Texture* texture)
 
 void Player::Update(const float& deltaTime)
 {
-	mRigidBody.Update(deltaTime);
+	mRigidBody.Update(GameType::TopDown, deltaTime);
+	// mRigidBody.ApplyForceY(mGravity);
 	Position( ).Transform(mRigidBody.Velocity( ));
+
+	// Logger::Debug(LogType::Debug,
+	// 			  "++++++++++++++++++Player::RigidBody++++++++++++++++++");
+
+	// Logger::Debug(LogType::Debug,
+	// 			  "Player::RigidBody::Force",
+	// 			  " x: "sv,
+	// 			  mRigidBody.Force( ).GetX( ),
+	// 			  " - y: "sv,
+	// 			  mRigidBody.Force( ).GetY( ));
+
+	// Logger::Debug(LogType::Debug,
+	// 			  "Player::RigidBody::Acceleration",
+	// 			  " x: "sv,
+	// 			  mRigidBody.Acceleration( ).GetX( ),
+	// 			  " - y: "sv,
+	// 			  mRigidBody.Acceleration( ).GetY( ));
+
+	// Logger::Debug(LogType::Debug,
+	// 			  "-------------Player::RigidBody-------------");
 
 	Logger::Debug(LogType::Debug,
 				  "Player::mPlayer:",
 				  " x: "sv,
-				  Position( ).GetX( ),
+				  GetTransform( ).position.GetX( ),
 				  " - y: "sv,
-				  Position( ).GetY( ));
+				  GetTransform( ).position.GetY( ));
 
 	Collision( ) = {
 		static_cast<int>(Position( ).GetX( )),
 		static_cast<int>(Position( ).GetY( )),
-		static_cast<int>(Size( ).GetX( )),
-		static_cast<int>(Size( ).GetY( )),
+		static_cast<int>(Scale( ).GetX( )),
+		static_cast<int>(Scale( ).GetY( )),
 	};
 
 	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
 						  static_cast<int>(Position( ).GetY( )),
-						  static_cast<int>(Size( ).GetX( )),
-						  static_cast<int>(Size( ).GetY( )) });
+						  static_cast<int>(Scale( ).GetX( )),
+						  static_cast<int>(Scale( ).GetY( )) });
 }
 
 void Player::Render( )
@@ -89,80 +112,29 @@ void Player::Events(Controller& controller)
 	{
 		Logger::Debug(LogType::Warning,
 					  "GameState::Events::Player::Input::KeyDown::D");
-		mRigidBody.ApplyForceX(50);
+		mRigidBody.ApplyForceX(mSpeed);
 	}
 	else if (controller.MoveLeft( ))
 	{
 		Logger::Debug(LogType::Warning,
 					  "GameState::Events::Player::Input::KeyDown::A");
-		mRigidBody.ApplyForceX(-50);
+		mRigidBody.ApplyForceX(-mSpeed);
 	}
-	else { mRigidBody.UnsetForceX( ); }
+	// else { mRigidBody.UnsetForceX( ); } // Platformer
+	else if (controller.MoveUp( ))
+	{
+		Logger::Debug(LogType::Warning,
+					  "GameState::Events::Player::Input::KeyDown::W");
+		mRigidBody.ApplyForceY(-mSpeed);
+	}
+	else if (controller.MoveDown( ))
+	{
+		Logger::Debug(LogType::Warning,
+					  "GameState::Events::Player::Input::KeyDown::S");
+		mRigidBody.ApplyForceY(mSpeed);
+	}
+	else { mRigidBody.UnsetForce( ); }
 
-	// if (controller.WasKeyPressed(SDL_SCANCODE_D))
-	// {
-	// 	Logger::Debug(LogType::Warning,
-	// 				  "PRESSED GameState::Events::Player::Input::KeyDown::D");
-	// }
-
-	// if (controller.WasKeyReleased(SDL_SCANCODE_D))
-	// {
-	// 	Logger::Debug(LogType::Warning,
-	// 				  "RELEASED GameState::Events::Player::Input::KeyDown::D");
-	// }
-
-	// if (controller.IsKeyHeld(SDL_SCANCODE_D))
-	// {
-	// 	Logger::Debug(LogType::Warning,
-	// 				  "HOLDING "
-	// 				  "GameState::Events::Player::Input::KeyDown::D");
-	// }
-
-	//
 	// -------------------------------------------------
 	// -------------------------------------------------
-	//
-	// switch (event.type)
-	// {
-	// 	// case SDL_PRESSED:
-	// 	case SDL_KEYDOWN:
-	// 		if (event.key.keysym.sym == SDLK_d)
-	// 		{
-	// 			Logger::Debug(LogType::Log,
-	// 						  "GameState::Events::Player::Input::KeyDown::d");
-	// 		}
-	// 		else if (event.key.keysym.sym == SDLK_a)
-	// 		{
-	// 			Logger::Debug(LogType::Log,
-	// 						  "GameState::Events::Player::Input::KeyDown::a");
-	// 			mRigidBody.ApplyForceX(-50);
-	// 		}
-	// 		break;
-
-	// 	case SDL_KEYUP:
-	// 		if (event.key.keysym.sym == SDLK_d ||
-	// 			event.key.keysym.sym == SDLK_a)
-	// 		{
-	// 			Logger::Debug(
-	// 				LogType::Log,
-	// 				"++++++++++++++++GameState::Events::Player::UnsetX");
-	// 			mRigidBody.UnsetForceX( );
-	// 		}
-	// 		break;
-
-	// 		//
-	// 		// if (event.key.keysym.sym == SDLK_w)
-	// 		// {
-	// 		// 	std::cout << "\nGameState::Events::Input::w";
-	// 		// }
-	// 		// else if (event.key.keysym.sym == SDLK_s)
-	// 		// {
-	// 		// 	std::cout << "\nGameState::Events::Input::s";
-	// 		// }
-	// 		// else
-	// 		// {
-	// 		// 	std::cout << "\nGameState::Events::UnsetY";
-	// 		// 	velocity.UnsetForceY( );
-	// 		// }
-	// }
 }

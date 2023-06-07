@@ -4,13 +4,18 @@
 #include "./Vector2D.h"
 #include "../Core/Node.h"
 
+enum class GameType
+{
+	TopDown,
+	Platformer
+};
+
 class RigidBody : public Node
 {
   public:
-	RigidBody(Node* parent = nullptr, std::string_view name = "")
-		: Node(parent, name)
+	RigidBody( )
 	{
-		SetName("RigidBody::Player");
+		SetName("RigidBody");
 		Logger::Debug(LogType::Log, "RigidBody::Constructor ", GetName( ));
 	}
 	// RigidBody( ) = default;
@@ -37,24 +42,36 @@ class RigidBody : public Node
 	void ApplyFriction(const Vector2D& v) { mFriction = v; }
 	void UnsetFriction( ) { mFriction = Vector2D::Zero( ); }
 
-	void Update(const float& deltaTime)
+	void Update(GameType gametype, const float& deltaTime)
 	{
-		mAcceleration.SetX((mForce.GetX( ) + mFriction.GetX( )) / mMass);
-		mAcceleration.SetY(mGravity + mForce.GetY( ) / mMass);
-		mVelocity = mAcceleration * deltaTime;
-		// mVelocity = (mAcceleration * deltaTime) * mTime;
-		mPosition = mVelocity * deltaTime;
+		if (GameType::Platformer == gametype)
+		{
+			mAcceleration.SetX((mForce.GetX( ) + mFriction.GetX( )) / mMass);
+			mAcceleration.SetY(mGravity + mForce.GetY( ) / mMass);
+			mVelocity = mAcceleration * deltaTime;
+			// mVelocity = (mAcceleration * deltaTime) * mTime;
+			mPosition = mVelocity * deltaTime;
+		}
+		else
+		{
+			mAcceleration.SetX((mForce.GetX( ) + mFriction.GetX( )) / mMass);
+			mAcceleration.SetY((mForce.GetY( ) + mFriction.GetY( )) / mMass);
+			mVelocity = mAcceleration * deltaTime;
+			mPosition = mVelocity * deltaTime;
+		}
 	}
 
 	const float& Mass( ) const { return mMass; }
+	const float& Gravity( ) const { return mGravity; }
 	const Vector2D& Pos( ) const { return mPosition; }
 	const Vector2D& Velocity( ) const { return mVelocity; }
 	const Vector2D& Acceleration( ) const { return mAcceleration; }
+	const Vector2D& Force( ) const { return mForce; }
 
   private:
 	float mMass { 1 };
 	float mGravity { 9.8 };
-	int16_t mTime { 10 };
+	uint8_t mTime { 10 };
 
 	Vector2D mForce { 0, 0 };
 	Vector2D mFriction { 0, 0 };

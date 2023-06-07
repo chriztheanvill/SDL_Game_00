@@ -59,7 +59,7 @@
 			"label": "Command CMake Compile Conan",
 			"type": "shell",
 			"command": [
-				"kitty sh -c ' cd ${workspaceFolder}/build/Debug ; echo ; cmake --build . --config Debug ; echo ; echo ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Finish ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; exit ; exec bash '"
+				"kitty sh -c ' cd ${workspaceFolder}/build/Debug ; echo ; cmake --build . --config Debug  --target all -- -j `nproc` ; echo ; echo ; echo ------ ------ ------ ------ ------ ------ ------ ; echo ------ ------ ------ Finish ------ ------ ------ ; echo ------ ------ ------ ------ ------ ------ ------ ; exit ; exec bash '"
 			],
 			"args": [],
 			"group": "build",

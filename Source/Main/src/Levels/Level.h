@@ -2,14 +2,20 @@
 #define LEVEL_H
 
 // Maps
-#include "./LevelManager.hpp"
 #include "../Graphics/TextureManager.h"
+#include "../Characters/Player.h"
 
-class Level
+class LevelManager;
+class Controller;
+
+#include "../Core/Node.h"
+class Level : public Node
 {
   public:
-	Level(LevelManager& lm, TextureManager& tm, std::string_view name);
-	~Level( );
+	Level(LevelManager& lm,
+		  TextureManager& tm,
+		  std::string_view name = "LevelEmpty");
+	~Level( ) override;
 
 	void Update(const float& deltaTime);
 	void Render( );
@@ -19,14 +25,12 @@ class Level
 
 	void Init( );
 
-	bool IsRunning( ) const { return mRunning; }
+	[[nodiscard]] auto IsRunning( ) const -> bool { return mRunning; }
 
   private:
 	bool mRunning { };
 	bool mInit { };
 	bool mFinish { };
-
-	std::string_view mName;
 
 	Player mPlayer;
 	TextureManager& mTextureManager;

@@ -10,20 +10,22 @@
 #include "../Components/Sprite.h"
 #include "../Input/Controller.h"
 
+#include "../Components/Transform.hpp"
 class Character : public Node
 {
   public:
-	Character(Node* node = nullptr, std::string_view name = "")
-		: Node(node, name)
+	Character(std::string_view name = "EmptyCharacter")
+		: Node(name)
 	{
-		Logger::Debug(LogType::Log,
-					  "--- GameState::Character::Constructor ---");
+		std::optional<Node> n;
+
+		Logger::Debug(LogType::Log, "Character::Constructor: ", GetName( ));
 		mSprite.SetName(name);
 	}
 
 	~Character( ) override
 	{
-		Logger::Debug(LogType::Log, "~GameState::Character::Destructor");
+		Logger::Debug(LogType::Log, "~Character::Destructor: ", GetName( ));
 	}
 
 	virtual void Update(const float& deltaTime) = 0;
@@ -40,20 +42,32 @@ class Character : public Node
 	SDL_Rect& Collision( ) { return mCollision; }
 	SDL_Rect& Src( ) { return mSrc; }
 
-	void SetPosition(const Vector2D& vec) { mPosition = vec; }
-	Vector2D& Position( ) { return mPosition; }
+	/* Transform has 3 values:
+	Position: Vector2D
+	Scale: Vector2D
+	Rotacion: doble
+	*/
+	void SetTransform(const TransformComponent& tc) { mTransform = tc; }
+	TransformComponent& GetTransform( ) { return mTransform; }
 
-	void SetSize(const Vector2D& vec) { mSize = vec; }
-	Vector2D& Size( ) { return mSize; }
+	void SetPosition(const Vector2D& vec) { mTransform.position = vec; }
+	Vector2D& Position( ) { return mTransform.position; }
+
+	void SetScale(const Vector2D& vec) { mTransform.scale = vec; }
+	Vector2D& Scale( ) { return mTransform.scale; }
+
+	void SetRotation(const double& rot) { mTransform.rotation = rot; }
+	double GetRotation( ) const { return mTransform.rotation; }
 
 	Sprite& GetSprite( ) { return mSprite; }
 
   private:
+	TransformComponent mTransform { };
 	SDL_Rect mCollision { };
 	SDL_Rect mSrc { };
 
-	Vector2D mPosition { };
-	Vector2D mSize { };
+	// Vector2D mPosition { };
+	// Vector2D mSize { };
 
 	Sprite mSprite;
 };

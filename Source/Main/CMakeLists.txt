@@ -28,10 +28,13 @@ target_link_libraries(
 	# # Options
 	# project_options
 	# project_warnings
+	#
+	# # Pkgs
 	Catch2::Catch2
 	fmt::fmt
-	range-v3::range-v3
 	nlohmann_json::nlohmann_json
+
+	# range-v3::range-v3
 
 	# CONAN_PKG::imgui-sfml
 	# CONAN_PKG::sdl2

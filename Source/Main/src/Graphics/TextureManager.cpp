@@ -3,24 +3,19 @@
 #include <cassert>
 
 // -----------------------------------------------------------------------------------
-TextureManager::TextureManager(Node* parent)
-	: Node(parent, "TextureManager")
+TextureManager::TextureManager( )
 {
 	// Setting NODE
 	SetName("TextureManager");
 	// SetChild(&mPlayer);
 
-	Logger::Debug(LogType::Log,
-				  "--- TextureManager::Constructor ---",
-				  GetName( ));
+	Logger::Debug(LogType::Log, "TextureManager::Constructor: ", GetName( ));
 }
 
 // -----------------------------------------------------------------------------------
 TextureManager::~TextureManager( )
 {
-	Logger::Debug(LogType::Log,
-				  "--- ~TextureManager::Destructor ---",
-				  GetName( ));
+	Logger::Debug(LogType::Log, "~TextureManager::Destructor: ", GetName( ));
 	// NodeLogComplete( );
 }
 

@@ -6,14 +6,18 @@
 LevelManager::LevelManager(TextureManager& tm)
 	: mTextureManager(tm)
 {
+	Logger::Debug(LogType::Log, "LevelManager::Constructor. ");
 	Init( );
 }
 
-LevelManager::~LevelManager( ) {}
+LevelManager::~LevelManager( )
+{
+	Logger::Debug(LogType::Log, "~LevelManager::Destructor. ");
+}
 
 void LevelManager::Init( )
 {
-	std::cout << "\n\nLevel Manager, Init\n\n";
+	Logger::Debug(LogType::Debug, "LevelManager::Init ");
 
 	mCurrentLevelName = LevelNames::Lv_00;
 

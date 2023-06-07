@@ -2,6 +2,8 @@
 // #include "../States/GameStateManager.h"
 // #include "./Time.h"
 
+bool Logger::write = false;
+
 void CheckCPPVersion( )
 {
 	std::cout << "\n\nCheck C++ version: ";
@@ -15,8 +17,12 @@ void CheckCPPVersion( )
 
 Engine::Engine( )
 {
+	Logger::CanWrite(true);
+	Logger::ANewFile( );
 	Logger::Debug(LogType::Log, "--- Engine ---");
+
 	CheckCPPVersion( );
+
 	if (!Init( ))
 	{
 		Logger::Debug(LogType::Error, "Error, Cant load SDL2 framework !!!");

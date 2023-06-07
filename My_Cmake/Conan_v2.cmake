@@ -52,7 +52,8 @@ find_package(spdlog)
 find_package(glew)
 find_package(nlohmann_json)
 find_package(sol2)
-find_package(range-v3)
+
+# find_package(range-v3)
 
 # find_package(glad REQUIRED) ## No Conan2
 #

@@ -9,8 +9,8 @@
 
 #include "../Characters/Player.h"
 #include "../Graphics/TextureManager.h"
+#include "Level.h"
 
-class Level;
 class TextureManager;
 
 enum class LevelNames
@@ -32,7 +32,7 @@ class LevelManager
 	virtual void Render( );
 	virtual void Events(Controller& controller);
 
-	TextureManager& GetTextureManager( ) { return mTextureManager; }
+	auto GetTextureManager( ) -> TextureManager& { return mTextureManager; }
 	void SetTextureManager(TextureManager& tm) { mTextureManager = tm; }
 
 	virtual void Init( );
@@ -45,8 +45,6 @@ class LevelManager
 	LevelNames mCurrentLevelName;
 	// std::string_view mCurrentLevelName;
 	std::map<LevelNames, std::unique_ptr<Level>> mLevels;
-	// std::map<std::string_view, std::unique_ptr<Level>> mLevels;
-	// std::map<std::unique_ptr<Level>, std::string_view> mLevels;
 	std::unique_ptr<Level> mCurrentLevel { };
 };
 

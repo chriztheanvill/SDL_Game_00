@@ -4,7 +4,7 @@ Controller::Controller(SDL_Event& e)
 	: InputSystem(e)
 {
 	Logger::Debug(LogType::Log, "Controller::Constructor");
-	// Detect( );
+	Detect( );
 }
 
 Controller::~Controller( )
@@ -15,41 +15,42 @@ Controller::~Controller( )
 void Controller::Detect( )
 {
 	// Usar un for, para detectar los demas controles
-	// Logger::Debug(LogType::Debug,
-	// 			  "Controller::Detect Controllers detected: ",
-	// 			  SDL_NumJoysticks( ));
-	// if (SDL_NumJoysticks( ) >= 1)
-	// {
-	// 	Logger::Debug(LogType::Debug, "Controller::Detect Controller detected");
-	// 	// Joystick 1
-	// 	mJoystick = SDL_JoystickOpen(0);
-	// 	if (mJoystick == nullptr)
-	// 	{
-	// 		Logger::Debug(LogType::Error,
-	// 					  "Controller::Detect Error Joystick 0");
-	// 	}
+	Logger::Debug(LogType::Debug,
+				  "Controller::Detect Controllers detected: ",
+				  SDL_NumJoysticks( ));
+	if (SDL_NumJoysticks( ) >= 1)
+	{
+		Logger::Debug(LogType::Debug, "Controller::Detect Controller detected");
+		// Joystick 1
+		SetJoystick(SDL_JoystickOpen(0));
 
-	// 	mInputDevice = InputDevice::Controller;
+		if (GetJoystick( ) == nullptr)
+		{
+			Logger::Debug(LogType::Error,
+						  "Controller::Detect Error Joystick 0");
+		}
 
-	// 	// Show info
-	// 	Logger::Debug(LogType::Debug,
-	// 				  "Controller::Detect Name: ",
-	// 				  SDL_JoystickName(mJoystick));
-	// 	Logger::Debug(LogType::Debug,
-	// 				  "Controller::Detect Num Axes: ",
-	// 				  SDL_JoystickNumAxes(mJoystick));
-	// 	Logger::Debug(LogType::Debug,
-	// 				  "Controller::Detect Num Buttons: ",
-	// 				  SDL_JoystickNumButtons(mJoystick));
-	// }
-	// else
-	// {
-	// 	Logger::Debug(LogType::Warning,
-	// 				  "Controller::Detect ---- Using Keyboard !!!!!!");
+		mInputDevice = InputDevice::Controller;
 
-	// 	mInputDevice = InputDevice::Keyboard;
-	// 	mJoystick = nullptr;
-	// }
+		// Show info
+		Logger::Debug(LogType::Debug,
+					  "Controller::Detect Name: ",
+					  SDL_JoystickName(GetJoystick( )));
+		Logger::Debug(LogType::Debug,
+					  "Controller::Detect Num Axes: ",
+					  SDL_JoystickNumAxes(GetJoystick( )));
+		Logger::Debug(LogType::Debug,
+					  "Controller::Detect Num Buttons: ",
+					  SDL_JoystickNumButtons(GetJoystick( )));
+	}
+	else
+	{
+		Logger::Debug(LogType::Warning,
+					  "Controller::Detect ---- Using Keyboard !!!!!!");
+
+		mInputDevice = InputDevice::Keyboard;
+		SetJoystick(nullptr);
+	}
 }
 
 void Controller::HandleInput( )
@@ -66,7 +67,9 @@ void Controller::HandleInput( )
 
 bool Controller::MoveLeft( )
 {
-	return IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A);
+	return (IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A));
+	// return (IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A))	 //
+	// 	   || IsJoyButtonHeld(0);
 }
 
 bool Controller::MoveRight( )
@@ -74,9 +77,19 @@ bool Controller::MoveRight( )
 	return IsKeyHeld(SDL_SCANCODE_RIGHT) || IsKeyHeld(SDL_SCANCODE_D);
 }
 
-bool Controller::MoveUp( ) { return false; }
-bool Controller::MoveDown( ) { return false; }
+bool Controller::MoveUp( )
+{
+	return IsKeyHeld(SDL_SCANCODE_UP) || IsKeyHeld(SDL_SCANCODE_W);
+}
+bool Controller::MoveDown( )
+{
+	return IsKeyHeld(SDL_SCANCODE_DOWN) || IsKeyHeld(SDL_SCANCODE_S);
+}
 
-bool Controller::Attack( ) { return false; }
-bool Controller::Jump( ) { return false; }
-bool Controller::Interact( ) { return false; }
+bool Controller::ButtonStart( ) { return IsKeyHeld(SDL_SCANCODE_RETURN); }
+bool Controller::ButtonSelect( ) { return IsKeyHeld(SDL_SCANCODE_BACKSLASH); }
+
+bool Controller::ButtonA( ) { return IsKeyHeld(SDL_SCANCODE_K); }
+bool Controller::ButtonB( ) { return IsKeyHeld(SDL_SCANCODE_L); }
+bool Controller::ButtonX( ) { return IsKeyHeld(SDL_SCANCODE_O); }
+bool Controller::ButtonY( ) { return IsKeyHeld(SDL_SCANCODE_P); }

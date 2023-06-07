@@ -8,7 +8,7 @@
 class TextureManager : public Node
 {
   public:
-	TextureManager(Node* parent = nullptr);
+	TextureManager( );
 	virtual ~TextureManager( );
 
 	SDL_Texture* Load(std::string_view name = "", std::string_view path = "");
