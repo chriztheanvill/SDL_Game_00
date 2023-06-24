@@ -79,7 +79,7 @@ void Player::Update(const float& deltaTime)
 	// 			  "-------------Player::RigidBody-------------");
 
 	Logger::Debug(LogType::Debug,
-				  "Player::mPlayer:",
+				  "Player::Update::mPlayer:",
 				  " x: "sv,
 				  GetTransform( ).position.GetX( ),
 				  " - y: "sv,
@@ -101,36 +101,33 @@ void Player::Update(const float& deltaTime)
 void Player::Render( )
 {
 	// SDL_SetRenderDrawColor(mGameStateManager.GetEngine( ).GetRender( ),
+	Logger::Debug(LogType::Debug, "Player::Render");
 	GetSprite( ).Render( );
 }
 
 void Player::Events(Controller& controller)
 {
-	Logger::Debug(LogType::Debug, "GameState::Events::Player");
+	Logger::Debug(LogType::Debug, "Player::Events");
 
 	if (controller.MoveRight( ))
 	{
-		Logger::Debug(LogType::Warning,
-					  "GameState::Events::Player::Input::KeyDown::D");
+		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::D");
 		mRigidBody.ApplyForceX(mSpeed);
 	}
 	else if (controller.MoveLeft( ))
 	{
-		Logger::Debug(LogType::Warning,
-					  "GameState::Events::Player::Input::KeyDown::A");
+		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::A");
 		mRigidBody.ApplyForceX(-mSpeed);
 	}
 	// else { mRigidBody.UnsetForceX( ); } // Platformer
 	else if (controller.MoveUp( ))
 	{
-		Logger::Debug(LogType::Warning,
-					  "GameState::Events::Player::Input::KeyDown::W");
+		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::W");
 		mRigidBody.ApplyForceY(-mSpeed);
 	}
 	else if (controller.MoveDown( ))
 	{
-		Logger::Debug(LogType::Warning,
-					  "GameState::Events::Player::Input::KeyDown::S");
+		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::S");
 		mRigidBody.ApplyForceY(mSpeed);
 	}
 	else { mRigidBody.UnsetForce( ); }

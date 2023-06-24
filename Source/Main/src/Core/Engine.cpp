@@ -202,6 +202,7 @@ void Engine::Loop( )
 	{
 		mTime.DeltaTimeStart( );
 		mGSM.Update(mTime.GetDeltaTime( ));
+
 		// Logger::Debug(LogType::Log,
 		// 			  "--- Time passed milliseconds: ",
 		// 			  mTime.CurrentMilliSeconds( ));

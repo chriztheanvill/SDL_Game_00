@@ -34,21 +34,21 @@ void Level::Init( )
 void Level::Update(const float& deltaTime)
 {
 	//
-	Logger::Debug(LogType::Debug, "Updating map: ", GetName( ));
+	Logger::Debug(LogType::Debug, "Level::Update:: map: ", GetName( ));
 	mPlayer.Update(deltaTime);
 }
 
 void Level::Render( )
 {
 	//
-	Logger::Debug(LogType::Debug, "Rendering map: ", GetName( ));
+	Logger::Debug(LogType::Debug, "Level::Render map: ", GetName( ));
 	mPlayer.Render( );
 }
 
 void Level::Events(Controller& controller)
 {
 	//
-	Logger::Debug(LogType::Debug, "Events map: ", GetName( ));
+	Logger::Debug(LogType::Debug, "Level::Events  ", GetName( ));
 	mPlayer.Events(controller);
 	// mPlayer.Events(event);
 }

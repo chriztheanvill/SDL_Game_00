@@ -24,10 +24,10 @@ Debug::Controller::Detect Name: 8BitDo Pro 2
 Debug::Controller::Detect Num Axes: 6
 Debug::Controller::Detect Num Buttons: 16
 > Log::GameStateManager::SetState
-Debug::GameStateManager::SetState mCurrent: 0x7ffe4a8b0440 - MenuState
+Debug::GameStateManager::SetState mCurrent: 0x7ffe3bd8e6f0 - MenuState
 Debug::==================MenuState::EnterState==================
 > Log::--- Enter to the loop --- 
-> Log::DeltaTime: 0.052
+> Log::DeltaTime: 0.033
 Debug::MenuState::Update
 Debug::MenuState::Update::Return GameState
 > Log::### State::Constructor :GameState
@@ -71,74 +71,50 @@ Debug::GameState::Load
 	name: test
 	path: assets/images/bkBlue.png
 > Log::~TextureManager::Destructor: TextureManager GameState Simple
-> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe4a8affa0
+> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe3bd8e250
 Debug::Controller::Detect Controllers detected: 1
 Debug::Controller::Detect Controller detected
 Debug::Controller::Detect Name: 8BitDo Pro 2
 Debug::Controller::Detect Num Axes: 6
 Debug::Controller::Detect Num Buttons: 16
-Debug::GameStateManager::Update Updating +++ tmp: 0x7ffe4a8b01c8 - GameState
+Debug::GameStateManager::Update Updating +++ tmp: 0x7ffe3bd8e478 - GameState
 > Log::GameStateManager::SetState
-Debug::GameStateManager::SetState mPrev: 0x7ffe4a8b0448 - MenuState
+Debug::GameStateManager::SetState mPrev: 0x7ffe3bd8e6f8 - MenuState
 Debug::==================MenuState::ExitState==================
-Debug::GameStateManager::SetState mCurrent: 0x7ffe4a8b0440 - GameState
+Debug::GameStateManager::SetState mCurrent: 0x7ffe3bd8e6f0 - GameState
 > Log::==================GameState::EnterState==================
-> Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
+> Log::DeltaTime: 0.14
+Debug::Level::Events  Level_00
+Debug::Player::Events
 Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer: x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
 > Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
+Debug::Level::Events  Level_00
+Debug::Player::Events
 Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer: x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
 > Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
+Debug::Level::Events  Level_00
+Debug::Player::Events
 Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer: x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
 > Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
+Debug::Level::Events  Level_00
+Debug::Player::Events
 Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
-> Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
-Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
-> Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
-Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
-> Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
-Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
-> Log::DeltaTime: 0.033
-Debug::Events map: Level_00
-Debug::GameState::Events::Player
-Debug::GameState::Update
-Debug::Updating map: Level_00
-Debug::Player::mPlayer: x: 0 - y: 0
-Debug::Rendering map: Level_00
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer: x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
 > Log::DeltaTime: 0.033
 
 ## Warning ----------------------------
@@ -153,20 +129,20 @@ GameStateManager::Update Quit!!!
 > Log::~Player::Destructor: Player
 > Log::~TransformComponent::Destructor: 
 > Log::~RigidBody::DestructorRigidBody
-> Log::~ NODE Destructor : RigidBody : Address: 0x2394e78
+> Log::~ NODE Destructor : RigidBody : Address: 0x1706b78
 > Log::~Character::Destructor: Player
 > Log::~TransformComponent::Destructor: 
-> Log::~ NODE Destructor : Player : Address: 0x2394dd0
-> Log::~ NODE Destructor : Level_00 : Address: 0x2394db0
+> Log::~ NODE Destructor : Player : Address: 0x1706ad0
+> Log::~ NODE Destructor : Level_00 : Address: 0x1706ab0
 > Log::Level::Destructor: Level_01
 > Log::~Player::Destructor: Player
 > Log::~TransformComponent::Destructor: 
 > Log::~RigidBody::DestructorRigidBody
-> Log::~ NODE Destructor : RigidBody : Address: 0x239a148
+> Log::~ NODE Destructor : RigidBody : Address: 0x170b418
 > Log::~Character::Destructor: Player
 > Log::~TransformComponent::Destructor: 
-> Log::~ NODE Destructor : Player : Address: 0x239a0a0
-> Log::~ NODE Destructor : Level_01 : Address: 0x239a080
+> Log::~ NODE Destructor : Player : Address: 0x170b370
+> Log::~ NODE Destructor : Level_01 : Address: 0x170b350
 > Log::### ~State::EngineState::Destructor :GameState
 > Log::### ~State::Destructor :GameState
 > Log::### MenuState::Destructor : MenuState
@@ -174,7 +150,7 @@ GameStateManager::Update Quit!!!
 > Log::### ~State::Destructor :MenuState
 > Log::--- ~GameStateManager ---
 > Log::~TextureManager::Destructor: TextureManager GameState Simple
-> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe4a8b03e8
+> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe3bd8e698
 > Log::~Controller::Destructor
 > Log::~InputSystem::Destructor
 Debug::Game Exit!
