@@ -71,7 +71,7 @@ void GameState::Load( )
 	// mLevel00.Init( );
 }
 
-std::unique_ptr<EngineState> GameState::Update(const float& deltaTime)
+auto GameState::Update(const float& deltaTime) -> std::unique_ptr<EngineState>
 {
 	Logger::Debug(LogType::Debug, "GameState::Update");
 

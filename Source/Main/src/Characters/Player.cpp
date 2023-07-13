@@ -6,28 +6,32 @@ Player::Player(TextureManager& tm)
 {
 	Logger::Debug(LogType::Log, "Player::Constructor: ", GetName( ));
 
-	tc.position = Vector2D::Zero( );
-	tc.scale = { 100, 200 };
-	tc.rotation = 0.0;
+	mPlayerStats = CharStats { 0, 0, 0, 0, 0, 0, 100, 250, 350 };
 
-	SetTransform(tc);
+	SetPosition(Vector2D::Zero( ));
+	SetSize({ 100, 100 });
+	SetScale({ 1, 1 });
+	// tc.scale = { Src( ).x, Src( ).y };
+	SetRotation(0.0);
+
+	// SetTransform(tc);
 	// SetTransform({ Vector2D::Zero( ), { 100, 200 }, 0.0 });
 
 	Collision( ) = {
-		static_cast<int>(GetTransform( ).position.GetX( )),
-		static_cast<int>(GetTransform( ).position.GetY( )),
-		static_cast<int>(GetTransform( ).scale.GetX( )),
-		static_cast<int>(GetTransform( ).scale.GetY( )),
+		static_cast<int>(Position( ).GetX( )),
+		static_cast<int>(Position( ).GetY( )),
+		static_cast<int>(Size( ).GetX( )),
+		static_cast<int>(Size( ).GetY( )),
 	};
 
 	GetSprite( ).SetName("Sprite::Player");
 	GetSprite( ).SetRenderer(tm.GetRender( ));
 	GetSprite( ).SetTexture(tm.Load("Vivian", "assets/images/Vivian.jpg"));
 	GetSprite( ).SetSrc({ });
-	GetSprite( ).SetDst({ static_cast<int>(GetTransform( ).position.GetX( )),
-						  static_cast<int>(GetTransform( ).position.GetY( )),
-						  static_cast<int>(GetTransform( ).scale.GetX( )),
-						  static_cast<int>(GetTransform( ).scale.GetY( )) });
+	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
+						  static_cast<int>(Position( ).GetY( )),
+						  static_cast<int>(Size( ).GetX( )),
+						  static_cast<int>(Size( ).GetY( )) });
 	// GetSprite( ).SetDst({ 0, 0, 100, 300 });
 
 	// GetSprite( ).SetRenderer(tm->GetRender( ));
@@ -81,21 +85,21 @@ void Player::Update(const float& deltaTime)
 	Logger::Debug(LogType::Debug,
 				  "Player::Update::mPlayer:",
 				  " x: "sv,
-				  GetTransform( ).position.GetX( ),
+				  Position( ).GetX( ),
 				  " - y: "sv,
-				  GetTransform( ).position.GetY( ));
+				  Position( ).GetY( ));
 
 	Collision( ) = {
 		static_cast<int>(Position( ).GetX( )),
 		static_cast<int>(Position( ).GetY( )),
-		static_cast<int>(Scale( ).GetX( )),
-		static_cast<int>(Scale( ).GetY( )),
+		static_cast<int>(Size( ).GetX( )),
+		static_cast<int>(Size( ).GetY( )),
 	};
 
 	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
 						  static_cast<int>(Position( ).GetY( )),
-						  static_cast<int>(Scale( ).GetX( )),
-						  static_cast<int>(Scale( ).GetY( )) });
+						  static_cast<int>(Size( ).GetX( )),
+						  static_cast<int>(Size( ).GetY( )) });
 }
 
 void Player::Render( )
@@ -109,28 +113,37 @@ void Player::Events(Controller& controller)
 {
 	Logger::Debug(LogType::Debug, "Player::Events");
 
-	if (controller.MoveRight( ))
-	{
-		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::D");
-		mRigidBody.ApplyForceX(mSpeed);
-	}
-	else if (controller.MoveLeft( ))
-	{
-		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::A");
-		mRigidBody.ApplyForceX(-mSpeed);
-	}
-	// else { mRigidBody.UnsetForceX( ); } // Platformer
-	else if (controller.MoveUp( ))
-	{
-		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::W");
-		mRigidBody.ApplyForceY(-mSpeed);
-	}
-	else if (controller.MoveDown( ))
-	{
-		Logger::Debug(LogType::Warning, "Player::Input::KeyDown::S");
-		mRigidBody.ApplyForceY(mSpeed);
-	}
-	else { mRigidBody.UnsetForce( ); }
+	// No es recomendable, tiene problemas de dirección.
+	// if (controller.MoveRight( ))
+	// {
+	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::D");
+	// 	mRigidBody.ApplyForceX(mSpeed);
+	// }
+	// else if (controller.MoveLeft( ))
+	// {
+	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::A");
+	// 	mRigidBody.ApplyForceX(-mSpeed);
+	// }
+	// // else { mRigidBody.UnsetForceX( ); } // Platformer
+	// else if (controller.MoveUp( ))
+	// {
+	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::W");
+	// 	mRigidBody.ApplyForceY(-mSpeed);
+	// }
+	// else if (controller.MoveDown( ))
+	// {
+	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::S");
+	// 	mRigidBody.ApplyForceY(mSpeed);
+	// }
+	// else { mRigidBody.UnsetForce( ); }
+
+	auto moveX =
+		(controller.MoveRight( ) - controller.MoveLeft( )) * mPlayerStats.Speed;
+	auto moveY =
+		(controller.MoveDown( ) - controller.MoveUp( )) * mPlayerStats.Speed;
+
+	mRigidBody.ApplyForceX(moveX);
+	mRigidBody.ApplyForceY(moveY);
 
 	// -------------------------------------------------
 	// -------------------------------------------------

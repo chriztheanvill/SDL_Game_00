@@ -65,31 +65,41 @@ void Controller::HandleInput( )
 	}
 }
 
-bool Controller::MoveLeft( )
+auto Controller::MoveLeft( ) -> int
 {
-	return (IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A));
+	return static_cast<int>(
+		(IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A)));
 	// return (IsKeyHeld(SDL_SCANCODE_LEFT) || IsKeyHeld(SDL_SCANCODE_A))	 //
 	// 	   || IsJoyButtonHeld(0);
 }
 
-bool Controller::MoveRight( )
+auto Controller::MoveRight( ) -> int
 {
-	return IsKeyHeld(SDL_SCANCODE_RIGHT) || IsKeyHeld(SDL_SCANCODE_D);
+	return static_cast<int>(IsKeyHeld(SDL_SCANCODE_RIGHT) ||
+							IsKeyHeld(SDL_SCANCODE_D));
 }
 
-bool Controller::MoveUp( )
+auto Controller::MoveUp( ) -> int
 {
-	return IsKeyHeld(SDL_SCANCODE_UP) || IsKeyHeld(SDL_SCANCODE_W);
+	return static_cast<int>(IsKeyHeld(SDL_SCANCODE_UP) ||
+							IsKeyHeld(SDL_SCANCODE_W));
 }
-bool Controller::MoveDown( )
+auto Controller::MoveDown( ) -> int
 {
-	return IsKeyHeld(SDL_SCANCODE_DOWN) || IsKeyHeld(SDL_SCANCODE_S);
+	return static_cast<int>(IsKeyHeld(SDL_SCANCODE_DOWN) ||
+							IsKeyHeld(SDL_SCANCODE_S));
 }
 
-bool Controller::ButtonStart( ) { return IsKeyHeld(SDL_SCANCODE_RETURN); }
-bool Controller::ButtonSelect( ) { return IsKeyHeld(SDL_SCANCODE_BACKSLASH); }
+auto Controller::ButtonStart( ) -> bool
+{
+	return IsKeyHeld(SDL_SCANCODE_RETURN);
+}
+auto Controller::ButtonSelect( ) -> bool
+{
+	return IsKeyHeld(SDL_SCANCODE_BACKSLASH);
+}
 
-bool Controller::ButtonA( ) { return IsKeyHeld(SDL_SCANCODE_K); }
-bool Controller::ButtonB( ) { return IsKeyHeld(SDL_SCANCODE_L); }
-bool Controller::ButtonX( ) { return IsKeyHeld(SDL_SCANCODE_O); }
-bool Controller::ButtonY( ) { return IsKeyHeld(SDL_SCANCODE_P); }
+auto Controller::ButtonA( ) -> bool { return IsKeyHeld(SDL_SCANCODE_K); }
+auto Controller::ButtonB( ) -> bool { return IsKeyHeld(SDL_SCANCODE_L); }
+auto Controller::ButtonX( ) -> bool { return IsKeyHeld(SDL_SCANCODE_O); }
+auto Controller::ButtonY( ) -> bool { return IsKeyHeld(SDL_SCANCODE_P); }

@@ -14,7 +14,7 @@ class Sprite
 
 	void SetRenderer(SDL_Renderer* render) { mRender = render; }
 	void SetTexture(SDL_Texture* texture) { mTexture = texture; }
-	SDL_Texture* GetTexture( ) const
+	[[nodiscard]] auto GetTexture( ) const -> SDL_Texture*
 	{
 		if (!mTexture)
 		{
@@ -28,13 +28,13 @@ class Sprite
 	void SetPath(std::string_view path) { mPath = path; }
 
 	void SetSrc(const SDL_Rect& rect) { mSrc = rect; }
-	SDL_Rect GetSrc( ) const { return mSrc; }
+	auto GetSrc( ) const -> SDL_Rect { return mSrc; }
 
 	void SetDst(const SDL_Rect& rect) { mDst = rect; }
-	SDL_Rect GetDst( ) const { return mDst; }
+	auto GetDst( ) const -> SDL_Rect { return mDst; }
 
 	void SetPosition(const Vector2D& pos) { mPosition = pos; }
-	Vector2D GetPosition( ) const { return mPosition; }
+	auto GetPosition( ) const -> Vector2D { return mPosition; }
 
 	void Update(const float& deltatime);
 	void Render( );
@@ -51,4 +51,4 @@ class Sprite
 	SDL_Renderer* mRender;
 };
 
-#endif // SPRITE_HPP
+#endif	 // SPRITE_HPP

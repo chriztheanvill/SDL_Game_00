@@ -32,6 +32,7 @@ struct TransformComponent
 
 	Vector2D position { };
 	Vector2D scale { };
+	Vector2D size { };
 	double rotation { };
 };
 

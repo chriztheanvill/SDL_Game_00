@@ -18,11 +18,8 @@ class Player : public Character
 
   private:
 	RigidBody mRigidBody { };
-	TransformComponent tc { };
 
-	const uint8_t mSpeed { 200 };
-	const uint8_t mGravity { 250 };
-	const uint16_t mJump { 350 };
+	CharStats mPlayerStats;
 };
 
 #endif	 // PLAYER_H

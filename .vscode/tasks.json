@@ -132,7 +132,7 @@
 				"$gcc"
 			],
 			"presentation": {
-				"focus": true,
+				"focus": false,
 				"panel": "shared",
 				"reveal": "silent",
 				"close": true

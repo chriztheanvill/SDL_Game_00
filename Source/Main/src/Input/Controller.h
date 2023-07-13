@@ -12,25 +12,25 @@ class Controller : public InputSystem
 	void Detect( );
 	void HandleInput( );
 
-	bool ButtonStart( );
-	bool ButtonSelect( );
+	auto ButtonStart( ) -> bool;
+	auto ButtonSelect( ) -> bool;
 	// Key A
-	bool MoveLeft( );
+	auto MoveLeft( ) -> int;
 	// Key D
-	bool MoveRight( );
+	auto MoveRight( ) -> int;
 	// Key W
-	bool MoveUp( );
+	auto MoveUp( ) -> int;
 	// Key S
-	bool MoveDown( );
+	auto MoveDown( ) -> int;
 
 	// Key K
-	bool ButtonA( );
+	auto ButtonA( ) -> bool;
 	// Key L
-	bool ButtonB( );
+	auto ButtonB( ) -> bool;
 	// Key O
-	bool ButtonX( );
+	auto ButtonX( ) -> bool;
 	// Key P
-	bool ButtonY( );
+	auto ButtonY( ) -> bool;
 
   private:
 	InputDevice mInputDevice { };

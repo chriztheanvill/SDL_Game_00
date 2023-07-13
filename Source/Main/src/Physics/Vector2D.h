@@ -36,7 +36,7 @@ class Vector2D
 	static Vector2D LEFT( ) { return { -1, 0 }; }
 	static Vector2D RIGHT( ) { return { 1, 0 }; }
 
-	Vector2D& operator=(const Vector2D& vec)
+	auto operator=(const Vector2D& vec) -> Vector2D&
 	{
 		if (this == &vec) return *this;
 		mX = vec.mX;
@@ -44,45 +44,49 @@ class Vector2D
 		return *this;
 	}
 
-	bool operator==(const Vector2D& vec) const { return this == &vec; }
-	bool operator!=(const Vector2D& vec) const { return !(this == &vec); }
+	auto operator==(const Vector2D& vec) const -> bool { return this == &vec; }
+	auto operator!=(const Vector2D& vec) const -> bool
+	{
+		return !(this == &vec);
+	}
 
-	Vector2D operator+(const Vector2D& vec) const
+	auto operator+(const Vector2D& vec) const -> Vector2D
 	{
 		return { vec.mX + mX, vec.mY + mY };
 	}
 
-	Vector2D operator-(const Vector2D& vec) const
+	auto operator-(const Vector2D& vec) const -> Vector2D
 	{
 		return { vec.mX - mX, vec.mY - mY };
 	}
 
-	Vector2D operator*(const Vector2D& vec) const
+	auto operator*(const Vector2D& vec) const -> Vector2D
 	{
 		return { vec.mX * mX, vec.mY * mY };
 	}
 
-	Vector2D operator+(const float& val) const
+	auto operator+(const float& val) const -> Vector2D
 	{
 		return { val + mX, val + mY };
 	}
 
-	Vector2D operator-(const float& val) const
+	auto operator-(const float& val) const -> Vector2D
 	{
 		return { val - mX, val - mY };
 	}
 
-	Vector2D operator*(const float& val) const
+	auto operator*(const float& val) const -> Vector2D
 	{
 		return { val * mX, val * mY };
 	}
-	Vector2D operator/(const float& val) const
+	auto operator/(const float& val) const -> Vector2D
 	{
 		if (val <= 0) { return *this; }
 		return { val / mX, val / mY };
 	}
 
-	friend std::ostream& operator<<(std::ostream& ost, const Vector2D& vec)
+	friend auto operator<<(std::ostream& ost, const Vector2D& vec)
+		-> std::ostream&
 	{
 		ost << "\nVec X: " << vec.mX << " - mY: " << vec.mY << "\n";
 		return ost;
@@ -109,13 +113,13 @@ class Vector2D
 		mY = vec.GetY( );
 	}
 
-	Vector2D GetVector( ) const { return { mX, mY }; }
+	auto GetVector( ) const -> Vector2D { return { mX, mY }; }
 
 	void SetX(const float& x) { mX = x; }
 	void SetY(const float& y) { mY = y; }
 
-	const float& GetX( ) const { return mX; }
-	const float& GetY( ) const { return mY; }
+	auto GetX( ) const -> const float& { return mX; }
+	auto GetY( ) const -> const float& { return mY; }
 
   private:
 	float mX, mY;
