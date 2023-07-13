@@ -1,5 +1,5 @@
 ---
-Checks:          "clang-diagnostic-*,clang-analyzer-*,clang-diagnostic-*, clang-analyzer-*, bugprone-*, modernize-*, performance-*, readability-*, portability-*, misc-*, google-*, llvm-*, hicpp-*, -readability-identifier-length, -google-explicit-constructor, -llvm-include-order\n, -hicpp-special-member-functions "
+Checks:          "clang-diagnostic-*,clang-analyzer-*,clang-diagnostic-*, clang-analyzer-*, bugprone-*, modernize-*, performance-*, readability-*, portability-*, misc-*, google-*, llvm-*, hicpp-*, -readability-identifier-length, -google-explicit-constructor, -llvm-include-order\n, -hicpp-special-member-functions, -readability-magic-numbers "
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
@@ -87,7 +87,6 @@ CheckOptions:
   readability-redundant-string-init.StringNames: '::std::basic_string_view;::std::basic_string'
   modernize-make-unique.IgnoreDefaultInitialization: 'true'
   modernize-use-emplace.ContainersWithPushBack: '::std::vector;::std::list;::std::deque'
-  readability-magic-numbers.IgnoreBitFieldsWidths: 'true'
   modernize-make-unique.IncludeStyle: llvm
   modernize-use-override.OverrideSpelling: override
   google-readability-function-size.NestingThreshold: '4294967295'
@@ -99,7 +98,6 @@ CheckOptions:
   modernize-use-emplace.IgnoreImplicitConstructors: 'false'
   readability-suspicious-call-argument.Substring: 'true'
   modernize-use-equals-delete.IgnoreMacros: 'true'
-  readability-magic-numbers.IgnoreAllFloatingPointValues: 'false'
   hicpp-use-auto.RemoveStars: 'false'
   readability-suspicious-call-argument.Abbreviations: 'arr=array;cnt=count;idx=index;src=source;stmt=statement;cpy=copy;dest=destination;dist=distancedst=distance;ptr=pointer;wdth=width;str=string;ln=line;srv=server;attr=attribute;ref=reference;buf=buffer;col=column;nr=number;vec=vector;len=length;elem=element;val=value;i=index;var=variable;hght=height;cl=client;num=number;pos=position;lst=list;addr=address'
   bugprone-misplaced-widening-cast.CheckImplicitCasts: 'false'
@@ -127,7 +125,6 @@ CheckOptions:
   readability-suspicious-call-argument.Abbreviation: 'true'
   modernize-use-emplace.SmartPointers: '::std::shared_ptr;::std::unique_ptr;::std::auto_ptr;::std::weak_ptr'
   bugprone-dangling-handle.HandleClasses: 'std::basic_string_view;std::experimental::basic_string_view'
-  readability-magic-numbers.IgnorePowersOf2IntegerValues: 'false'
   misc-unused-parameters.StrictMode: 'false'
   readability-suspicious-call-argument.JaroWinklerSimilarAbove: '85'
   misc-const-correctness.TransformPointersAsValues: 'false'
@@ -229,7 +226,6 @@ CheckOptions:
   readability-braces-around-statements.ShortStatementLines: '0'
   bugprone-argument-comment.CommentUserDefinedLiterals: '0'
   hicpp-use-emplace.ContainersWithPushBack: '::std::vector;::std::list;::std::deque'
-  readability-magic-numbers.IgnoredFloatingPointValues: '1.0;100.0;'
   readability-implicit-bool-conversion.AllowPointerConditions: 'false'
   readability-redundant-declaration.IgnoreMacros: 'true'
   bugprone-easily-swappable-parameters.IgnoredParameterTypeSuffixes: 'bool;Bool;_Bool;it;It;iterator;Iterator;inputit;InputIt;forwardit;ForwardIt;bidirit;BidirIt;constiterator;const_iterator;Const_Iterator;Constiterator;ConstIterator;RandomIt;randomit;random_iterator;ReverseIt;reverse_iterator;reverse_const_iterator;ConstReverseIterator;Const_Reverse_Iterator;const_reverse_iterator;Constreverseiterator;constreverseiterator'
@@ -269,7 +265,6 @@ CheckOptions:
   readability-suspicious-call-argument.Dice: 'true'
   misc-throw-by-value-catch-by-reference.WarnOnLargeObjects: 'false'
   modernize-raw-string-literal.ReplaceShorterLiterals: 'false'
-  readability-magic-numbers.IgnoredIntegerValues: '1;2;3;4;'
   performance-inefficient-vector-operation.VectorLikeClasses: '::std::vector'
   modernize-use-auto.RemoveStars: 'false'
   bugprone-implicit-widening-of-multiplication-result.IncludeStyle: llvm
