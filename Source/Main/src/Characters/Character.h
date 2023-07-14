@@ -56,8 +56,6 @@ class Character : public Node
 
   protected:
 	auto Collision( ) -> SDL_Rect& { return mCollision; }
-	auto Src( ) -> SDL_Rect { return mSprite.GetSrc( ); }
-	auto Dst( ) -> SDL_Rect { return mSprite.GetDst( ); }
 
 	/* Transform has 3 values:
 	Position: Vector2D

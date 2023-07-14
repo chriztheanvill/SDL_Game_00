@@ -11,11 +11,7 @@ Player::Player(TextureManager& tm)
 	SetPosition(Vector2D::Zero( ));
 	SetSize({ 100, 100 });
 	SetScale({ 1, 1 });
-	// tc.scale = { Src( ).x, Src( ).y };
 	SetRotation(0.0);
-
-	// SetTransform(tc);
-	// SetTransform({ Vector2D::Zero( ), { 100, 200 }, 0.0 });
 
 	Collision( ) = {
 		static_cast<int>(Position( ).GetX( )),
@@ -32,7 +28,6 @@ Player::Player(TextureManager& tm)
 						  static_cast<int>(Position( ).GetY( )),
 						  static_cast<int>(Size( ).GetX( )),
 						  static_cast<int>(Size( ).GetY( )) });
-	// GetSprite( ).SetDst({ 0, 0, 100, 300 });
 
 	// GetSprite( ).SetRenderer(tm->GetRender( ));
 	// GetSprite( ).SetTexture(tm->Load("Vivian", "assets/images/Vivian.jpg"));
@@ -83,7 +78,7 @@ void Player::Update(const float& deltaTime)
 	// 			  "-------------Player::RigidBody-------------");
 
 	Logger::Debug(LogType::Debug,
-				  "Player::Update::mPlayer:",
+				  "Player::Update::mPlayer::Pos",
 				  " x: "sv,
 				  Position( ).GetX( ),
 				  " - y: "sv,
