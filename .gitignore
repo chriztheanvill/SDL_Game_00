@@ -1,6 +1,9 @@
 compile_commands.json
 compile_commands.json/
 
+CMakeUserPresets.json
+CMakeUserPresets.json/
+
 ## VS Code
 .cache/
 .history/
