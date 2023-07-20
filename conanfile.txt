@@ -11,5 +11,9 @@ sol2/3.2.3
 # glad/0.1.36 ## Broken package
 
 [generators]
-CMakeDeps
 CMakeToolchain
+CMakeDeps
+
+
+[layout]
+cmake_layout
