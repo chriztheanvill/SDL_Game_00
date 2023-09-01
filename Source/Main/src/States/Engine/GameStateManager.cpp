@@ -57,7 +57,7 @@ void GameStateManager::SetTextureManagerRenderer(SDL_Renderer* render)
 }
 
 // --------------------------------------------------------------------------------------
-std::unique_ptr<EngineState> GameStateManager::NewGameState( )
+auto GameStateManager::NewGameState( ) -> std::unique_ptr<EngineState>
 {
 	// TODO(cris): Checar esta funsion
 	// Seria mas limpio

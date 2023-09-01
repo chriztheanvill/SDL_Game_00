@@ -28,7 +28,8 @@ class EngineState : public State
 					  GetName( ));
 	}
 
-	virtual std::unique_ptr<EngineState> Update(const float& deltaTime) = 0;
+	virtual auto Update(const float& deltaTime)
+		-> std::unique_ptr<EngineState> = 0;
 	virtual void Render( ) = 0;
 	virtual void Load( ) = 0;
 	virtual void Events(Controller& controller) = 0;
@@ -46,10 +47,13 @@ class EngineState : public State
 	// 	mTextureManager = new TextureManager(Node( ));
 	// }
 
-	GameStateManager& GetGameStateManager( ) const { return mGameStateManager; }
+	[[nodiscard]] auto GetGameStateManager( ) const -> GameStateManager&
+	{
+		return mGameStateManager;
+	}
 
   protected:
-	TextureManager& GetTextureManager( ) { return mTextureManager; }
+	auto GetTextureManager( ) -> TextureManager& { return mTextureManager; }
 
   private:
 	TextureManager& mTextureManager;

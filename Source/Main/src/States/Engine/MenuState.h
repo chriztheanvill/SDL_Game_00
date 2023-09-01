@@ -11,7 +11,8 @@ class MenuState : public EngineState
 	MenuState(GameStateManager& gsm, TextureManager& tm);
 	~MenuState( ) override;
 
-	std::unique_ptr<EngineState> Update(const float& deltaTime) override;
+	auto Update(const float& deltaTime)
+		-> std::unique_ptr<EngineState> override;
 	void Render( ) override;
 	void Load( ) override;
 	void Events(Controller& controller) override;

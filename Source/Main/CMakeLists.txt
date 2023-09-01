@@ -54,6 +54,43 @@ target_link_libraries(
 	# CONAN_PKG::glad # OpenGL
 	# CONAN_PKG::nlohmann_json
 	#
+	${LUA_LIBRARY}
+	${THREAD_LIBRARIES}
+	${OPENGL_VIDEO_LIBRARIES}
 )
+
+# ###############################################################
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+	message(STATUS " -- Build Type ${CMAKE_BUILD_TYPE} \n\n")
+
+	# # Conan v1
+	message(STATUS "++ Creating Symbolic Links ++\n")
+	add_custom_target(
+		linking_assets
+
+		# COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
+	)
+	add_dependencies(${PROJECT_NAME} linking_assets)
+
+# # Conan v2
+# message(STATUS " -- Copy assets")
+
+# message(STATUS " -- PROJECT SOURCE DIR ${PROJECT_SOURCE_DIR} \n\n")
+# message(STATUS " -- BINARY DIR ${CMAKE_BINARY_DIR} \n\n")
+# add_custom_command(TARGET ${PROJECT_NAME}
+# POST_BUILD
+# COMMAND mkdir -p ${CMAKE_BINARY_DIR}/Source/Main/assets
+# COMMAND ln -s ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
+# )
+# file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/Source/Main/)
+else()
+	message(STATUS " -- Build Type RELEASE \n\n")
+	message(STATUS "++ Copying files ++\n")
+
+	# file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
+endif()
+
+# ###############################################################
 
 # ## Add LINKS

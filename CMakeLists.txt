@@ -102,6 +102,17 @@ include(My_Cmake/Conan_v2.cmake)
 # include(My_Cmake/Vcpkg_Find.cmake)
 
 # ###############################################################
+
+# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# # Set the current directory the run time folder
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+
+# ###############################################################
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" ON)
 
@@ -209,26 +220,15 @@ enable_testing()
 add_subdirectory(Source)
 
 # ###############################################################
-
-# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-# # Set the current directory the run time folder
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
-target_link_libraries(
-	${PROJECT_NAME} PUBLIC
-
-	# ${LUA_LIBRARIES}
-	${LUA_LIBRARY}
-	${THREAD_LIBRARIES}
-	${OPENGL_VIDEO_LIBRARIES}
-
-	# ${Boost_LIBRARIES}
-)
+# # FOR Single project
+# target_link_libraries(
+# ${PROJECT_NAME} PUBLIC
+# # ${LUA_LIBRARIES}
+# ${LUA_LIBRARY}
+# ${THREAD_LIBRARIES}
+# ${OPENGL_VIDEO_LIBRARIES}
+# # ${Boost_LIBRARIES}
+# )
 
 # ###############################################################
 
@@ -277,36 +277,6 @@ target_compile_features(
 	# C++23 ENABLED
 	# cxx_std_23
 )
-
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-	message(STATUS " -- Build Type ${CMAKE_BUILD_TYPE} \n\n")
-
-	# # Conan v1
-	message(STATUS "++ Creating Symbolic Links ++\n")
-	add_custom_target(
-		linking_assets
-
-		# COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/bin/assets
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
-	)
-	add_dependencies(${PROJECT_NAME} linking_assets)
-
-# # Conan v2
-# message(STATUS " -- Copy assets")
-
-# message(STATUS " -- PROJECT SOURCE DIR ${PROJECT_SOURCE_DIR} \n\n")
-# message(STATUS " -- BINARY DIR ${CMAKE_BINARY_DIR} \n\n")
-# add_custom_command(TARGET ${PROJECT_NAME}
-# POST_BUILD
-# COMMAND mkdir -p ${CMAKE_BINARY_DIR}/Source/Main/assets
-# COMMAND ln -s ${PROJECT_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/Source/Main/assets
-# )
-# file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/Source/Main/)
-else()
-	message(STATUS " -- Build Type RELEASE \n\n")
-	message(STATUS "++ Copying files ++\n")
-	file(COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
-endif()
 
 # ###############################################################
 

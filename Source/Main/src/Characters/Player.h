@@ -3,7 +3,6 @@
 
 #include "./Character.h"
 
-class TextureManager;
 class Player : public Character
 {
   public:
@@ -20,6 +19,10 @@ class Player : public Character
 	RigidBody mRigidBody { };
 
 	CharStats mPlayerStats;
+
+	// Test
+	// std::string_view mSpriteName = "Player";
+	// std::string_view mSpritePath = "assets/images/Vivian.jpg";
 };
 
 #endif	 // PLAYER_H

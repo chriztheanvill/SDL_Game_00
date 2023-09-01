@@ -12,6 +12,7 @@
 
 #include "../Components/Transform.hpp"
 
+#include "../Graphics/TextureManager.h"
 struct CharStats
 {
 	uint16_t HP { 10 };
@@ -81,6 +82,9 @@ class Character : public Node
 	}
 
 	auto GetSprite( ) -> Sprite& { return mSprite; }
+
+	std::string_view mSpriteName;
+	std::string_view mSpritePath;
 
   private:
 	TransformComponent mTransform { };

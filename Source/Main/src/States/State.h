@@ -24,7 +24,7 @@ class State
 	virtual void ExitState( ) = 0;
 
 	void SetName(std::string_view name = "") { mName = name; }
-	std::string_view GetName( ) const { return mName; }
+	[[nodiscard]] auto GetName( ) const -> std::string_view { return mName; }
 
   private:
 	std::string_view mName;

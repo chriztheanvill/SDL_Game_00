@@ -10,6 +10,7 @@
 #include <set>
 #include <typeindex>
 #include <vector>
+#include <memory>
 
 #include "../Utils/Logger.h"
 #include "./Pool.hpp"
@@ -115,7 +116,7 @@ class Registry
 {
   public:
 	Registry( ) = default;
-	auto NewEntity( ) -> Entity;
+	auto NewEntity(std::string_view name = "") -> Entity;
 	void KillEntity(Entity entity);
 	void Update( );
 
@@ -148,7 +149,7 @@ class Registry
 	// Manage Systems
 	// Checks the component signature of an entity and add the entity to the
 	// systems that are interested in it
-	void AddEntityToSystem(Entity entity);
+	auto AddEntityToSystem(Entity entity) -> void;
 
   private:
 	int numEntities = 0;
@@ -211,7 +212,8 @@ auto Registry::AddSystem(Ts&&... ts) -> void
 template <typename T>
 auto Registry::RemoveSystem( ) -> void
 {
-	auto systemfound = FindSystems<T>(systems);
+	auto systemfound = FindSystems<T>( );
+	// auto systemfound = FindSystems<T>(systems);
 	// auto systemfound = UMapFindSystems<T>(systems);
 	// auto systemfound = systems.find(static_cast<std::type_index>(typeid(T)));
 	// auto systemfound = systems.find(std::type_index(typeid(T)));
@@ -232,7 +234,8 @@ auto Registry::HasSystem( ) const -> bool
 template <typename T>
 auto Registry::GetSystem( ) const -> T&
 {
-	auto systemfound = FindSystems<T>(systems);
+	auto systemfound = FindSystems<T>( );
+	// auto systemfound = FindSystems<T>(systems);
 	// auto systemfound = UMapFindSystems<T>(systems);
 	// WARNING Maybe an error
 	return *(static_cast<T*>(systemfound->second));
@@ -327,6 +330,8 @@ auto Registry::HasComponent(Entity entity) const -> bool
 	return entityComponentSignatures[entityID].test(componentID);
 }
 
+// -----------------------------------------------------------
+
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
@@ -336,7 +341,7 @@ template <class TComponent>
 void System::RequireComponent( )
 {
 	const auto componentID = Component<TComponent>::NewId( );
-	componentSignature.set( );
+	componentSignature.set(componentID);
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////

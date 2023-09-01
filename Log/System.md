@@ -6,10 +6,11 @@
 > Log::--- Init Game --- 
 > Log::InputSystem::Constructor
 > Log::Controller::Constructor
-Debug::Controller::Detect Controllers detected: 0
-
-## Warning ----------------------------
-Controller::Detect ---- Using Keyboard !!!!!!
+Debug::Controller::Detect Controllers detected: 1
+Debug::Controller::Detect Controller detected
+Debug::Controller::Detect Name: Xbox 360 Controller
+Debug::Controller::Detect Num Axes: 6
+Debug::Controller::Detect Num Buttons: 11
 > Log::*** *** Node Constructor : 
 > Log::TextureManager::Constructor: TextureManager
 > Log::--- GameStateManager::Constructor ---
@@ -17,12 +18,13 @@ Controller::Detect ---- Using Keyboard !!!!!!
 > Log::### State::Constructor :MenuState
 > Log::### State::EngineState::Constructor :MenuState
 > Log::### MenuState::Constructor : MenuState
-Debug::Controller::Detect Controllers detected: 0
-
-## Warning ----------------------------
-Controller::Detect ---- Using Keyboard !!!!!!
+Debug::Controller::Detect Controllers detected: 1
+Debug::Controller::Detect Controller detected
+Debug::Controller::Detect Name: Xbox 360 Controller
+Debug::Controller::Detect Num Axes: 6
+Debug::Controller::Detect Num Buttons: 11
 > Log::GameStateManager::SetState
-Debug::GameStateManager::SetState mCurrent: 0x7ffe1134d190 - MenuState
+Debug::GameStateManager::SetState mCurrent: 0x7ffd57f49c90 - MenuState
 Debug::==================MenuState::EnterState==================
 > Log::--- Enter to the loop --- 
 > Log::DeltaTime: 0.033
@@ -40,22 +42,14 @@ Debug::LevelManager::Init
 > Log::RigidBody::Constructor RigidBody
 > Log::Player::Constructor: Player
 > Log::--- TextureManager::Load Adding a new texture --- TextureManager::GameState
-	name: Vivian
-	path: assets/images/Vivian.jpg
+	name: Player
+	path: assets/tilemaps/Space/PNG/playerShip1_blue.png
 > Log::Level::Constructor: Level_00
 > Log::Level::Init: Level_00
-> Log::*** *** Node Constructor : Level_01
-> Log::*** *** Node Constructor : Player
-> Log::TransformComponent::Constructor: 
-> Log::Character::Constructor: Player
-> Log::*** *** Node Constructor : 
-> Log::RigidBody::Constructor RigidBody
-> Log::Player::Constructor: Player
-Debug::--- TextureManager::Load Get a texture ---
-name: Vivian
-path: assets/images/Vivian.jpg
-> Log::Level::Constructor: Level_01
-> Log::Level::Init: Level_01
+Debug::ECS::Registry::NewEntity: Added a new Entity: ID: 0
+Name: tank
+Debug::ECS::Registry::NewEntity: Added a new Entity: ID: 1
+Name: truck
 
 ## Warning ----------------------------
 LevelManager::Init Choosing level: 0
@@ -67,16 +61,17 @@ Debug::GameState::Load
 	name: test
 	path: assets/images/bkBlue.png
 > Log::~TextureManager::Destructor: TextureManager GameState Simple
-> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe1134ccf0
-Debug::Controller::Detect Controllers detected: 0
-
-## Warning ----------------------------
-Controller::Detect ---- Using Keyboard !!!!!!
-Debug::GameStateManager::Update Updating +++ tmp: 0x7ffe1134cf18 - GameState
+> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffd57f497f0
+Debug::Controller::Detect Controllers detected: 1
+Debug::Controller::Detect Controller detected
+Debug::Controller::Detect Name: Xbox 360 Controller
+Debug::Controller::Detect Num Axes: 6
+Debug::Controller::Detect Num Buttons: 11
+Debug::GameStateManager::Update Updating +++ tmp: 0x7ffd57f49a18 - GameState
 > Log::GameStateManager::SetState
-Debug::GameStateManager::SetState mPrev: 0x7ffe1134d198 - MenuState
+Debug::GameStateManager::SetState mPrev: 0x7ffd57f49c98 - MenuState
 Debug::==================MenuState::ExitState==================
-Debug::GameStateManager::SetState mCurrent: 0x7ffe1134d190 - GameState
+Debug::GameStateManager::SetState mCurrent: 0x7ffd57f49c90 - GameState
 > Log::==================GameState::EnterState==================
 > Log::DeltaTime: 0.033
 Debug::Level::Events  Level_00
@@ -94,7 +89,7 @@ Debug::Level::Update:: map: Level_00
 Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
 Debug::Level::Render map: Level_00
 Debug::Player::Render
-> Log::DeltaTime: 0.033
+> Log::DeltaTime: 0.034
 Debug::Level::Events  Level_00
 Debug::Player::Events
 Debug::GameState::Update
@@ -150,7 +145,23 @@ Debug::Level::Update:: map: Level_00
 Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
 Debug::Level::Render map: Level_00
 Debug::Player::Render
+> Log::DeltaTime: 0.034
+Debug::Level::Events  Level_00
+Debug::Player::Events
+Debug::GameState::Update
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
 > Log::DeltaTime: 0.033
+Debug::Level::Events  Level_00
+Debug::Player::Events
+Debug::GameState::Update
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
+> Log::DeltaTime: 0.034
 Debug::Level::Events  Level_00
 Debug::Player::Events
 Debug::GameState::Update
@@ -190,23 +201,7 @@ Debug::Level::Update:: map: Level_00
 Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
 Debug::Level::Render map: Level_00
 Debug::Player::Render
-> Log::DeltaTime: 0.033
-Debug::Level::Events  Level_00
-Debug::Player::Events
-Debug::GameState::Update
-Debug::Level::Update:: map: Level_00
-Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
-Debug::Level::Render map: Level_00
-Debug::Player::Render
-> Log::DeltaTime: 0.033
-Debug::Level::Events  Level_00
-Debug::Player::Events
-Debug::GameState::Update
-Debug::Level::Update:: map: Level_00
-Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
-Debug::Level::Render map: Level_00
-Debug::Player::Render
-> Log::DeltaTime: 0.033
+> Log::DeltaTime: 0.034
 Debug::Level::Events  Level_00
 Debug::Player::Events
 Debug::GameState::Update
@@ -223,6 +218,22 @@ Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
 Debug::Level::Render map: Level_00
 Debug::Player::Render
 > Log::DeltaTime: 0.033
+Debug::Level::Events  Level_00
+Debug::Player::Events
+Debug::GameState::Update
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
+> Log::DeltaTime: 0.032
+Debug::Level::Events  Level_00
+Debug::Player::Events
+Debug::GameState::Update
+Debug::Level::Update:: map: Level_00
+Debug::Player::Update::mPlayer::Pos x: 0 - y: 0
+Debug::Level::Render map: Level_00
+Debug::Player::Render
+> Log::DeltaTime: 0.034
 Debug::Level::Events  Level_00
 Debug::Player::Events
 Debug::GameState::Update
@@ -251,19 +262,11 @@ GameStateManager::Update Quit!!!
 > Log::Level::Destructor: Level_00
 > Log::~Player::Destructor: Player
 > Log::~RigidBody::DestructorRigidBody
-> Log::~ NODE Destructor : RigidBody : Address: 0x561962c3d2e0
+> Log::~ NODE Destructor : RigidBody : Address: 0x1ea2780
 > Log::~Character::Destructor: Player
 > Log::~TransformComponent::Destructor: 
-> Log::~ NODE Destructor : Player : Address: 0x561962c3d240
-> Log::~ NODE Destructor : Level_00 : Address: 0x561962c3d220
-> Log::Level::Destructor: Level_01
-> Log::~Player::Destructor: Player
-> Log::~RigidBody::DestructorRigidBody
-> Log::~ NODE Destructor : RigidBody : Address: 0x561962c41b50
-> Log::~Character::Destructor: Player
-> Log::~TransformComponent::Destructor: 
-> Log::~ NODE Destructor : Player : Address: 0x561962c41ab0
-> Log::~ NODE Destructor : Level_01 : Address: 0x561962c41a90
+> Log::~ NODE Destructor : Player : Address: 0x1ea26c0
+> Log::~ NODE Destructor : Level_00 : Address: 0x1ea26a0
 > Log::### ~State::EngineState::Destructor :GameState
 > Log::### ~State::Destructor :GameState
 > Log::### MenuState::Destructor : MenuState
@@ -271,7 +274,7 @@ GameStateManager::Update Quit!!!
 > Log::### ~State::Destructor :MenuState
 > Log::--- ~GameStateManager ---
 > Log::~TextureManager::Destructor: TextureManager GameState Simple
-> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffe1134d138
+> Log::~ NODE Destructor : TextureManager GameState Simple : Address: 0x7ffd57f49c38
 > Log::~Controller::Destructor
 > Log::~InputSystem::Destructor
 Debug::Game Exit!

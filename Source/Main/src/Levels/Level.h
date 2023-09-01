@@ -7,6 +7,7 @@
 
 class LevelManager;
 class Controller;
+class Registry;
 
 #include "../Core/Node.h"
 class Level : public Node
@@ -35,6 +36,8 @@ class Level : public Node
 	Player mPlayer;
 	TextureManager& mTextureManager;
 	LevelManager& mLevelManager;
+
+	std::unique_ptr<Registry> mRegistry;
 };
 
 #endif	 // LEVEL_H

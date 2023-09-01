@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "./LevelManager.hpp"
+#include "../ECS/ECS.hpp"
 
 Level::Level(LevelManager& lm, TextureManager& tm, std::string_view name)
 	: mLevelManager(lm)
@@ -28,6 +29,11 @@ void Level::Init( )
 {
 	//
 	Logger::Debug(LogType::Log, "Level::Init: ", GetName( ));
+	mRegistry = std::make_unique<Registry>( );
+
+	Entity tank = mRegistry->NewEntity("tank");
+	Entity truck = mRegistry->NewEntity("truck");
+
 	mRunning = true;
 }
 

@@ -11,7 +11,7 @@
 #include "../Graphics/TextureManager.h"
 #include "Level.h"
 
-class TextureManager;
+// class TextureManager;
 
 enum class LevelNames
 {

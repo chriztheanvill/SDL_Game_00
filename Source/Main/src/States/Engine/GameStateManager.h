@@ -15,13 +15,16 @@ class GameStateManager
 
 	void Update(const float& deltaTime);
 
-	std::unique_ptr<EngineState> NewGameState( );
+	auto NewGameState( ) -> std::unique_ptr<EngineState>;
 
 	void SetTextureManagerRenderer(SDL_Renderer* render);
-	TextureManager& GetTextureManager( ) { return mTextureManager; }
+	auto GetTextureManager( ) -> TextureManager& { return mTextureManager; }
 
 	inline void SetIsRunning(const bool& run) { mIsRunning = run; }
-	inline const bool& GetIsRunning( ) const { return mIsRunning; }
+	[[nodiscard]] inline auto GetIsRunning( ) const -> const bool&
+	{
+		return mIsRunning;
+	}
 
   private:
 	bool mIsRunning { };

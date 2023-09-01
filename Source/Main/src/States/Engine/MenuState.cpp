@@ -21,7 +21,7 @@ void MenuState::Load( )
 	// mPlayer.SetSprite("Vivian", "assets/images/Vivian.jpg");
 }
 
-std::unique_ptr<EngineState> MenuState::Update(const float& deltaTime)
+auto MenuState::Update(const float& deltaTime) -> std::unique_ptr<EngineState>
 {
 	Logger::Debug(LogType::Debug, "MenuState::Update");
 	Logger::Debug(LogType::Debug, "MenuState::Update::Return GameState");

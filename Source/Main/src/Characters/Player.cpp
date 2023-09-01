@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "../Graphics/TextureManager.h"
 
 Player::Player(TextureManager& tm)
 	: Character("Player")
@@ -9,7 +8,7 @@ Player::Player(TextureManager& tm)
 	mPlayerStats = CharStats { 0, 0, 0, 0, 0, 0, 100, 250, 350 };
 
 	SetPosition(Vector2D::Zero( ));
-	SetSize({ 100, 100 });
+	SetSize({ 50, 50 });
 	SetScale({ 1, 1 });
 	SetRotation(0.0);
 
@@ -20,9 +19,12 @@ Player::Player(TextureManager& tm)
 		static_cast<int>(Size( ).GetY( )),
 	};
 
+	mSpriteName = "Player";
+	mSpritePath = "assets/tilemaps/Space/PNG/playerShip1_blue.png";
+
 	GetSprite( ).SetName("Sprite::Player");
 	GetSprite( ).SetRenderer(tm.GetRender( ));
-	GetSprite( ).SetTexture(tm.Load("Vivian", "assets/images/Vivian.jpg"));
+	GetSprite( ).SetTexture(tm.Load(mSpriteName, mSpritePath));
 	GetSprite( ).SetSrc({ });
 	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
 						  static_cast<int>(Position( ).GetY( )),
@@ -108,38 +110,12 @@ void Player::Events(Controller& controller)
 {
 	Logger::Debug(LogType::Debug, "Player::Events");
 
-	// No es recomendable, tiene problemas de dirección.
-	// if (controller.MoveRight( ))
-	// {
-	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::D");
-	// 	mRigidBody.ApplyForceX(mSpeed);
-	// }
-	// else if (controller.MoveLeft( ))
-	// {
-	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::A");
-	// 	mRigidBody.ApplyForceX(-mSpeed);
-	// }
-	// // else { mRigidBody.UnsetForceX( ); } // Platformer
-	// else if (controller.MoveUp( ))
-	// {
-	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::W");
-	// 	mRigidBody.ApplyForceY(-mSpeed);
-	// }
-	// else if (controller.MoveDown( ))
-	// {
-	// 	Logger::Debug(LogType::Warning, "Player::Input::KeyDown::S");
-	// 	mRigidBody.ApplyForceY(mSpeed);
-	// }
-	// else { mRigidBody.UnsetForce( ); }
-
 	auto moveX =
 		(controller.MoveRight( ) - controller.MoveLeft( )) * mPlayerStats.Speed;
 	auto moveY =
 		(controller.MoveDown( ) - controller.MoveUp( )) * mPlayerStats.Speed;
 
+	// mRigidBody.ApplyForce({ moveX, moveY });
 	mRigidBody.ApplyForceX(moveX);
 	mRigidBody.ApplyForceY(moveY);
-
-	// -------------------------------------------------
-	// -------------------------------------------------
 }
