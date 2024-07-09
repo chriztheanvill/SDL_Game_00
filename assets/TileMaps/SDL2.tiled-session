@@ -1,0 +1,87 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Level_00.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/32x32_map_tile.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/untitled.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 1.25244140625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 512.5988304093568,
+                "y": 288.23703703703706
+            }
+        },
+        "Level_00.json": {
+            "scale": 4,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 56.625,
+                "y": 62.125
+            }
+        },
+        "Level_01.json": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.125,
+                "y": 128.125
+            }
+        },
+        "Level_01.json.tmj": {
+            "scale": 75.88125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 8.012519561815337,
+                "y": 8.012519561815338
+            }
+        },
+        "full spritesheet.json": {
+            "scaleInDock": 4,
+            "scaleInEditor": 4
+        },
+        "full tilemap.json": {
+            "scaleInDock": 3,
+            "scaleInEditor": 5.5
+        }
+    },
+    "frame.defaultDuration": 100,
+    "last.imagePath": "/home/cris/Workspace/C++/SDL_Game_My/assets/images/Dungeon",
+    "map.fixedSize": false,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "full spritesheet.json",
+        "full tilemap.json",
+        "Level_00.json",
+        "Level_01.json"
+    ],
+    "project": "SDL2.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "full spritesheet.json",
+        "full tilemap.json",
+        "Level_01.json",
+        "Level_00.json",
+        "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/32x32_map_tile.tsx",
+        "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/untitled.tmx",
+        "Level_01.json.tmj"
+    ],
+    "tileset.lastUsedFormat": "json",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

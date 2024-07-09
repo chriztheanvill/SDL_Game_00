@@ -1,0 +1,77 @@
+{
+	"Stats": [
+		{
+			"Location": "Level_00",
+			"Lv": 1,
+			"HP": 10,
+			"BP": 10,
+			"Items": [
+				"Gun01",
+				"Gun02",
+				"Sword01"
+			],
+			"Money": 100,
+			"TimeMin": 30
+		},
+		{
+			"Location": "Level_99",
+			"Lv": 9999,
+			"HP": 999999999,
+			"BP": 999999999,
+			"Items": [
+				"HealthCareS",
+				"HealthCareM",
+				"HealthCareB",
+				"Gun01",
+				"Gun02",
+				"Gun03",
+				"Gun04",
+				"Gun05",
+				"Gun06",
+				"Sword01",
+				"Sword02",
+				"Sword03",
+				"Sword04",
+				"Sword05",
+				"Sword06"
+			],
+			"Money": 999999999999999,
+			"TimeMin": 999999999999999
+		}
+	],
+	"progress": [
+		{
+			"Type": "Level",
+			"Title": "Hello world!",
+			"Data": "Level_00.json",
+			"Timelimit": 30000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 00!",
+			"Text": "I completed level 00, but then I took an arrow in the knee"
+		},
+		{
+			"Type": "Level",
+			"Title": "Intro",
+			"Data": "Level_01.json",
+			"Timelimit": 40000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 1!",
+			"Text": "I completed level 1, but then I took an arrow in the knee"
+		},
+		{
+			"Type": "Level",
+			"Title": "The Story",
+			"Data": "Level_02.json",
+			"Timelimit": 10000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 2!",
+			"Text": "I completed level 2, but then I took an arrow in the knee"
+		}
+	]
+}

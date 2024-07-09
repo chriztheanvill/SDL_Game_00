@@ -26,32 +26,37 @@ cd $workspaceFolder
 
 
 # if [ ! -d "build" ] ### Folder does NOT exist, mkdir
-if [ -d "build" ]; ### Folder does EXIST, mkdir
-then
-# 	echo "Building with Conan v2! // Debug"
-# 	conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug
-
-# else
-	# mkdir -p -v "build"
-	# conan install . --output-folder=build/Debug --build=missing ## Release
-	echo "build dir already exist!"
-	echo "Do you want to rebuild?"
+# if [ -d "build" ]; ### Folder does EXIST, mkdir
+# then
+# # 	echo "Building with Conan v2! // Debug"
+# # 	conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug
+# # else
+# 	# mkdir -p -v "build"
+# 	# conan install . --output-folder=build/Debug --build=missing ## Release
+# 	echo "build dir already exist!"
+# 	echo "Do you want to rebuild?"
 	
-	read answer
+# 	read answer
 
-	if [[ ("$answer" = "y") || ("$answer" = "Y") ]];
-	then
-		echo "Deleting build dir"
-		rm -rf build
-	else
-		echo "Exit!!!"
-		exit 
-	fi 
+# 	if [[ ("$answer" = "y") || ("$answer" = "Y") ]];
+# 	then
+# 		echo "Deleting build dir"
+# 		rm -rf build
+# 	else
+# 		echo "Exit!!!"
+# 		exit 
+# 	fi 
+# fi
 
-fi
+rm -rf build Log compile_commands.json CMakeUserPresets.json .cache
+
+# sleep 5;
 
 echo "Building with Conan v2! // Debug"
-conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug
+## old
+# conan install . --output-folder=build/Debug --build=missing --settings=build_type=Debug
+
+conan install . --build=missing --settings=build_type=Debug 
 
 if [ ! -d "build" ] ### Folder does NOT exist, mkdir
 then
@@ -67,6 +72,7 @@ pwd
 echo
 echo
 
+
 # ls -al ;
 
 ### Unix 
@@ -75,8 +81,11 @@ echo
 # echo "+++++ Generated using Unix Makefiles +++++"
 
 
+### Ninja Conan OLD
+# cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug ../..
+
 ### Ninja Conan
-cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug ../..
+cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=generators/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug ../.. 
 
 ### Ninja
 # cmake -G "Ninja" -DCMAKE_CXX_FLAGS="-fdiagnostics-color=always" -DCMAKE_C_FLAGS="-fdiagnostics-color=always" ..
@@ -89,7 +98,8 @@ echo ;
 echo ; 
 echo "+++++ +++++ Compiling +++++ +++++"
 
-cmake --build . --config Debug
+cmake --build . --config Debug -j`nproc`
+cd ../..
 
 ##
 ###
@@ -103,6 +113,7 @@ read  -n 1;
 exit; 
 exec bash;
 
+## conan install . --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=generators/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug && cd ../..
 
 
 # echo "Create C++ Cmake Project!"

@@ -1,8 +1,8 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "../Physics/Vector2D.h"
-#include "../Physics/RigidBody.h"
+#include "../Utils/Vector2D.h"
+#include "../Components/RigidBodyComponent.h"
 
 #include <SDL2/SDL.h>
 
@@ -10,7 +10,7 @@
 #include "../Components/Sprite.h"
 #include "../Input/Controller.h"
 
-#include "../Components/Transform.hpp"
+#include "../Components/TransformComponent.hpp"
 
 #include "../Graphics/TextureManager.h"
 struct CharStats
@@ -72,8 +72,8 @@ class Character : public Node
 	void SetScale(const Vector2D& vec) { mTransform.scale = vec; }
 	auto Scale( ) -> Vector2D& { return mTransform.scale; }
 
-	void SetSize(const Vector2D& vec) { mTransform.size = vec; }
-	auto Size( ) -> Vector2D& { return mTransform.size; }
+	// void SetSize(const Vector2D& vec) { mTransform.size = vec; }
+	// auto Size( ) -> Vector2D& { return mTransform.size; }
 
 	void SetRotation(const double& rot) { mTransform.rotation = rot; }
 	[[nodiscard]] auto GetRotation( ) const -> double
@@ -83,8 +83,8 @@ class Character : public Node
 
 	auto GetSprite( ) -> Sprite& { return mSprite; }
 
-	std::string_view mSpriteName;
-	std::string_view mSpritePath;
+	std::string mSpriteName;
+	std::string mSpritePath;
 
   private:
 	TransformComponent mTransform { };

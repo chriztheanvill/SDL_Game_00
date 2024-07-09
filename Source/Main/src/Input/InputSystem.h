@@ -29,20 +29,20 @@ class InputSystem
 	void InputReleased( );
 	void InputHolded( );
 
-	bool WasKeyPressed(SDL_Scancode key);
-	bool WasKeyReleased(SDL_Scancode key);
-	bool IsKeyHeld(SDL_Scancode key);
+	auto WasKeyPressed(SDL_Scancode key) -> bool;
+	auto WasKeyReleased(SDL_Scancode key) -> bool;
+	auto IsKeyHeld(SDL_Scancode key) -> bool;
 
-	bool WasJoyButtonPressed(uint8_t button);
-	bool WasJoyButtonReleased(uint8_t button);
-	bool IsJoyButtonHeld(uint8_t button);
+	auto WasJoyButtonPressed(uint8_t button) -> bool;
+	auto WasJoyButtonReleased(uint8_t button) -> bool;
+	auto IsJoyButtonHeld(uint8_t button) -> bool;
 
-	bool GetIsRunning( ) const { return mIsRunning; }
+	auto GetIsRunning( ) const -> bool { return mIsRunning; }
 
   protected:
 	InputDevice mInputDevice { };
 	void SetJoystick(SDL_Joystick* joy) { mJoystick = joy; }
-	SDL_Joystick* GetJoystick( ) { return mJoystick; }
+	auto GetJoystick( ) -> SDL_Joystick* { return mJoystick; }
 
   private:
 	bool mIsRunning { true };

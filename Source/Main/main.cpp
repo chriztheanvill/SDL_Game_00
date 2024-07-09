@@ -11,7 +11,7 @@
 // // For this, in Cmake on Graphics, enable X11
 // // #include <X11/Xlib.h>
 
-#include "./src/Core/Engine.h"
+#include "./src/Game/Game.hpp"
 
 // Just for show the icons in VS Code
 // NOTE
@@ -51,7 +51,16 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 		e->Init( );
 	*/
 
-	Engine mEngine;
+	Game game;
+
+	game.Init( );
+
+	while (game.IsRunning( ))
+	{
+		game.Events( );
+		game.Update( );
+		game.Render( );
+	}
 
 	/* ################################################# */
 	Logger::Debug(LogType::Debug, "Game Exit!");

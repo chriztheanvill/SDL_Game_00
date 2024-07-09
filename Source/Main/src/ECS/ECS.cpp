@@ -5,69 +5,56 @@
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 
-int IComponent::nextID = 0;	  // Static
+uint16_t IComponent::m_nextID = 0;	 // Static
 
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 
-Entity::Entity(int id)
-	: mID(id)
-{
-}
+Entity::Entity(uint16_t id, std::string name)
+	: m_id(id)
+	, m_name(name) {}
 
-auto Entity::GetId( ) const -> int { return mID; }
+auto Entity::GetID( ) const -> uint16_t { return m_id; }
 
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 
-auto Registry::NewEntity(std::string_view name) -> Entity
-{
-	int entityid = numEntities++;
-	if (entityid >= entityComponentSignatures.size( ))
-	{
-		entityComponentSignatures.resize(entityid + 1);
-	}
-	Entity entity(entityid);
-	entitiesToBeAdded.insert(entity);
-	Logger::Debug(LogType::Debug,
-				  "ECS::Registry::NewEntity: Added a new Entity: ID: ",
-				  entityid,
-				  "\nName: ",
-				  name);
+auto Registry::NewEntity(std::string_view name) -> Entity {
+	uint16_t entityid = m_numEntities++;
+
+	Signature signature;
+	m_entityComponentSignatures.try_emplace(entityid, signature);
+
+	Entity entity(entityid, std::string(name));
+	entity.m_registry = this;
+	m_entitiesToBeAdded.emplace(entity);
 
 	return entity;
 }
 
-auto Registry::AddEntityToSystem(Entity entity) -> void
-{
-	//
-	const int entityID = entity.GetId( );
-	const auto& ecsID = entityComponentSignatures[entityID];
+void Registry::KillEntity(Entity entity) {}
 
-	for (auto& system : systems)
-	{
-		const auto& sysSignature = system.second->GetSignature( );
+auto Registry::AddEntityToSystem(const Entity& entity) -> void {
+	const uint16_t entityID = entity.GetID( );
+	const std::bitset<32>& ecsID = m_entityComponentSignatures[entityID];
 
-		// Se hace una comparación por bit
+	for (const auto& [f, s] : m_systems) {
+		const Signature& sysSignature = s->GetSignature( );
+
 		bool isInterested = (ecsID & sysSignature) == sysSignature;
 
-		if (isInterested) { system.second->AddEntity(entity); }
+		if (isInterested) { s->AddEntity(entity); }
 	}
-
-	// ------------------------
 }
 
-void Registry::Update( )
-{
-	// Agregar
-	for (auto entity : entitiesToBeAdded) { AddEntityToSystem(entity); }
-	entitiesToBeAdded.clear( );
-
-	// Remover
+// Se agregan las entidades, despues de cada frame
+void Registry::Update( ) {
+	for (const Entity& entity : m_entitiesToBeAdded) AddEntityToSystem(entity);
+	m_entitiesToBeAdded.clear( );
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////
@@ -75,74 +62,10 @@ void Registry::Update( )
 // ///////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////
 
-// void System::AddEntity(Entity entity)
-// {
-// 	auto has_it = [this](Entity entity)
-// 	{
-// 		return std::find(entities.begin( ), entities.end( ), entity) !=
-// 			   entities.end( );
-// 	};
+void System::AddEntity(const Entity& entity) { m_entities.push_back(entity); }
 
-// 	auto add_it = [this](const Entity& entity)
-// 	{
-// 		entities.push_back(entity);
-// 		return entity;
-// 	};
+void System::RemoveEntity(const Entity& entity) { std::erase(m_entities, entity); }
 
-// 	auto output =
-// 		entities | std::views::filter(has_it) | std::views::transform(add_it);
+auto System::GetEntities( ) const -> std::vector<Entity> { return m_entities; }
 
-// 	Logger::Debug(LogType::Debug, "ECS::System::AddEntity: ", output);
-
-// 	// auto output = entities |
-// 	// 			  std::views::filter([](const int n) { return n % 3 == 0; }) |
-// 	// 			  std::views::transform([](const
-// }
-
-// void System::RemoveEntity(Entity entity)
-// {
-// 	auto has_it = [this](Entity entity)
-// 	{
-// 		return std::find(entities.begin( ), entities.end( ), entity) !=
-// 			   entities.end( );
-// 	};
-
-// 	auto remove_it = [this](Entity entity)
-// 	{
-// 		return entities.erase(std::remove_if(entities.begin( ),
-// 											 entities.end( ),
-// 											 [&entity](Entity other)
-// 											 { return entity == other; }),
-// 							  entities.end( ));
-// 		// return std::erase(entities, entity);
-// 	};
-
-// 	auto output = entities | std::views::filter(has_it) |
-// 				  std::views::transform(remove_it);
-
-// 	Logger::Debug(LogType::Debug, "ECS::System::RemoveEntity:: ", output);
-// }
-
-void System::AddEntity(Entity entity) { entities.push_back(entity); }
-
-void System::RemoveEntity(Entity entity)
-{
-	entities.erase(std::remove_if(entities.begin( ),
-								  entities.end( ),
-								  [&entity](Entity other) {
-									  return entity.GetId( ) == other.GetId( );
-								  }),
-				   entities.end( ));
-}
-
-auto System::GetEntities( ) const -> std::vector<Entity> { return entities; }
-
-auto System::GetSignature( ) const -> const Signature&
-{
-	return componentSignature;
-}
-
-// ///////////////////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////////////////////////
-// ///////////////////////////////////////////////////////////////////////////////////
+auto System::GetSignature( ) const -> const Signature& { return m_componentSignature; }

@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "recommendations": [
+      "tdennis4496.cmantic",
+      "ms-vscode.cpptools",
+      "devtbi.vscode-cppinsights",
+      "extensions.vscode-clangd",
+      "ms-vscode.cmake-tools",
+      "vadimcn.vscode-lldb",
+      "guyutongxue.cpp-reference",
+      "flywine.cpphelper",
+      "webfreak.debug",
+      "josetr.cmake-language-support-vscode"
+    ],
+  }
+}

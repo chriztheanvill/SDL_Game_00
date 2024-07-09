@@ -8,15 +8,14 @@ Player::Player(TextureManager& tm)
 	mPlayerStats = CharStats { 0, 0, 0, 0, 0, 0, 100, 250, 350 };
 
 	SetPosition(Vector2D::Zero( ));
-	SetSize({ 50, 50 });
 	SetScale({ 1, 1 });
 	SetRotation(0.0);
 
 	Collision( ) = {
-		static_cast<int>(Position( ).GetX( )),
-		static_cast<int>(Position( ).GetY( )),
-		static_cast<int>(Size( ).GetX( )),
-		static_cast<int>(Size( ).GetY( )),
+		static_cast<int>(Position( ).x),
+		static_cast<int>(Position( ).y),
+		static_cast<int>(Scale( ).x),
+		static_cast<int>(Scale( ).y),
 	};
 
 	mSpriteName = "Player";
@@ -24,12 +23,12 @@ Player::Player(TextureManager& tm)
 
 	GetSprite( ).SetName("Sprite::Player");
 	GetSprite( ).SetRenderer(tm.GetRender( ));
-	GetSprite( ).SetTexture(tm.Load(mSpriteName, mSpritePath));
+	GetSprite( ).SetTexture(tm.AddTexture(mSpriteName, mSpritePath));
 	GetSprite( ).SetSrc({ });
-	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
-						  static_cast<int>(Position( ).GetY( )),
-						  static_cast<int>(Size( ).GetX( )),
-						  static_cast<int>(Size( ).GetY( )) });
+	GetSprite( ).SetDst({ static_cast<int>(Position( ).x),
+						  static_cast<int>(Position( ).y),
+						  static_cast<int>(Scale( ).x),
+						  static_cast<int>(Scale( ).y) });
 
 	// GetSprite( ).SetRenderer(tm->GetRender( ));
 	// GetSprite( ).SetTexture(tm->Load("Vivian", "assets/images/Vivian.jpg"));
@@ -48,14 +47,11 @@ Player::~Player( )
 #######################################################################################
 */
 
-void Player::SetSprite(SDL_Texture* texture)
-{
-	GetSprite( ).SetTexture(texture);
-}
+void Player::SetSprite(SDL_Texture* texture) { GetSprite( ).SetTexture(texture); }
 
 void Player::Update(const float& deltaTime)
 {
-	mRigidBody.Update(GameType::TopDown, deltaTime);
+	mRigidBody.Update(deltaTime);
 	// mRigidBody.ApplyForceY(mGravity);
 	Position( ).Transform(mRigidBody.Velocity( ));
 
@@ -65,38 +61,40 @@ void Player::Update(const float& deltaTime)
 	// Logger::Debug(LogType::Debug,
 	// 			  "Player::RigidBody::Force",
 	// 			  " x: "sv,
-	// 			  mRigidBody.Force( ).GetX( ),
+	// 			  mRigidBody.Force( ).x,
 	// 			  " - y: "sv,
-	// 			  mRigidBody.Force( ).GetY( ));
+	// 			  mRigidBody.Force( ).y);
 
 	// Logger::Debug(LogType::Debug,
 	// 			  "Player::RigidBody::Acceleration",
 	// 			  " x: "sv,
-	// 			  mRigidBody.Acceleration( ).GetX( ),
+	// 			  mRigidBody.Acceleration( ).x,
 	// 			  " - y: "sv,
-	// 			  mRigidBody.Acceleration( ).GetY( ));
+	// 			  mRigidBody.Acceleration( ).y);
 
 	// Logger::Debug(LogType::Debug,
 	// 			  "-------------Player::RigidBody-------------");
 
-	Logger::Debug(LogType::Debug,
-				  "Player::Update::mPlayer::Pos",
-				  " x: "sv,
-				  Position( ).GetX( ),
-				  " - y: "sv,
-				  Position( ).GetY( ));
+	Logger::Debug(
+	  LogType::Debug,
+	  "Player::Update::mPlayer::Pos",
+	  " x: "sv,
+	  Position( ).x,
+	  " - y: "sv,
+	  Position( ).y
+	);
 
 	Collision( ) = {
-		static_cast<int>(Position( ).GetX( )),
-		static_cast<int>(Position( ).GetY( )),
-		static_cast<int>(Size( ).GetX( )),
-		static_cast<int>(Size( ).GetY( )),
+		static_cast<int>(Position( ).x),
+		static_cast<int>(Position( ).y),
+		static_cast<int>(Scale( ).x),
+		static_cast<int>(Scale( ).y),
 	};
 
-	GetSprite( ).SetDst({ static_cast<int>(Position( ).GetX( )),
-						  static_cast<int>(Position( ).GetY( )),
-						  static_cast<int>(Size( ).GetX( )),
-						  static_cast<int>(Size( ).GetY( )) });
+	GetSprite( ).SetDst({ static_cast<int>(Position( ).x),
+						  static_cast<int>(Position( ).y),
+						  static_cast<int>(Scale( ).x),
+						  static_cast<int>(Scale( ).y) });
 }
 
 void Player::Render( )
@@ -110,10 +108,8 @@ void Player::Events(Controller& controller)
 {
 	Logger::Debug(LogType::Debug, "Player::Events");
 
-	auto moveX =
-		(controller.MoveRight( ) - controller.MoveLeft( )) * mPlayerStats.Speed;
-	auto moveY =
-		(controller.MoveDown( ) - controller.MoveUp( )) * mPlayerStats.Speed;
+	auto moveX = (controller.MoveRight( ) - controller.MoveLeft( )) * mPlayerStats.Speed;
+	auto moveY = (controller.MoveDown( ) - controller.MoveUp( )) * mPlayerStats.Speed;
 
 	// mRigidBody.ApplyForce({ moveX, moveY });
 	mRigidBody.ApplyForceX(moveX);

@@ -51,7 +51,7 @@ cd build/Debug
 pwd
 
 ## Conan
-cmake --build . --config Debug
+cmake --build . --config Debug -j `nproc`
 
 ## Normal
 # cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j 1 ;

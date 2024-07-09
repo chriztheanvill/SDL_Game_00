@@ -16,7 +16,7 @@ class Player : public Character
 	void SetSprite(SDL_Texture* texture) override;
 
   private:
-	RigidBody mRigidBody { };
+	RigidBodyComponent mRigidBody { 2 };
 
 	CharStats mPlayerStats;
 

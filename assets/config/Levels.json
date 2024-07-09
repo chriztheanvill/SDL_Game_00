@@ -1,0 +1,37 @@
+{
+	"progress": [
+		{
+			"Type": "Level",
+			"Title": "Hello world!",
+			"Data": "Level_00.json",
+			"Timelimit": 30000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 00!",
+			"Text": "I completed level 00, but then I took an arrow in the knee"
+		},
+		{
+			"Type": "Level",
+			"Title": "Intro",
+			"Data": "Level_01.json",
+			"Timelimit": 40000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 1!",
+			"Text": "I completed level 1, but then I took an arrow in the knee"
+		},
+		{
+			"Type": "Level",
+			"Title": "The Story",
+			"Data": "Level_02.json",
+			"Timelimit": 10000
+		},
+		{
+			"Type": "Cutscene",
+			"Title": "You completed level 2!",
+			"Text": "I completed level 2, but then I took an arrow in the knee"
+		}
+	]
+}

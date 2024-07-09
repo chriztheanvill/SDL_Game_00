@@ -1,0 +1,14 @@
+{ "columns":9,
+ "image":"..\/images\/Dungeon\/full tilemap.png",
+ "imageheight":128,
+ "imagewidth":144,
+ "margin":0,
+ "name":"full tilemap",
+ "spacing":0,
+ "tilecount":72,
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

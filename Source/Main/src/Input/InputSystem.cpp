@@ -3,7 +3,6 @@
 InputSystem::InputSystem(SDL_Event& e)
 	: mEvent(e)
 	, mJoystick( )
-	, mKeyState( )
 {
 	Logger::Debug(LogType::Log, "InputSystem::Constructor");
 }

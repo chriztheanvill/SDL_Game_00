@@ -7,31 +7,28 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "../States/Engine/GameStateManager.h"
-
 #include "./Time.h"
 #include "../Utils/Logger.h"
 
-class Engine
-{
+class Engine {
   public:
 	Engine( );
 	~Engine( );
 
+	auto GetMainWindow( ) -> SDL_Window* { return m_window; }
+	auto GetMainRender( ) -> SDL_Renderer* { return m_render; }
+
+	auto Init( ) -> bool;
+	auto InitGraphics( ) -> bool;
+
   private:
-	bool Init( );
-	void Loop( );
+	Cris::Time m_time;
 
-	bool SDL2( );
-	bool InitGraphics( );
+	SDL_Window* m_window;
+	SDL_Renderer* m_render;
 
-	Cris::Time mTime;
-
-	SDL_Window* mWindow;
-	SDL_Renderer* mRender;
-
-	int mWindowH;
-	int mWindowW;
+	int m_windowH;
+	int m_windowW;
 };
 
 #endif	 // ENGINE_H

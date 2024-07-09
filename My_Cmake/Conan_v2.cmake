@@ -33,26 +33,32 @@ message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 # # $ cd ../.. && rm -rf build CMakeUserPresets.json compile_commands.json
 # #
 # #
-# #
+# # # Unix
 # # $ conan install . --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=generators/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug && cd ../..
+
+# # # Ninja
+# # $ conan install . --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=generators/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug && cd ../..
+
+# # $ conan install . --build=missing --settings=build_type=Debug && cd build/Debug && cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=generators/conan_toolchain.cmake -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build . --config Debug -j`nproc` && cd ../..
 # #
 # #
 # # Libs
 # https://approvaltestscpp.readthedocs.io/en/latest/generated_docs/ConanIntegration.html
 
 # find_package(catch2)
-find_package(Catch2 REQUIRED CONFIG)
-find_package(docopt REQUIRED CONFIG)
+find_package(Catch2 REQUIRED)
+find_package(docopt REQUIRED)
 
 # find_package(fmt)
-find_package(fmt REQUIRED CONFIG)
+find_package(fmt REQUIRED)
 
 # include_directories(${fmt_INCLUDE_DIR})
 # link_libraries(${fmt_LIBRARIES})
-find_package(spdlog REQUIRED CONFIG)
-find_package(glew REQUIRED CONFIG)
-find_package(nlohmann_json REQUIRED CONFIG)
-find_package(sol2 REQUIRED CONFIG)
+# find_package(spdlog REQUIRED)
+# find_package(glew REQUIRED)
+find_package(SQLite3 REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(sol2 REQUIRED)
 
 # find_package(range-v3)
 

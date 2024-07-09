@@ -1,7 +1,7 @@
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
 
-#include "../Physics/Vector2D.h"
+#include "../Utils/Vector2D.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

@@ -51,8 +51,13 @@ cd build/Debug
 pwd
 
 ## Conan
-cmake --build . --config Debug --target all -- -j `nproc` ;
-# cmake --build . --config Debug
+# cmake --build . --config Debug --target all -- -j`nproc` ;
+# cmake --build . --config Debug -j`nproc`
+echo ; 
+echo "|||||| |||||| |||||| Compiling |||||| |||||| ||||||" ; 
+echo ; 
+cmake --build . --config Debug -j `nproc`
+echo ; 
 
 ## Normal
 # cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j 1 ;
@@ -92,7 +97,10 @@ echo -e "\e[1m***** ***** ***** ****** ***** ***** *****" ;
 echo "***** ***** ***** Finish ***** ***** *****" ; 
 echo "***** ***** ***** ****** ***** ***** *****" ; 
 echo -e "\e[0m"
-read  -n 1; 
+
+# read  -n 1; # Get Input to close
+
+# clear;
 exit; 
 exec bash;
 

@@ -25,7 +25,20 @@ echo -e "\e[0m"
 # echo 
 # echo 
 
-cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j `nproc` ;
+
+cd $workspaceFolder
+cd build/Debug
+pwd
+
+
+echo ; 
+echo "|||||| |||||| |||||| Compiling |||||| |||||| ||||||" ; 
+echo ; 
+cmake --build . --config Debug -j `nproc`
+echo ; 
+
+
+# cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j `nproc` ;
 # cmake --build $workspaceFolder/build/Debug --config Debug --target all -- -j 2 ;
 # cmake --build $workspaceFolder/build --config Debug --target all -- -j `nproc` ;
 
