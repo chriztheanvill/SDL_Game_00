@@ -13,8 +13,8 @@ uint16_t IComponent::m_nextID = 0;	 // Static
 // ///////////////////////////////////////////////////////////////////////////////////
 
 Entity::Entity(uint16_t id, std::string name)
-	: m_id(id)
-	, m_name(name) {}
+  : m_id(id)
+  , m_name(name) {}
 
 auto Entity::GetID( ) const -> uint16_t { return m_id; }
 
@@ -24,37 +24,37 @@ auto Entity::GetID( ) const -> uint16_t { return m_id; }
 // ///////////////////////////////////////////////////////////////////////////////////
 
 auto Registry::NewEntity(std::string_view name) -> Entity {
-	uint16_t entityid = m_numEntities++;
+  uint16_t entityid = m_numEntities++;
 
-	Signature signature;
-	m_entityComponentSignatures.try_emplace(entityid, signature);
+  Signature signature;
+  m_entityComponentSignatures.try_emplace(entityid, signature);
 
-	Entity entity(entityid, std::string(name));
-	entity.m_registry = this;
-	m_entitiesToBeAdded.emplace(entity);
+  Entity entity(entityid, std::string(name));
+  entity.m_registry = this;
+  m_entitiesToBeAdded.emplace(entity);
 
-	return entity;
+  return entity;
 }
 
 void Registry::KillEntity(Entity entity) {}
 
 auto Registry::AddEntityToSystem(const Entity& entity) -> void {
-	const uint16_t entityID = entity.GetID( );
-	const std::bitset<32>& ecsID = m_entityComponentSignatures[entityID];
+  const uint16_t entityID = entity.GetID( );
+  const std::bitset<32>& ecsID = m_entityComponentSignatures[entityID];
 
-	for (const auto& [f, s] : m_systems) {
-		const Signature& sysSignature = s->GetSignature( );
+  for (const auto& [f, s] : m_systems) {
+	const Signature& sysSignature = s->GetSignature( );
 
-		bool isInterested = (ecsID & sysSignature) == sysSignature;
+	bool isInterested = (ecsID & sysSignature) == sysSignature;
 
-		if (isInterested) { s->AddEntity(entity); }
-	}
+	if (isInterested) { s->AddEntity(entity); }
+  }
 }
 
 // Se agregan las entidades, despues de cada frame
 void Registry::Update( ) {
-	for (const Entity& entity : m_entitiesToBeAdded) AddEntityToSystem(entity);
-	m_entitiesToBeAdded.clear( );
+  for (const Entity& entity : m_entitiesToBeAdded) AddEntityToSystem(entity);
+  m_entitiesToBeAdded.clear( );
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////

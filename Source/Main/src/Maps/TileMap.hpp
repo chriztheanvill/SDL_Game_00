@@ -29,6 +29,7 @@ using Maps = std::map<LevelSelect, std::vector<std::pair<std::string, std::vecto
 
 class TileMap {
   public:
+	class Registry* m_registry;
 	struct MapCollider {
 		std::string name { };
 		SDL_Rect rect { };
@@ -40,10 +41,9 @@ class TileMap {
 	Maps m_maps;
 
 	MapColls m_mapColls;
-	// std::vector<Maps> m_maps;
 
-	auto AddTileMapToRegistry(std::unique_ptr<class Registry>& registry, uint16_t level) -> void;
-	auto AddCollMapToRegistry(std::unique_ptr<class Registry>& registry, uint16_t level) -> void;
+	auto AddTileMapToRegistry(uint16_t level) -> void;
+	auto AddCollMapToRegistry(uint16_t level) -> void;
 
   public:
 	TileMap( );
@@ -51,19 +51,14 @@ class TileMap {
 
 	// std::function<void(String)> tmp;
 	// TextureManager* m_textureManager;
+	auto SetRegistry(std::unique_ptr<class Registry>& registry) { m_registry = registry.get( ); }
+	auto ClearOtherLevels(uint16_t level) -> void;
+	auto SelectLevel(uint16_t level) -> void;
+	auto RemoveLevelFromECS(uint16_t level) -> void;
 
-	// auto SetTextureManager(TextureManager* tm) -> void;
-	auto ClearOtherLevels(std::unique_ptr<class Registry>& registry, uint16_t level) -> void;
-	auto SelectLevel(std::unique_ptr<class Registry>& registry, uint16_t level) -> void;
-	auto RemoveLevelFromECS(std::unique_ptr<class Registry>& registry, uint16_t level) -> void;
-
-	// auto AddMap(const Maps& maps) -> void { m_maps.push_back(maps); }
 	auto SetMap(const Maps& maps) -> void { m_maps = maps; }
 	auto SetMapColl(const MapColls& maps) -> void { m_mapColls = maps; }
 	auto SelectCurrentLevel(LevelSelect levelSelect) -> void;
-	// auto Update(const float& deltaTime) -> void;
-	// auto Render( ) -> void;
-
 	// auto dSome( ) -> void;
 };
 

@@ -15,6 +15,7 @@ struct GraphicComponent {
 	uint16_t entityID { };
 	SDL_Rect src { };
 	SDL_RendererFlip flip { };
+	int16_t zIndex { };
 
 	// auto operator==(const GraphicComponent& other) const -> bool = default;
 	virtual ~GraphicComponent( ) = default;

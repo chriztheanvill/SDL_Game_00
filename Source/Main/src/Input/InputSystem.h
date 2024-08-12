@@ -7,61 +7,56 @@
 
 #include <map>
 
-enum class InputDevice
-{
-	Keyboard,
-	Controller
-};
+enum class InputDevice { Keyboard, Controller };
 
-class InputSystem
-{
-  public:
-	InputSystem(SDL_Event& e);
-	~InputSystem( );
+class InputSystem {
+public:
+  InputSystem( );
+  ~InputSystem( );
 
-	void CleanKeyStates( );
+  void CleanKeyStates( );
 
-	bool Events( );
+  auto Events( ) -> void;
 
-	bool Quit( );
+  bool Quit( );
 
-	void InputPressed( );
-	void InputReleased( );
-	void InputHolded( );
+  void InputPressed( );
+  void InputReleased( );
+  // void InputHolded( );
 
-	auto WasKeyPressed(SDL_Scancode key) -> bool;
-	auto WasKeyReleased(SDL_Scancode key) -> bool;
-	auto IsKeyHeld(SDL_Scancode key) -> bool;
+  auto WasKeyPressed(SDL_Scancode key) -> bool;
+  auto WasKeyReleased(SDL_Scancode key) -> bool;
+  auto IsKeyHeld(SDL_Scancode key) -> bool;
 
-	auto WasJoyButtonPressed(uint8_t button) -> bool;
-	auto WasJoyButtonReleased(uint8_t button) -> bool;
-	auto IsJoyButtonHeld(uint8_t button) -> bool;
+  auto WasJoyButtonPressed(const uint8_t& button) -> bool;
+  auto WasJoyButtonReleased(const uint8_t& button) -> bool;
+  auto IsJoyButtonHeld(const uint8_t& button) -> bool;
 
-	auto GetIsRunning( ) const -> bool { return mIsRunning; }
+  auto GetIsRunning( ) const -> bool { return mIsRunning; }
 
-  protected:
-	InputDevice mInputDevice { };
-	void SetJoystick(SDL_Joystick* joy) { mJoystick = joy; }
-	auto GetJoystick( ) -> SDL_Joystick* { return mJoystick; }
+protected:
+  InputDevice mInputDevice { };
+  void SetJoystick(SDL_Joystick* joy) { mJoystick = joy; }
+  auto GetJoystick( ) -> SDL_Joystick* { return mJoystick; }
 
-  private:
-	bool mIsRunning { true };
-	SDL_Event& mEvent;
-	SDL_Joystick* mJoystick;
+private:
+  bool mIsRunning { true };
+  SDL_Event mEvent;
+  SDL_Joystick* mJoystick;
 
-	const Uint8* mKeyState { };
-	// Uint8 mKeyStatePressed { };
-	// Uint8 mKeyStateReleased { };
-	// Uint8 mKeyStateHold { };
-	// Uint8 mKeyStatePrev { };
+  const Uint8* mKeyState { };
+  // Uint8 mKeyStatePressed { };
+  // Uint8 mKeyStateReleased { };
+  // Uint8 mKeyStateHold { };
+  // Uint8 mKeyStatePrev { };
 
-	std::map<SDL_Scancode, bool> mHeldKeys;
-	std::map<SDL_Scancode, bool> mPressedKeys;
-	std::map<SDL_Scancode, bool> mReleasedKeys;
+  std::map<SDL_Scancode, bool> mHeldKeys;
+  std::map<SDL_Scancode, bool> mPressedKeys;
+  std::map<SDL_Scancode, bool> mReleasedKeys;
 
-	std::map<uint8_t, bool> mHeldJoyButton;
-	std::map<uint8_t, bool> mPressedJoyButton;
-	std::map<uint8_t, bool> mReleasedJoyButton;
+  std::map<uint8_t, bool> mHeldJoyButton;
+  std::map<uint8_t, bool> mPressedJoyButton;
+  std::map<uint8_t, bool> mReleasedJoyButton;
 };
 
 #endif	 // INPUTSYSTEM_H

@@ -4,18 +4,17 @@
 #include <cstdint>
 #include <string>
 
-enum class ComponentIndex
-{
+enum class ComponentIndex {
 	Transform,
 	RigidBody,
 	Sprite,
 	Tile,
+	Collider,
 };
 
-struct ComponentBase
-{
+struct ComponentBase {
 	uint16_t entityID { };
-	std::string componentIndex { };
+	ComponentIndex componentIndex { };
 };
 
 #endif	 // COMPONENTBASE_HPP

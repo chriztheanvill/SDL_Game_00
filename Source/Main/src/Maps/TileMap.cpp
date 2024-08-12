@@ -55,22 +55,22 @@ auto TileMap::SelectCurrentLevel(LevelSelect levelSelect) -> void {
 	currentLevelSelected = levelSelect;
 }
 
-auto TileMap::SelectLevel(std::unique_ptr<Registry>& registry, uint16_t level) -> void {
+auto TileMap::SelectLevel(uint16_t level) -> void {
 	// Logger::Debug(LogType::Check, "TileMap::SelectLevel 0 ");
-	if (!registry->HasSystem<RenderTileMapSystem>( )) return;
+	if (!m_registry->HasSystem<RenderTileMapSystem>( )) return;
 	// Logger::Debug(LogType::Log, "TileMap::SelectLevel 1 ");
 
-	ClearOtherLevels(registry, level);
-	AddTileMapToRegistry(registry, level);
-	AddCollMapToRegistry(registry, level);
+	ClearOtherLevels(level);
+	AddTileMapToRegistry(level);
+	AddCollMapToRegistry(level);
 }
 
-auto TileMap::ClearOtherLevels(std::unique_ptr<Registry>& registry, uint16_t level) -> void {
-	registry->Update( );
+auto TileMap::ClearOtherLevels(uint16_t level) -> void {
+	m_registry->Update( );
 
 	Logger::Debug(LogType::Check, "TileMap::ClearOtherLevels level: ", level);
 
-	for (Entity& entity : registry->GetSystem<RenderTileMapSystem>( )->GetEntities( )
+	for (Entity& entity : m_registry->GetSystem<RenderTileMapSystem>( )->GetEntities( )
 							| views::filter([&](const Entity& entity) -> bool {
 								  return entity.GetComponent<TileComponent>( ).level != level
 										 || !entity.HasComponent<TileComponent>( );
@@ -78,16 +78,16 @@ auto TileMap::ClearOtherLevels(std::unique_ptr<Registry>& registry, uint16_t lev
 		Logger::Debug(LogType::Log, "TileMap::ClearOtherLevels Entity: ", entity.GetID( ));
 		// entity.RemoveComponent<TileComponent>( );
 		// entity.RemoveComponent<TransformComponent>( );
-		registry->RemoveComponent<TileComponent>(entity);
-		registry->RemoveComponent<TransformComponent>(entity);
+		m_registry->RemoveComponent<TileComponent>(entity);
+		m_registry->RemoveComponent<TransformComponent>(entity);
 		//
-		registry->GetSystem<RenderTileMapSystem>( )->RemoveEntity(entity);
-		registry->UpdateNumEntities(-1);
+		m_registry->GetSystem<RenderTileMapSystem>( )->RemoveEntity(entity);
+		m_registry->UpdateNumEntities(-1);
 	}
 }
 
-auto TileMap::RemoveLevelFromECS(std::unique_ptr<Registry>& registry, uint16_t level) -> void {
-	registry->Update( );
+auto TileMap::RemoveLevelFromECS(uint16_t level) -> void {
+	m_registry->Update( );
 
 	//  Logger::Debug(
 	// LogType::Check,
@@ -97,7 +97,7 @@ auto TileMap::RemoveLevelFromECS(std::unique_ptr<Registry>& registry, uint16_t l
 	//   " +++++++++++++++++ Ya tiene algo"
 	//  );
 
-	for (Entity& entity : registry->GetSystem<RenderTileMapSystem>( )->GetEntities( )) {
+	for (Entity& entity : m_registry->GetSystem<RenderTileMapSystem>( )->GetEntities( )) {
 		if (!entity.HasComponent<TileComponent>( )) continue;
 		if (entity.GetComponent<TileComponent>( ).level != level) continue;
 		// Logger::Debug(LogType::Log, "TileMap::RemoveLevelFromECS Entity: ", entity.GetID( ));
@@ -108,30 +108,30 @@ auto TileMap::RemoveLevelFromECS(std::unique_ptr<Registry>& registry, uint16_t l
 		// entity.RemoveComponent<TileComponent>( );
 		// entity.RemoveComponent<TransformComponent>( );
 		//
-		registry->RemoveComponent<TileComponent>(entity);
-		registry->RemoveComponent<TransformComponent>(entity);
+		m_registry->RemoveComponent<TileComponent>(entity);
+		m_registry->RemoveComponent<TransformComponent>(entity);
 		//
-		registry->GetSystem<RenderTileMapSystem>( )->RemoveEntity(entity);
-		registry->UpdateNumEntities(-1);
+		m_registry->GetSystem<RenderTileMapSystem>( )->RemoveEntity(entity);
+		m_registry->UpdateNumEntities(-1);
 	}
 }
 
-auto TileMap::AddCollMapToRegistry(std::unique_ptr<Registry>& registry, uint16_t level) -> void {
-	Logger::Debug(LogType::Check, "TileMap::AddCollMapToRegistry m_mapColls: ");
+auto TileMap::AddCollMapToRegistry(uint16_t level) -> void {
+	// Logger::Debug(LogType::Check, "TileMap::AddCollMapToRegistry m_mapColls: ");
 
 	for (const auto& [levelselect, vecs] : m_mapColls) {
-		Logger::Debug(
-		  LogType::Check,
-		  "TileMap::AddCollMapToRegistry level: ",
-		  static_cast<int>(levelselect)
-		);
+		// Logger::Debug(
+		//   LogType::Check,
+		//   "TileMap::AddCollMapToRegistry level: ",
+		//   static_cast<int>(levelselect)
+		// );
 		if (static_cast<int>(levelselect) != level) continue;
 		for (const auto& eachVec : vecs) {
-			Logger::Debug(
-			  LogType::Check,
-			  "TileMap::AddCollMapToRegistry eachVec: ",
-			  eachVec.rect.y
-			);
+			// Logger::Debug(
+			//   LogType::Check,
+			//   "TileMap::AddCollMapToRegistry eachVec: ",
+			//   eachVec.rect.y
+			// );
 			// Entity collTile = registry->NewEntity(
 			// 	  "tile_" + eachTile.name + "_" + std::to_string(eachTile.id)
 			// 	);
@@ -154,7 +154,8 @@ auto TileMap::AddCollMapToRegistry(std::unique_ptr<Registry>& registry, uint16_t
 		}
 	}
 }
-auto TileMap::AddTileMapToRegistry(std::unique_ptr<Registry>& registry, uint16_t level) -> void {
+
+auto TileMap::AddTileMapToRegistry(uint16_t level) -> void {
 	// Logger::Debug(LogType::Log, "TileMap::SelectLevel 2 ");
 	// std::pair<std::string, std::vector<Tile>>
 
@@ -173,7 +174,7 @@ auto TileMap::AddTileMapToRegistry(std::unique_ptr<Registry>& registry, uint16_t
 				// Logger::Debug(LogType::Log, "TileMap::SelectLevel eachTile ", eachTile.name);
 				// Logger::Debug(LogType::Log, "TileMap::SelectLevel eachTile ", eachTile.id);
 
-				Entity tile = registry->NewEntity(
+				Entity tile = m_registry->NewEntity(
 				  "tile_" + eachTile.name + "_" + std::to_string(eachTile.id)
 				);
 
@@ -187,11 +188,13 @@ auto TileMap::AddTileMapToRegistry(std::unique_ptr<Registry>& registry, uint16_t
 				  eachTile.name,
 				  eachTile.id,
 				  level,
+				  0,
 				  SDL_Rect { static_cast<int>(eachTile.src.x),
 							 static_cast<int>(eachTile.src.y),
 							 static_cast<int>(eachTile.size.x),
 							 static_cast<int>(eachTile.size.y) }
 				);
+
 			}	// for each tile
 		}	// for each map
 	}	// for maps

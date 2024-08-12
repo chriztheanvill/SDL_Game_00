@@ -21,29 +21,29 @@
 cmake_minimum_required(VERSION 3.28.1)
 
 # # Name System proyect ##
-project(Pikuma_00 VERSION 1.0.0 LANGUAGES C CXX)
+project(Pikuma_00 VERSION 1.0.0 LANGUAGES CXX)
 
 add_compile_options(
 
-  # -std=c++20
-  -ffast-math
+        # -std=c++20
+        -ffast-math
 
-  # Improve maths
-  # -ffast-math
-  #
-  # # -ffast-math has all this
-  # -ffinite-math-only
-  # -fno-signed-zeros
-  # -fno-trapping-math
-  # -fassociative-math
-  # -fno-math-errno
-  # -freciprocal-math
-  # -funsafe-math-optimizations
-  # -fcx-limited-range
-  # # -ffast-math has all this
-  # ~Improve maths
+        # Improve maths
+        # -ffast-math
+        #
+        # # -ffast-math has all this
+        # -ffinite-math-only
+        # -fno-signed-zeros
+        # -fno-trapping-math
+        # -fassociative-math
+        # -fno-math-errno
+        # -freciprocal-math
+        # -funsafe-math-optimizations
+        # -fcx-limited-range
+        # # -ffast-math has all this
+        # ~Improve maths
 
-  # -fmodules-ts
+        # -fmodules-ts
 )
 
 include(My_Cmake/Standard_Project_Settings.cmake)
@@ -51,8 +51,8 @@ include(My_Cmake/Standard_Project_Settings.cmake)
 # Link this 'library' to set the c++ standard / compile-time options requested
 add_library(project_options INTERFACE)
 target_compile_features(project_options INTERFACE
-  cxx_std_23
-  cxx_lambda_init_captures
+        cxx_std_23
+        cxx_lambda_init_captures
 )
 
 # Link this 'library' to use the warnings specified in CompilerWarnings.cmake
@@ -69,10 +69,10 @@ enable_sanitizers(project_options)
 # Find Linux Version
 include(My_Cmake/Linux_Ver.cmake)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  get_linux_lsb_release_information()
-  message(STATUS "+++++++++++++++ GNU Linux ${LSB_RELEASE_ID_SHORT} ${LSB_RELEASE_VERSION_SHORT} ${LSB_RELEASE_CODENAME_SHORT} +++++++++++++++")
-endif()
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    get_linux_lsb_release_information()
+    message(STATUS "+++++++++++++++ GNU Linux ${LSB_RELEASE_ID_SHORT} ${LSB_RELEASE_VERSION_SHORT} ${LSB_RELEASE_CODENAME_SHORT} +++++++++++++++")
+endif ()
 
 # enable Threads
 include(My_Cmake/Threads.cmake)
@@ -98,19 +98,19 @@ include(My_Cmake/MyLibs.cmake)
 # run_conan()
 # ###############################################################
 # # Conan config (New)
-include(My_Cmake/Conan_v2.cmake)
+#include(My_Cmake/Conan_v2.cmake)
 
 # ###############################################################
 # # vcpkg
-# include(My_Cmake/Vcpkg_Find.cmake)
+include(My_Cmake/Vcpkg_Find.cmake)
 
 # ###############################################################
 
 # set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 # set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+#set(CMAKE_CXX_EXTENSIONS ON)
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -120,50 +120,50 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ###############################################################
 # Very basic PCH example
-# option(ENABLE_PCH "Enable Precompiled Headers" ON)
+option(ENABLE_PCH "Enable Precompiled Headers" ON)
 
 # # option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-# if(ENABLE_PCH)
-# # This sets a global PCH parameter, each project will build its own PCH, which
-# # is a good idea if any #define's change
-# #
-# message(STATUS " -- Precompiled Headers ")
+if (ENABLE_PCH)
+    # This sets a global PCH parameter, each project will build its own PCH, which
+    # is a good idea if any #define's change
+    #
+    message(STATUS " -- Precompiled Headers ")
 
-# # target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
-# target_precompile_headers(
-# project_options
+    # target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
+    target_precompile_headers(
+            project_options
 
-# # PUBLIC
-# # "foo.h"
-# INTERFACE
+            # PUBLIC
+            # "foo.h"
+            INTERFACE
 
-# # System
-# <array>
-# <iostream>
-# <fstream>
-# <map>
-# <memory>
-# <iterator>
-# <random>
-# <string>
-# <utility>
-# <vector>
+            # System
+            <array>
+            <iostream>
+            <fstream>
+            <map>
+            <memory>
+            <iterator>
+            <random>
+            <string>
+            <utility>
+            <vector>
 
-# # 3s
-# <SDL2/SDL.h>
-# <SDL2/SDL_image.h>
-# <SDL2/SDL_ttf.h>
+            # 3s
+            <SDL2/SDL.h>
+            <SDL2/SDL_image.h>
+            <SDL2/SDL_ttf.h>
 
-# # <fmt/core.h>
-# # <fmt/color.h>
-# <glm/glm.hpp>
+            # <fmt/core.h>
+            # <fmt/color.h>
+            <glm/glm.hpp>
 
-# # Boost
-# # <boost/format.hpp>
+            # Boost
+            # <boost/format.hpp>
 
-# # <boost/filesystem
-# )
-# endif()
+            # <boost/filesystem
+    )
+endif ()
 
 # ###############################################################
 # Enable C++20
@@ -271,23 +271,23 @@ message(STATUS " -- MY -- CMake C++ FLAGS ${CMAKE_CXX_FLAGS} \n\n")
 # # Features
 # https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html
 target_compile_features(
-  ${PROJECT_NAME} PRIVATE
+        ${PROJECT_NAME} PRIVATE
 
-  # LAMBDA FEATURES
-  cxx_lambda_init_captures
-  cxx_generic_lambdas
-  cxx_binary_literals
+        # LAMBDA FEATURES
+        cxx_lambda_init_captures
+        cxx_generic_lambdas
+        cxx_binary_literals
 
-  # cxx_constexpr
-  cxx_decltype_auto
+        # cxx_constexpr
+        #cxx_decltype_auto
 
-  # C++17 ENABLED
-  # cxx_std_17
-  # C++20 ENABLED
-  # cxx_std_20
+        # C++17 ENABLED
+        # cxx_std_17
+        # C++20 ENABLED
+        # cxx_std_20
 
-  # C++23 ENABLED
-  cxx_std_23
+        # C++23 ENABLED
+        cxx_std_23
 )
 
 # ###############################################################

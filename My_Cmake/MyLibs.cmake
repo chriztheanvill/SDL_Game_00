@@ -19,14 +19,14 @@
 # set(OpenGL_GL_PREFERENCE LEGACY) ## Un comment if doesn't work
 
 find_package(PkgConfig REQUIRED)
-find_package(OpenGL REQUIRED)
-find_package(Vulkan REQUIRED)
+#find_package(OpenGL REQUIRED)
+#find_package(Vulkan REQUIRED)
 find_package(SDL2 REQUIRED)
 
 # find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(glm REQUIRED)
-find_package(GLEW REQUIRED STATIC)
+#find_package(glfw3 REQUIRED)
+#find_package(glm REQUIRED)
+#find_package(GLEW REQUIRED STATIC)
 
 # if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 # if(${LSB_RELEASE_ID_SHORT} STREQUAL "Fedora")
@@ -47,20 +47,20 @@ message(STATUS "+++ LUA dir: " ${LUA_VERSION_STRING} " - " ${LUA_INCLUDE_DIR} " 
 
 # ## GLFW
 # ## GLFW additions
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+#set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
 # set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
-set(GLFW_BUILD_DOCS ON CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+#set(GLFW_BUILD_DOCS ON CACHE BOOL "" FORCE)
+#set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+#set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 # # SDL2
 include_directories(
-	${SDL2_INCLUDE_DIRS}
+        ${SDL2_INCLUDE_DIRS}
 
-	# #   ${SDL2IMAGE_INCLUDE_DIRS}
-	# #   ${SDL2GFX_INCLUDE_DIRS}
-	${LUA_INCLUDE_DIR}
+        # #   ${SDL2IMAGE_INCLUDE_DIRS}
+        # #   ${SDL2GFX_INCLUDE_DIRS}
+        ${LUA_INCLUDE_DIR}
 )
 
 # message(STATUS "+++ SDL2 dir: " ${SDL2_INCLUDE_DIRS} " - " ${SDL2_IMAGE_INCLUDE_DIR})
@@ -73,95 +73,95 @@ include_directories(
 
 # # OPENGL_VIDEO_LIBRARIES
 set(
-	OPENGL_VIDEO_LIBRARIES
+        OPENGL_VIDEO_LIBRARIES
 
-	# # GENERAL System Libraries
-	#${OPENGL_LIBRARY}
-	${OPENGL_LIBRARIES}
-	${OPENGL_gl_LIBRARIES}
-	${OPENGL_glu_LIBRARIES}
+        # # GENERAL System Libraries
+        #${OPENGL_LIBRARY}
+        #${OPENGL_LIBRARIES}
+        #${OPENGL_gl_LIBRARIES}
+        #${OPENGL_glu_LIBRARIES}
 
-	# GLFW
-	${GLFW_LIBRARIES}
-	#${GLFW3_LIBRARY}
-	${GLFW3_LIBRARIES}
-	${GLEW_LIBRARIES}
-	#${GLEW_LIBRARY}
+        # GLFW
+        #${GLFW_LIBRARIES}
+        #${GLFW3_LIBRARY}
+        #${GLFW3_LIBRARIES}
+        #${GLEW_LIBRARIES}
+        #${GLEW_LIBRARY}
 
-	# # SDL2
-	${SDL2_LIBRARIES}
-	${SDL2GFX_LIBRARIES}
-	${SDL2_IMAGE_LIBRARIES}
-	${SDL2_TTF_LIBRARIES}
+        # # SDL2
+        ${SDL2_LIBRARIES}
+        ${SDL2GFX_LIBRARIES}
+        ${SDL2_IMAGE_LIBRARIES}
+        ${SDL2_TTF_LIBRARIES}
 
-	# # Define Libraries
-	Vulkan::Vulkan
-	OpenGL::GL
-	GLEW::GLEW
-	glfw
-	SOIL
-	OpenGL
+        # # Define Libraries
+        #Vulkan::Vulkan
+        #OpenGL::GL
+        #GLEW::GLEW
+        #glfw
+        #SOIL
+        #OpenGL
 
-	# # SDL2
-	SDL2
-	SDL2_image
-	SDL2_net
-	SDL2_mixer
-	SDL2_ttf
-	SDL2_gfx
+        # # SDL2
+        SDL2
+        SDL2_image
+        SDL2_net
+        SDL2_mixer
+        SDL2_ttf
+        SDL2_gfx
 
-	# ----- SFML ----- #
-	# ${SFML_LIBRARIES}
-	# ${SFML_DEPENDENCIES}
-	# sfml-system
-	# sfml-window
-	# sfml-graphics
-	# sfml-network
-	# sfml-audio
-	# #   sfml‑main // NO
+        # ----- SFML ----- #
+        # ${SFML_LIBRARIES}
+        # ${SFML_DEPENDENCIES}
+        # sfml-system
+        # sfml-window
+        # sfml-graphics
+        # sfml-network
+        # sfml-audio
+        # #   sfml‑main // NO
 
-	# # LUA
-	lua5.4 # # Debian SID BTRFS
-	# lua # # Fedora
-	m
-	dl
+        # # LUA
+        #lua5.4 # # Debian SID BTRFS
+        lua # # Fedora
+        #m
+        #dl
 
-	# # SDL2_sound
+        # # SDL2_sound
 
-	# # System Libraries
-	# Xi
-	# GLEW
-	# GLU
-	# m
-	# GL
-	# m
-	# glut
-	# pthread
-	# dl
-	# drm
-	# Xdamage
-	# X11-xcb
-	# xcb-glx
-	# xcb-dri2
-	# #glfw3
-	# rt
-	# m
-	# dl
-	# Xrandr
-	# Xinerama
-	# Xxf86vm
-	# Xext
-	# Xcursor
-	# Xrender
-	# Xfixes
-	# X11
-	# pthread
-	# xcb
-	# Xau
-	# Xdmcp
-	# assimp
-	# #
+        # # System Libraries
+        # Xi
+        # GLEW
+        # GLU
+        # m
+        # GL
+        # m
+        # glut
+        # pthread
+        # dl
+        # drm
+        # Xdamage
+        # X11-xcb
+        # xcb-glx
+        # xcb-dri2
+        # #glfw3
+        # rt
+        # m
+        # dl
+        # Xrandr
+        # Xinerama
+        # Xxf86vm
+        # Xext
+        # Xcursor
+        # Xrender
+        # Xfixes
+        # X11
+        # pthread
+        # xcb
+        # Xau
+        # Xdmcp
+        # assimp
+        # #
 
-	# # TCP
-	mysqlclient
+        # # TCP
+        #mysqlclient
 )
