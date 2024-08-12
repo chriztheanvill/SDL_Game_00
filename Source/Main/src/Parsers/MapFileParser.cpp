@@ -161,7 +161,6 @@ auto MapFileParser::Parse( ) -> std::expected<bool, std::string> {
 	  }
 	);
 
-	/* TODO: Get Tiles */
 	maps.emplace(mapFile.first, GetTiles(mapFile.second));
 	mapColls.emplace(mapFile.first, GetObjects(mapFile.second));
 
@@ -377,7 +376,7 @@ auto MapFileParser::GetTiles(const nlohmann::json& jfile)
 		}	// for data
 		tilesChunk.emplace_back(chunkName, tiles);
 	  }		// for chunks
-			// map.push_back(tilesChunk);
+		  // map.push_back(tilesChunk);
 	}
   );
 
