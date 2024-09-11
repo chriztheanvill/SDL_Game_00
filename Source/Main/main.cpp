@@ -79,11 +79,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
   /* ##################################################################### */
   /* ##################################################################### */
 
-  // Logger::Debug(LogType::Debug, "Main init Parse Maps");
-
-  /* ##################################################################### */
-  /* ##################################################################### */
-
   Logger::Debug(LogType::Debug, "Main Init Game");
 
   Game game;
@@ -124,7 +119,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
   return 0;
 }
 
-/* TODO
+/* NOTE:
  * Solo Clion
 Semantic highlightingCopy heading link
 Optional semantic highlighting uses different colors for various variables and parameters, making it
