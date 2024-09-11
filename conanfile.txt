@@ -1,11 +1,11 @@
 [requires]
-catch2/3.5.2
-docopt.cpp/0.6.3
-fmt/10.2.1
+fmt/11.0.2
 nlohmann_json/3.11.3
 sol2/3.3.1
-sqlite3/3.46.0
+sqlite3/3.46.1
 
+# catch2/3.6.0
+# docopt.cpp/0.6.3
 # glew/2.2.0
 # glaze/2.6.1
 # spdlog/1.12.0

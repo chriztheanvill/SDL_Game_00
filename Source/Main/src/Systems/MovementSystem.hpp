@@ -1,104 +1,54 @@
-#ifndef MOVEMENTSYSTEM_HPP
-#define MOVEMENTSYSTEM_HPP
+#ifndef MOVEMENT_SYSTEM_HPP
+#define MOVEMENT_SYSTEM_HPP
 
-#include "../ECS/ECS.hpp"
-#include "../Components/TransformComponent.hpp"
-#include "../Components/RigidBodyComponent.h"
-#include "../Utils/EnumComponentID.hpp"
-#include "../Input/Controller.h"
+#include "../ECS/Registry.hpp"
+
 #include <ranges>
 
 class MovementSystem : public System {
-private:
-public:
-  MovementSystem( ) {
-	RequireComponent<TransformComponent>( );
-	RequireComponent<RigidBodyComponent>( );
-  }
-  // virtual ~MovementSystem( ) = default;	// Virtual is Expensive
+ private:
+  // float movementSpeed = 50.0f; // Old
+  float m_movementSpeed = 150.0f;
+  // float movementSpeed = 0.05f * 1000; // Sin sync
+  // float movementSpeed = 0.02f; // Sin sync
 
-  auto Update(const float& deltaTime) -> void {
-	auto eachEntity = [&](const Entity& entity) -> void {
-	  TransformComponent& transform = entity.GetComponent<TransformComponent>( );
-	  RigidBodyComponent& rigidbody = entity.template GetComponent<RigidBodyComponent>( );
+ public:
+  MovementSystem();
 
-	  float movepl = 5.0f;
-
-	  if (Controller::Instance( ).MoveLeft( )) {
-		// transform.position.TransformX(-movepl);
-		rigidbody.ApplyForceX(-movepl);
-		// Logger::Debug(LogType::Check, "MovementSystem::Update, move left.",
-		// transform.position.x);
-	  } else if (Controller::Instance( ).MoveRight( )) {
-		// transform.position.TransformX(movepl);
-		rigidbody.ApplyForceX(movepl);
-		// Logger::Debug(LogType::Check, "MovementSystem::Update, move right.",
-		// transform.position.x);
-	  } else {
-		rigidbody.UnsetForce( );
-	  }
-
-	  // OLD
-	  //  if (Controller::Instance( )->MoveLeft( )) {
-	  // // transform.position.TransformX(-movepl);
-	  // rigidbody.ApplyForceX(-movepl);
-	  // // Logger::Debug(LogType::Check, "MovementSystem::Update, move left.",
-	  // // transform.position.x);
-	  //  } else if (Controller::Instance( )->MoveRight( )) {
-	  // // transform.position.TransformX(movepl);
-	  // rigidbody.ApplyForceX(movepl);
-	  // // Logger::Debug(LogType::Check, "MovementSystem::Update, move right.",
-	  // // transform.position.x);
-	  //  } else {
-	  // rigidbody.UnsetForce( );
-	  //  }
-
-	  rigidbody.Update(deltaTime);
-
-	  transform.position.TransformX(rigidbody.Position( ).x);
-	  transform.position.TransformY(rigidbody.Position( ).y);
-	  // transform.position.TransformX(rigidbody.Velocity( ).x);
-	  // transform.position.TransformY(rigidbody.Velocity( ).y);
-
-	  //  Logger::Debug(
-	  // LogType::Debug,
-	  // "MovementSystem::Update ",
-	  // "X:",
-	  // transform.position.x,
-	  // " - Y: ",
-	  // transform.position.y
-	  //  );
-	};
-
-	std::ranges::for_each(GetEntities( ), eachEntity);
-	//
-
-	// for (const auto& entity : GetEntities( ))
-	// {
-	// 	TransformComponent& transform
-	// 	  = entity.GetComponent<TransformComponent>( );
-	// 	RigidBody& rigidbody = entity.GetComponent<RigidBody>( );
-
-	// 	rigidbody.Update(deltaTime);
-
-	// 	transform.position.TransformX(rigidbody.Velocity( ).x);
-	// 	transform.position.TransformY(rigidbody.Velocity( ).y);
-
-	// 	Logger::Debug(
-	// 	  LogType::Debug,
-	// 	  "MovementSystem::Update ",
-	// 	  "X:",
-	// 	  transform.position.x,
-	// 	  " - Y: ",
-	// 	  transform.position.y
-	// 	);
-	// }
-  }
+  auto Update(float deltaTime) -> void;
 };
 
-#endif	 // MOVEMENTSYSTEM_HPP
+#endif // MOVEMENT_SYSTEM_HPP
 
-		 // const Uint8* keyState = SDL_GetKeyboardState(NULL);
+       /*
+         auto eachEntity = [&](const Entity& entity) -> void {
+               TransformComponent& transform = entity.GetComponent<TransformComponent>();
+               RigidBodyComponent& rigidbody = entity.template GetComponent<RigidBodyComponent>();
+       
+               rigidbody.ApplyForceX(
+                 static_cast<float>(Controller::Instance().MoveRight() -
+         Controller::Instance().MoveLeft())
+                 * movementSpeed
+               );
+       
+               // rigidbody.ApplyForceY(100);
+       
+               rigidbody.Update(deltaTime);
+       
+               // Logger::Debug(LogType::Log, "MovementSystem::Update tr pos x: ", transform.position.x);
+               // Logger::Debug(LogType::Log, "MovementSystem::Update r ", rigidbody.Position().x);
+               Logger::Debug(LogType::Log, "MovementSystem::Update tr pos x: ", transform.position.y);
+               Logger::Debug(LogType::Log, "MovementSystem::Update r x ", rigidbody.Position().y);
+               Logger::Debug(LogType::Log, "MovementSystem::Update r y ", rigidbody.Velocity().y);
+       
+               transform.position.TransformX(rigidbody.Velocity().x);
+               transform.position.TransformY(rigidbody.Velocity().y);
+             };
+       
+             std::ranges::for_each(GetEntities(), eachEntity);
+        */
+
+// const Uint8* keyState = SDL_GetKeyboardState(NULL);
 
 //  switch (m_event.type) {
 // case SDL_KEYDOWN:
@@ -134,4 +84,27 @@ public:
 // LogType::Check,
 // "MovementSystem::Update, move left.",
 // Controller::Instance( )->MoveLeft( )
+//  );
+
+// if (Controller::Instance().MoveLeft()) {
+//   // transform.position.TransformX(-movepl);
+//   rigidbody.ApplyForceX(-movepl);
+//   // Logger::Debug(LogType::Check, "MovementSystem::Update, move left.",
+//   // transform.position.x);
+// } else if (Controller::Instance().MoveRight()) {
+//   // transform.position.TransformX(movepl);
+//   rigidbody.ApplyForceX(movepl);
+//   // Logger::Debug(LogType::Check, "MovementSystem::Update, move right.",
+//   // transform.position.x);
+// } else {
+//   rigidbody.UnsetForce();
+// }
+
+//  Logger::Debug(
+// LogType::Debug,
+// "MovementSystem::Update ",
+// "X:",
+// transform.position.x,
+// " - Y: ",
+// transform.position.y
 //  );

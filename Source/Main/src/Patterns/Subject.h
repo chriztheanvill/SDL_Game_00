@@ -1,7 +1,3 @@
-//
-// Created by cris on 11/11/23.
-//
-
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
@@ -10,29 +6,28 @@
 
 class IObserver;
 class Observer;
-class ISubject
-{
-  public:
-	virtual ~ISubject( ) {}
-	virtual auto Attach(IObserver* observer) -> void = 0;
-	virtual auto Detach(IObserver* observer) -> void = 0;
-	virtual auto Notify( ) -> void = 0;
+
+class ISubject {
+public:
+  virtual ~ISubject( ) {}
+  virtual auto Attach(IObserver* observer) -> void = 0;
+  virtual auto Detach(IObserver* observer) -> void = 0;
+  virtual auto Notify( ) -> void = 0;
 };
 
-class Subject : public ISubject
-{
-	std::vector<IObserver*> listObservers;
-	std::string mMessaje;
+class Subject : public ISubject {
+  std::vector<IObserver*> m_listObservers;
+  std::string m_message;
 
-  public:
-	Subject( );
-	virtual ~Subject( );
+public:
+  Subject( );
+  virtual ~Subject( );
 
-	auto Attach(IObserver* observer) -> void override;
-	auto Detach(IObserver* observer) -> void override;
-	auto Notify( ) -> void override;
+  auto Attach(IObserver* observer) -> void override;
+  auto Detach(IObserver* observer) -> void override;
+  auto Notify( ) -> void override;
 
-	auto SetMessage(std::string_view message) -> void;
+  auto SetMessage(std::string_view message) -> void;
 };
 
 #endif	 // SUBJECT_H

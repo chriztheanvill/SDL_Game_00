@@ -38,3 +38,16 @@ int main(){
 ```
 
 En la linea 28 `T t( std::forward<Ts>(ts)...);` Este es el motivo por el cual se requiere valores predeterminados.
+
+# Libs
+
+## fmt
+
+- Si da problemas con `consteval`, usar: `fmt::runtime( msg )`
+
+```c++
+    fmt::print(fmt::emphasis::bold | color, fmt::runtime(msg), message);
+```
+
+
+  

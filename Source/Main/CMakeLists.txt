@@ -10,9 +10,23 @@ file(GLOB_RECURSE GAME_PROTOTYPE_00
 # ## Main proyect ###
 add_executable(
         ${PROJECT_NAME}
+        main.cpp
 
         ${GAME_PROTOTYPE_00}
-        #        #
+        #src/ECS/GenIDs.cpp
+        #src/ECS/GenIDs.h
+
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Component.cpp
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Component.h
+        #
+        #
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/System.cpp
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/System.h
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Registry.cpp
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Registry.h
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Entity.cpp
+        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Entity.h
+        #        #        #
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Components/ComponentBase.hpp
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Components/GraphicComponent.hpp
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Components/Point.hpp
@@ -21,16 +35,18 @@ add_executable(
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Components/TileComponent.hpp
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Components/TransformComponent.hpp
         #        #
-        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Constants.h
+        #        #${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Constants.h
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Engine.h
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Engine.cpp
-        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Node.h
+        #        #${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Node.h
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Time.h
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Core/Time.cpp
         #        #
-        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/ECS.hpp
-        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/ECS.cpp
-        #        ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Pool.hpp
+        #        #                ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/ECS.hpp
+        #        #                ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/ECS.cpp
+        #        #                ${PROJECT_SOURCE_DIR}/Source/Main/src/ECS/Pool.hpp
+        #
+        #
         #        #
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Game/Game.hpp
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Game/Game.cpp
@@ -63,7 +79,6 @@ add_executable(
         #        ${PROJECT_SOURCE_DIR}/Source/Main/src/Utils/Vector2D.h
 
 
-        main.cpp
 )
 
 # target_compile_definitions(file_name PRIVATE #DEFINE)
@@ -78,12 +93,10 @@ target_link_libraries(
         # project_warnings
         #
         # # Pkgs
-        Catch2::Catch2
+        #Catch2::Catch2
         fmt::fmt
         nlohmann_json::nlohmann_json
         SQLite::SQLite3
-
-        # range-v3::range-v3
 
         # CONAN_PKG::imgui-sfml
         # CONAN_PKG::sdl2

@@ -31,19 +31,19 @@ enum class ImageLayers {
 };
 
 namespace Components {
-  constexpr u_int16_t WindowSizeW = 800;
-  constexpr u_int16_t WindowSizeH = 600;
-  constexpr std::string_view WindowName = "Game_My";
-  // ImageLayers ImageLayer = ImageLayers::NONE;
-  // LevelSelect LevelToSelect = LevelSelect::Level_00;
-}	// namespace Components
+constexpr u_int16_t WindowSizeW = 800;
+constexpr u_int16_t WindowSizeH = 600;
+constexpr std::string_view WindowName = "Game_My";
+// ImageLayers ImageLayer = ImageLayers::NONE;
+// LevelSelect LevelToSelect = LevelSelect::Level_00;
+} // namespace Components
 
 namespace FileLocations {
-  constexpr std::string_view Images = "assets/images/";
-  constexpr std::string_view Fonts = "assets/fonts/";
-  constexpr std::string_view Config = "assets/config/";
-  constexpr std::string_view Music = "assets/sounds/";
-  constexpr std::string_view TileMaps = "assets/TileMaps/";
-}	// namespace FileLocations
+constexpr std::string_view Images = "assets/images/";
+constexpr std::string_view Fonts = "assets/fonts/";
+constexpr std::string_view Config = "assets/config/";
+constexpr std::string_view Music = "assets/sounds/";
+constexpr std::string_view TileMaps = "assets/TileMaps/";
+} // namespace FileLocations
 
-#endif	 // UTILS_HPP
+#endif // UTILS_HPP

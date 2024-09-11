@@ -2,20 +2,16 @@
 #include "Subject.h"
 
 Observer::Observer(Subject& subject)
-	: mSubject(subject)
-{
-	subject.Attach(this);
-	++mCurrentObserver;
+  : m_subject(subject) {
+  subject.Attach(this);
+  ++m_currentObserver;
 }
 
 Observer::~Observer( ) {}
-auto Observer::Update(const std::string& messageFromSubject) -> void
-{
-	mMessaje = messageFromSubject;
-	Logger::Debug(LogType::Log,
-				  "Observer num: ",
-				  mCurrentObserver,
-				  "\n message: ",
-				  mMessaje);
+
+auto Observer::Update(const std::string& messageFromSubject) -> void {
+  m_message = messageFromSubject;
+  // Logger::Debug(LogType::Log, "Observer num: ", m_currentObserver, "\n message: ", m_message);
 }
-auto Observer::Remove( ) -> void { mSubject.Detach(this); }
+
+auto Observer::Remove( ) -> void { m_subject.Detach(this); }

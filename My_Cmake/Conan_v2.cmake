@@ -46,8 +46,8 @@ message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 # https://approvaltestscpp.readthedocs.io/en/latest/generated_docs/ConanIntegration.html
 
 # find_package(catch2)
-find_package(Catch2 REQUIRED)
-find_package(docopt REQUIRED)
+#find_package(Catch2 REQUIRED)
+#find_package(docopt REQUIRED)
 
 # find_package(fmt)
 find_package(fmt REQUIRED)

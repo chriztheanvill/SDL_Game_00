@@ -7,28 +7,28 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "./Time.h"
 #include "../Utils/Logger.h"
 
 class Engine {
-  public:
-	Engine( );
-	~Engine( );
+ public:
+  Engine();
+  ~Engine();
 
-	auto GetMainWindow( ) -> SDL_Window* { return m_window; }
-	auto GetMainRender( ) -> SDL_Renderer* { return m_render; }
+  auto GetMainWindow() -> SDL_Window* { return m_window; }
 
-	auto Init( ) -> bool;
-	auto InitGraphics( ) -> bool;
+  auto GetMainRender() -> SDL_Renderer* { return m_render; }
 
-  private:
-	Cris::Time m_time;
+  auto Init() -> bool;
+  auto InitGraphics(bool isVSync = false) -> bool;
 
-	SDL_Window* m_window;
-	SDL_Renderer* m_render;
+ private:
+  SDL_Window* m_window;
+  SDL_Renderer* m_render;
 
-	int m_windowH;
-	int m_windowW;
+  int m_windowH;
+  int m_windowW;
+
+  // SDL_Surface* m_imgIconSurface;
 };
 
-#endif	 // ENGINE_H
+#endif // ENGINE_H

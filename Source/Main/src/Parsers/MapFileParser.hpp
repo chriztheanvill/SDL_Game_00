@@ -1,24 +1,24 @@
 #ifndef MAPFILEPARSER_HPP
 #define MAPFILEPARSER_HPP
 
-#include <fstream>
 #include <cstdint>
+#include <fstream>
 #include <vector>
 // #include <tuple>
-#include <utility>
 #include <map>
 #include <string>
 #include <string_view>
+#include <utility>
 
-#include <nlohmann/json.hpp>
 #include <SDL2/SDL.h>
+#include <nlohmann/json.hpp>
 
-#include "../Utils/Logger.h"
-#include "../Utils/Vector2D.h"
+#include "../Graphics/TextureManager.h"
 #include "../Maps/Tile.hpp"
 #include "../Maps/TileMap.hpp"
+#include "../Utils/Logger.h"
 #include "../Utils/Utils.hpp"
-#include "../Graphics/TextureManager.h"
+#include "../Utils/Vector2D.h"
 
 struct TileSetFile {
   int columns;
@@ -37,8 +37,9 @@ struct TileSetFile {
 };
 
 class MapFileParser {
-private:
+ private:
   TextureManager* m_textureManager;
+  // std::shared_ptr<TextureManager> m_textureManager;
   TileMap* m_tileMap;
   // std::map<std::string, std::vector<TileFile>> mapped;
 
@@ -48,33 +49,36 @@ private:
   // Los Tilesets tienen que ir en orden como va en el
   // TileMap: TileSets
   std::map<LevelSelect, std::string> m_fileNames {
-	// TileSets
-	// std::string(FileLocations::TileMaps) + "PrtCave.json",
-	// std::string(FileLocations::TileMaps) + "full spritesheet.json",
-	// std::string(FileLocations::TileMaps) + "full tilemap.json",
-	//
-	// TileMaps (Level_XX)
-	{ LevelSelect::Level_00, std::string(FileLocations::TileMaps) + "Level_00.json" },
-	{ LevelSelect::Level_01, std::string(FileLocations::TileMaps) + "Level_01.json" },
+    // TileSets
+    // std::string(FileLocations::TileMaps) + "PrtCave.json",
+    // std::string(FileLocations::TileMaps) + "full spritesheet.json",
+    // std::string(FileLocations::TileMaps) + "full tilemap.json",
+    //
+    // TileMaps (Level_XX)
+    { LevelSelect::Level_00, std::string(FileLocations::TileMaps) + "Level_00.json" },
+    { LevelSelect::Level_01, std::string(FileLocations::TileMaps) + "Level_01.json" },
   };
 
-  auto LoadTextures( ) -> void;
+  auto LoadTextures() -> void;
 
-  auto GetTiles(const nlohmann::json& jfile)
-	-> std::vector<std::pair<std::string, std::vector<Tile>>>;
+  auto GetTiles(const nlohmann::json& jfile
+  ) -> std::vector<std::pair<std::string, std::vector<Tile>>>;
   auto GetTileSets(const nlohmann::json& jfile) -> TileSetFile;
 
   auto GetObjects(const nlohmann::json& jfile) -> std::vector<TileMap::MapCollider>;
 
-public:
-  MapFileParser( );
-  virtual ~MapFileParser( );
+ public:
+  MapFileParser();
+  virtual ~MapFileParser();
 
   // auto Parse( ) -> std::expected<TileMap, std::string>;
-  auto Parse( ) -> std::expected<bool, std::string>;
+  auto Parse() -> std::expected<bool, std::string>;
 
   auto SetTextureManager(TextureManager* tm) -> void { m_textureManager = tm; }
-  auto SetTileMap(std::unique_ptr<TileMap>& tileMap) -> void { m_tileMap = tileMap.get( ); }
+
+  // auto SetTextureManager(std::shared_ptr<TextureManager>& tm) -> void { m_textureManager = tm; }
+
+  auto SetTileMap(std::unique_ptr<TileMap>& tileMap) -> void { m_tileMap = tileMap.get(); }
 };
 
-#endif	 // MAPFILEPARSER_HPP
+#endif // MAPFILEPARSER_HPP

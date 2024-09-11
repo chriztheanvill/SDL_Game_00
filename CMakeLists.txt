@@ -72,6 +72,8 @@ include(My_Cmake/Linux_Ver.cmake)
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     get_linux_lsb_release_information()
     message(STATUS "+++++++++++++++ GNU Linux ${LSB_RELEASE_ID_SHORT} ${LSB_RELEASE_VERSION_SHORT} ${LSB_RELEASE_CODENAME_SHORT} +++++++++++++++")
+
+    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 endif ()
 
 # enable Threads
@@ -98,11 +100,11 @@ include(My_Cmake/MyLibs.cmake)
 # run_conan()
 # ###############################################################
 # # Conan config (New)
-#include(My_Cmake/Conan_v2.cmake)
+include(My_Cmake/Conan_v2.cmake)
 
 # ###############################################################
 # # vcpkg
-include(My_Cmake/Vcpkg_Find.cmake)
+#include(My_Cmake/Vcpkg_Find.cmake)
 
 # ###############################################################
 
@@ -112,6 +114,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS ON)
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_CXX_SCAN_FOR_MODULES NO)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # # Set the current directory the run time folder

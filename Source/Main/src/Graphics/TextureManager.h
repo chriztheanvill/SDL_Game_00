@@ -3,29 +3,31 @@
 
 #include <SDL2/SDL_image.h>
 
-#include <string>
+#include <cassert>
 #include <map>
+#include <string>
 
-class TextureManager
-{
-  private:
-	std::map<std::string, SDL_Texture*> m_textures;
-	SDL_Renderer* m_render { };
+class TextureManager {
+ private:
+  std::map<std::string, SDL_Texture*> m_textures;
+  SDL_Renderer* m_render {};
 
-  public:
-	TextureManager( );
-	// TextureManager(const TextureManager& other);			  // Copy
-	// TextureManager& operator=(const TextureManager& other);	  // Copy Operator
-	virtual ~TextureManager( );
+ public:
+  TextureManager();
+  virtual ~TextureManager();
 
-	SDL_Texture* AddTexture(const std::string& name = "", const std::string& path = "");
-	SDL_Texture* GetTexture(const std::string& name = "") const;
+  auto AddTexture(const std::string& name = "", const std::string& path = "") -> SDL_Texture*;
 
-	void SetRender(SDL_Renderer& render) { m_render = &render; }
-	SDL_Renderer* GetRender( ) const { return m_render; }
+  [[nodiscard]] constexpr auto GetTexture(const std::string& name = "") const -> SDL_Texture* {
+    assert(!m_textures.empty() && "Textures are empty");
+    assert(m_textures.contains(name) && "Texture does not exist");
 
-	auto Render(const SDL_Rect& src, const SDL_Rect& dst, const std::string& name) -> void;
-	auto Clear( ) -> void;
+    return m_textures.at(name);
+  }
+
+  constexpr void SetRender(SDL_Renderer& render) { m_render = &render; }
+  [[nodiscard]] constexpr auto GetRender() const -> SDL_Renderer* { return m_render; }
+  auto Clear() -> void;
 };
 
-#endif	 // TEXTUREMANAGER_HPP
+#endif // TEXTUREMANAGER_HPP

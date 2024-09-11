@@ -2,15 +2,11 @@
 
 // State::State(GameStateManager& gsm, const std::string& name)
 State::State(std::string_view name)
-	: mName(name)
-{
-	Logger::Debug(LogType::Log, "### State::Constructor :", mName);
+  : mName(name) {
+  Logger::Debug(LogType::Log, "### State::Constructor :", mName);
 }
 
-State::~State( )
-{
-	Logger::Debug(LogType::Log, "### ~State::Destructor :", mName);
-}
+State::~State( ) { Logger::Debug(LogType::Log, "### ~State::Destructor :", mName); }
 
 /*
 #######################################################################################
@@ -23,7 +19,7 @@ State::~State( )
 
 void State::Render( ) {}
 void State::Load( ) { Logger::Debug(LogType::Debug, "### State::Load :"); }
-void State::Events(Controller& controller) {}
+void State::Events( ) {}
 
 void State::EnterState( ) {}
 void State::ExitState( ) {}

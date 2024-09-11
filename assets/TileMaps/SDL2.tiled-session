@@ -27,8 +27,8 @@
             "scale": 4,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 56.625,
-                "y": 62.125
+                "x": 105.625,
+                "y": 100.375
             }
         },
         "Level_01.json": {
@@ -48,15 +48,15 @@
             }
         },
         "full spritesheet.json": {
-            "scaleInDock": 4,
+            "scaleInDock": 2,
             "scaleInEditor": 4
         },
         "full tilemap.json": {
             "scaleInDock": 3,
-            "scaleInEditor": 5.5
+            "scaleInEditor": 4
         }
     },
-    "frame.defaultDuration": 100,
+    "frame.defaultDuration": 500,
     "last.imagePath": "/home/cris/Workspace/C++/SDL_Game_My/assets/images/Dungeon",
     "map.fixedSize": false,
     "map.lastUsedFormat": "json",

@@ -11,8 +11,6 @@
 // // For this, in Cmake on Graphics, enable X11
 // // #include <X11/Xlib.h>
 
-#include "./src/Game/Game.hpp"
-
 // Just for show the icons in VS Code
 // NOTE
 // DONE
@@ -26,70 +24,114 @@
 // TODO(cris):
 
 /* NOTE to check the program process:
-	# Glances
-	## Simple
-	## glances -612 -t 0.5 -f name:.*program_name*
-	## With left panel
-	## glances -61 -t 0.5 -f name:.*program_name*
-	### Shortcuts:
-		q = exit
+    # Glances
+    ## Simple
+    ## glances -612 -t 0.5 -f name:.*program_name*
+    ## With left panel
+    ## glances -61 -t 0.5 -f name:.*program_name*
+    ### Shortcuts:
+        q = exit
 
-	# htop
-	# htop --filter=program_name
-		f10 = exit
+    # htop
+    # htop --filter=program_name
+        f10 = exit
 
-	Check address:
-	valgrind build/Debug/bin/sdl2_Game_00
+    Check address:
+    valgrind build/Debug/bin/sdl2_Game_00
 */
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
-{
-	/* ################################################# */
+#include "./src/Core/Engine.h"
+#include "./src/Core/Time.h"
+#include "./src/Game/Game.hpp"
+#include "./src/Graphics/TextureManager.h"
 
-	/* NOTE: Do not use Singleton
-		Engine* e = Engine::GetInstance( );
-		e->Init( );
-	*/
+// #include "./src/Parsers/MapFileParser.hpp"
+#include <cassert>
+#include <memory>
 
-	Game game;
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
+  /* NOTE: Do not use Singleton
+      Engine* e = Engine::GetInstance( );
+      e->Init( );
+  */
 
-	game.Init( );
+  Logger::Debug(LogType::Debug, "Main Init engine");
 
-	while (game.IsRunning( ))
-	{
-		game.Events( );
-		game.Update( );
-		game.Render( );
-	}
+  Cris::Time time;
+  Engine engine;
+  bool isvsync {};
 
-	/* ################################################# */
-	Logger::Debug(LogType::Debug, "Game Exit!");
+  time.SetVSync(isvsync);
+
+  assert(engine.Init() || !fprintf(stderr, "Cant load SDL2 framework, INIT \n"));
+  assert(
+    engine.InitGraphics(isvsync) || !fprintf(stderr, "Cant load SDL2 framework, INIT Graphics \n")
+  );
+
+  /* ##################################################################### */
+  /* ##################################################################### */
+
+  Logger::Debug(LogType::Debug, "Main init TextureManager");
+  std::shared_ptr<TextureManager> textureManager = std::make_shared<TextureManager>();
+
+  textureManager->SetRender(*engine.GetMainRender());
+
+  /* ##################################################################### */
+  /* ##################################################################### */
+
+  // Logger::Debug(LogType::Debug, "Main init Parse Maps");
+
+  /* ##################################################################### */
+  /* ##################################################################### */
+
+  Logger::Debug(LogType::Debug, "Main Init Game");
+
+  Game game;
+
+  // game.SetVSyncTimer(false);
+  game.SetTextureManager(textureManager);
+  game.Init();
+
+  while (game.IsRunning()) {
+    const float deltaTime = time.DeltaTime();
+
+    // Logger::Debug(LogType::Debug, "Game::Update deltatime: ", deltaTime);
+    game.Events();
+    game.Update(deltaTime);
+    game.Render(deltaTime);
+  }
+
+  Logger::Debug(LogType::Warning, "Game Exit!");
+
+  /* ##################################################################### */
+  /* ##################################################################### */
 
 #ifdef NDEBUG
-	Logger::Debug(LogType::Debug, "Mode Release!");
+  Logger::Debug(LogType::Debug, "Mode Release!");
 #else
-	Logger::Debug(LogType::Debug, "Mode Debug!");
+  Logger::Debug(LogType::Debug, "Mode Debug!");
 #endif
 
-	/* ################################################# */
+  /* ################################################# */
 
-	// Display* d { XOpenDisplay(nullptr) };
-	// Screen* s { XDefaultScreenOfDisplay(d) };
+  // Display* d { XOpenDisplay(nullptr) };
+  // Screen* s { XDefaultScreenOfDisplay(d) };
 
-	// fmt::print("Size H: {} - W: {}\n", s->height, s->width);
+  // fmt::print("Size H: {} - W: {}\n", s->height, s->width);
 
-	/* ################################################# */
+  /* ################################################# */
 
-	return 0;
+  return 0;
 }
 
 /* TODO
- * 	GameStateManager::Update
- * 	* Cambiar el estilo de State Machine Finite de apuntadores a usar Enums
- *	* * De la primer manera, se crea el estado, mientras el otro estado esta en
- *uso
- *	* * De la nueva manera, se elimina el estado en uso, y se crea el nuevo
- *
+ * Solo Clion
+Semantic highlightingCopy heading link
+Optional semantic highlighting uses different colors for various variables and parameters, making it
+easier to recognize and understand your code at a glance.
+
+You can enable it in the settings by going to File | Settings | Editor | Color Scheme | Language
+Defaults | Semantic highlighting.
 
 https://devblogs.microsoft.com/cppblog/documentation-for-cpp20-ranges/
  */

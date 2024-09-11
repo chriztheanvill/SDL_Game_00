@@ -6,7 +6,7 @@
  "name":"full spritesheet",
  "spacing":0,
  "tilecount":252,
- "tiledversion":"1.10.2",
+ "tiledversion":"1.11.0",
  "tileheight":16,
  "tiles":[
         {
@@ -52,7 +52,7 @@
                  "tileid":8
                 }, 
                 {
-                 "duration":100,
+                 "duration":5000,
                  "tileid":9
                 }, 
                 {
@@ -100,35 +100,35 @@
                  "tileid":34
                 }, 
                 {
-                 "duration":100,
+                 "duration":400,
                  "tileid":35
                 }, 
                 {
-                 "duration":100,
+                 "duration":500,
                  "tileid":36
                 }, 
                 {
-                 "duration":100,
+                 "duration":600,
                  "tileid":37
                 }, 
                 {
-                 "duration":100,
+                 "duration":900,
                  "tileid":38
                 }, 
                 {
-                 "duration":100,
+                 "duration":600,
                  "tileid":39
                 }, 
                 {
-                 "duration":100,
+                 "duration":500,
                  "tileid":40
                 }, 
                 {
-                 "duration":100,
+                 "duration":400,
                  "tileid":41
                 }, 
                 {
-                 "duration":3000,
+                 "duration":5000,
                  "tileid":42
                 }],
          "id":34
@@ -348,6 +348,30 @@
                  "tileid":173
                 }],
          "id":168
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":500,
+                 "tileid":174
+                }, 
+                {
+                 "duration":500,
+                 "tileid":176
+                }, 
+                {
+                 "duration":500,
+                 "tileid":178
+                }, 
+                {
+                 "duration":500,
+                 "tileid":180
+                }, 
+                {
+                 "duration":500,
+                 "tileid":154
+                }],
+         "id":174
         }],
  "tilewidth":16,
  "type":"tileset",
