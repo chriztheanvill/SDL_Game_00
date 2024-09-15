@@ -3,6 +3,8 @@
 // #include "../Components/TileComponent.hpp"
 // #include "../Components/TransformComponent.hpp"
 
+#include "../Components/AnimationComponent.hpp"
+
 #include <algorithm>
 #include <functional>
 #include <ranges>
@@ -279,7 +281,7 @@ auto MapFileParser::GetTiles(const nlohmann::json& jfile
         int sumtilecount {};
         int id_original {};
         // std::vector<uint16_t> animTime;
-        std::vector<GraphicComponent::Frame> frames;
+        std::vector<AnimationComponent::Frame> frames;
 
         TileSetFile tileSetFile {};
 
@@ -325,9 +327,9 @@ auto MapFileParser::GetTiles(const nlohmann::json& jfile
                   int srcAnimH = idAnim / tileset.columns;
                   srcAnimH *= tileset.tileh;
 
-                  GraphicComponent::Frame frame;
+                  AnimationComponent::Frame frame;
                   frame.duration = dur;
-                  frame.src = { srcAnimW, srcAnimH, 0, 0 };
+                  frame.src = { static_cast<float>(srcAnimW), static_cast<float>(srcAnimH) };
                   frames.emplace_back(frame);
 
                 } // for

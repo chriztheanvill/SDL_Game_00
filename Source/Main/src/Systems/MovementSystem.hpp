@@ -8,7 +8,7 @@
 class MovementSystem : public System {
  private:
   // float movementSpeed = 50.0f; // Old
-  float m_movementSpeed = 150.0f;
+  float m_movementSpeed = 30.0f;
   // float movementSpeed = 0.05f * 1000; // Sin sync
   // float movementSpeed = 0.02f; // Sin sync
 

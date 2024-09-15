@@ -2,6 +2,7 @@
 
 #include "../Components/GraphicComponent.hpp"
 // #include "../Components/SpriteComponent.h"
+#include "../Components/AnimationComponent.hpp"
 #include "../Systems/RenderSystem.hpp"
 
 #include <algorithm>
@@ -205,8 +206,6 @@ auto TileMap::AddTileMapToRegistry(uint16_t level) -> void {
           0
         );
 
-        auto var = eachTile.order + std::to_underlying(GraphicComponent::SortLayer::BG);
-
         if (!eachTile.frames.empty()) {
           // Tiles WITH animations
           // Logger::Debug(LogType::Debug, "TileMap::AddTileMapToRegistry With Animations");
@@ -219,8 +218,11 @@ auto TileMap::AddTileMapToRegistry(uint16_t level) -> void {
                        static_cast<int>(eachTile.size.y) },
             eachTile.order + std::to_underlying(GraphicComponent::SortLayer::BG),
             SDL_FLIP_NONE,
-            GraphicComponent::TileAnimated(eachTile.id, level, eachTile.frames)
+            // GraphicComponent::GraphicType::TileAnimated
+            GraphicComponent::Tile(eachTile.id, level)
           );
+
+          tile.AddComponent<AnimationComponent>(eachTile.frames);
 
         } else {
           // Tiles without animations
@@ -234,6 +236,7 @@ auto TileMap::AddTileMapToRegistry(uint16_t level) -> void {
                        static_cast<int>(eachTile.size.y) },
             eachTile.order + std::to_underlying(GraphicComponent::SortLayer::BG),
             SDL_FLIP_NONE,
+            // GraphicComponent::GraphicType::Tile
             GraphicComponent::Tile(eachTile.id, level)
           );
 

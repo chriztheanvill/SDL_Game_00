@@ -3,6 +3,7 @@
 
 struct SDL_Texture;
 struct TextureManager;
+#include "../Components/AnimationComponent.hpp"
 #include "../Components/GraphicComponent.hpp"
 #include "../Utils/Vector2D.h"
 #include <utility>
@@ -24,7 +25,7 @@ struct Tile {
     float startx,
     float starty,
     bool visible,
-    std::vector<GraphicComponent::Frame> frames_t
+    std::vector<AnimationComponent::Frame> frames_t
   )
       : size(size)
       , src(sourceTile)
@@ -55,7 +56,7 @@ struct Tile {
   float startx {};
   float starty {};
   bool visible {};
-  std::vector<GraphicComponent::Frame> frames {};
+  std::vector<AnimationComponent::Frame> frames {};
 };
 
 #endif // TILE_HPP

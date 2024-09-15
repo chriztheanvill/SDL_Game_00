@@ -8,11 +8,13 @@
 #include "../Systems/MovementSystem.hpp"
 #include "../Systems/RenderSystem.hpp"
 //
+#include "../Components/AnimationComponent.hpp"
 #include "../Input/Controller.h"
 
 #include "../Components/GraphicComponent.hpp"
 #include "../Components/RigidBodyComponent.h"
 #include "../Components/TransformComponent.hpp"
+#include "../Systems/AnimationSystem.hpp"
 
 // #include "../Game/TileMap.hpp"
 
@@ -46,7 +48,9 @@ auto Game::Init() -> void {
    * ######## Texture Manager ########
    * #####################################
    */
-  m_textureManager->AddTexture("Player", "assets/images/bkBlue.png");
+  m_textureManager->AddTexture(
+    "Player", "assets/images/Dungeon/heroes/knight/knight_idle_spritesheet.png"
+  );
 
   /*
    * #####################################
@@ -80,6 +84,7 @@ auto Game::LoadLevel(uint16_t level) -> void {
 
   m_registry->AddSystem<MovementSystem>();
   m_registry->AddSystem<RenderSystem>(m_textureManager);
+  m_registry->AddSystem<AnimationSystem>();
   // m_registry->AddSystem<RenderTileMapSystem>(m_textureManager);
 
   // m_registry->AddSystem<RenderSystem>(m_textureManager);
@@ -87,17 +92,25 @@ auto Game::LoadLevel(uint16_t level) -> void {
 
   Entity player = m_registry->NewEntity("Player");
 
-  player.AddComponent<TransformComponent>(Vector2D { 32, 32 }, Vector2D { 4, 4 }, 0.0F);
+  player.AddComponent<TransformComponent>(Vector2D { 52, 52 }, Vector2D { 4, 4 }, 0.0F);
   // player.AddComponent<RigidBodyComponent>(GameType::Platformer);
   player.AddComponent<RigidBodyComponent>(GameType::TopDown);
   player.AddComponent<GraphicComponent>(
     "Player",
-    SDL_Rect { 0, 0, 32, 32 },
+    SDL_Rect { 0, 0, 16, 16 },
     -4 + std::to_underlying(GraphicComponent::SortLayer::FG),
     SDL_FLIP_NONE,
     GraphicComponent::Sprite()
   );
-  // player.AddComponent<SpriteComponent>("Player", SDL_Rect { 0, 0, 32, 32 }, 1);
+
+  player.AddComponent<AnimationComponent>(std::vector<AnimationComponent::Frame> {
+    { { 16 * 0, 0 }, 100 },
+    { { 16 * 1, 0 }, 100 },
+    { { 16 * 2, 0 }, 100 },
+    { { 16 * 3, 0 }, 100 },
+    { { 16 * 4, 0 }, 100 },
+    { { 16 * 5, 0 }, 100 }
+  });
 
   // player.GetComponent<RigidBodyComponent>().get().ApplyFriction({ 1, 0 });
 
@@ -118,6 +131,7 @@ auto Game::Update(float deltaTime) -> void {
   /* ################################################# */
   Controller::Instance().Detect();
   m_registry->GetSystem<MovementSystem>().Update(deltaTime);
+  m_registry->GetSystem<AnimationSystem>().Update(deltaTime);
 
   /* ################################################# */
 
