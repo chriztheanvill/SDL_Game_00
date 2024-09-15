@@ -15,7 +15,6 @@
 #include "../Utils/Vector2D.h"
 
 // struct AnimationComponent : public Component{
-//
 struct AnimationComponent {
   struct Frame {
     Vector2D src {};
