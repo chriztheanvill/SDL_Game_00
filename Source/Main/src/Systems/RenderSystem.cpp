@@ -27,7 +27,7 @@ auto RenderSystem::Sort() -> void {
   });
 }
 
-auto RenderSystem::Render(float deltaTime) -> void {
+auto RenderSystem::Render() -> void {
   // auto eachEntity = [this](const Entity& entity) -> void {};
   // std::ranges::for_each(GetEntities(), eachEntity);
 

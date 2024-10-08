@@ -13,8 +13,7 @@ Controller::~Controller() { Logger::Debug(LogType::Log, "~Controller::Destructor
 
 void Controller::Detect() {
   // Usar un for, para detectar los demas controles
-  // Logger::Debug(LogType::Debug, "Controller::Detect Controllers detected: ", SDL_NumJoysticks(
-  // ));
+  // Logger::Debug(LogType::Debug, "Controller::Detect Controllers detected: ", SDL_NumJoysticks());
   if (SDL_NumJoysticks() >= 1) {
     // Logger::Debug(LogType::Debug, "Controller::Detect Controller detected");
     // Joystick 1

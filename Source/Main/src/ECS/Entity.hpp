@@ -24,7 +24,7 @@ class Entity {
   std::string m_name;
 
  public:
-  Entity(uint16_t id, std::string name = "Empty_Entity");
+  Entity(uint16_t id = 0, std::string name = "Empty_Entity");
   // Entity(const Entity& entity) = default;	  // Llama al operador ==
   [[nodiscard]] auto GetID() const -> uint16_t;
 

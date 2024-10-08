@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <cstdint>
-#include <memory>
+#include <stdfloat>
 #include <string>
 #include <utility>
 
@@ -27,17 +27,35 @@ struct AnimationComponent {
 
   uint16_t entityID;
   uint16_t currentFrame {};
-  uint16_t currentTime {};
-  uint16_t lastFrameTime {};
+  //
+  int_least16_t currentTime {};
+  int_least16_t lastFrameTime {};
+
+  // int_fast64_t currentTime {};
+  // int_fast64_t lastFrameTime {};
+
+  // float currentTime {};
+  // float lastFrameTime {};
+  // OK
+  // std::float16_t currentTime {};
+  // std::float16_t lastFrameTime {};
+
   bool isFinished {};
   bool isActivated {};
   bool isLoop {};
   std::vector<Frame> frames;
+  std::string name;
 
-  AnimationComponent(uint16_t entityID_t, std::vector<Frame> frames_t, bool isLoop_t = true)
+  AnimationComponent(
+    uint16_t entityID_t,
+    std::string_view name_t = "Empty",
+    std::vector<Frame> frames_t = {},
+    bool isLoop_t = true
+  )
       : entityID(entityID_t)
       , isLoop(isLoop_t)
-      , frames(std::move(frames_t)) { }
+      , frames(std::move(frames_t))
+      , name(name_t) { }
 
   auto operator==(const AnimationComponent& other) const -> bool { return this == &other; }
 };

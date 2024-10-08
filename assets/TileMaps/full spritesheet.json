@@ -357,7 +357,39 @@
                 }, 
                 {
                  "duration":500,
+                 "tileid":118
+                }, 
+                {
+                 "duration":500,
+                 "tileid":112
+                }, 
+                {
+                 "duration":500,
+                 "tileid":27
+                }, 
+                {
+                 "duration":500,
+                 "tileid":195
+                }, 
+                {
+                 "duration":500,
+                 "tileid":251
+                }],
+         "id":174
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":500,
+                 "tileid":175
+                }, 
+                {
+                 "duration":500,
                  "tileid":176
+                }, 
+                {
+                 "duration":500,
+                 "tileid":177
                 }, 
                 {
                  "duration":500,
@@ -365,13 +397,9 @@
                 }, 
                 {
                  "duration":500,
-                 "tileid":180
-                }, 
-                {
-                 "duration":500,
-                 "tileid":154
+                 "tileid":179
                 }],
-         "id":174
+         "id":175
         }],
  "tilewidth":16,
  "type":"tileset",

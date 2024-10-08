@@ -93,7 +93,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
     // Logger::Debug(LogType::Debug, "Game::Update deltatime: ", deltaTime);
     game.Events();
     game.Update(deltaTime);
-    game.Render(deltaTime);
+    game.Render();
   }
 
   Logger::Debug(LogType::Warning, "Game Exit!");

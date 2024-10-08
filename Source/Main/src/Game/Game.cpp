@@ -9,12 +9,14 @@
 #include "../Systems/RenderSystem.hpp"
 //
 #include "../Components/AnimationComponent.hpp"
+#include "../Components/ColliderComponent.hpp"
 #include "../Input/Controller.h"
 
 #include "../Components/GraphicComponent.hpp"
 #include "../Components/RigidBodyComponent.h"
 #include "../Components/TransformComponent.hpp"
 #include "../Systems/AnimationSystem.hpp"
+#include "../Systems/CollisionSystem.hpp"
 
 // #include "../Game/TileMap.hpp"
 
@@ -64,7 +66,6 @@ auto Game::Init() -> void {
 
   mapFileParser.SetTileMap(m_tileMap);
   const std::expected<bool, std::string>& maps = mapFileParser.Parse();
-  // if (!m_maps)
   assert(maps || !fprintf(stderr, "Cant load TileMap: %s\n", maps.error().c_str()));
 
   m_tileMap->SetRegistry(m_registry);
@@ -83,18 +84,16 @@ auto Game::LoadLevel(uint16_t level) -> void {
    */
 
   m_registry->AddSystem<MovementSystem>();
+  m_registry->AddSystem<CollisionSystem>();
   m_registry->AddSystem<RenderSystem>(m_textureManager);
   m_registry->AddSystem<AnimationSystem>();
-  // m_registry->AddSystem<RenderTileMapSystem>(m_textureManager);
-
-  // m_registry->AddSystem<RenderSystem>(m_textureManager);
-  // m_registry->AddSystem<RenderTileMapSystem>(m_textureManager);
 
   Entity player = m_registry->NewEntity("Player");
 
-  player.AddComponent<TransformComponent>(Vector2D { 52, 52 }, Vector2D { 4, 4 }, 0.0F);
+  player.AddComponent<TransformComponent>(Vector2D { 200, 200 }, Vector2D { 4, 4 }, 0.0F);
   // player.AddComponent<RigidBodyComponent>(GameType::Platformer);
-  player.AddComponent<RigidBodyComponent>(GameType::TopDown);
+  player.AddComponent<RigidBodyComponent>(GameType::TopDown, 50);
+
   player.AddComponent<GraphicComponent>(
     "Player",
     SDL_Rect { 0, 0, 16, 16 },
@@ -103,14 +102,117 @@ auto Game::LoadLevel(uint16_t level) -> void {
     GraphicComponent::Sprite()
   );
 
-  player.AddComponent<AnimationComponent>(std::vector<AnimationComponent::Frame> {
-    { { 16 * 0, 0 }, 100 },
-    { { 16 * 1, 0 }, 100 },
-    { { 16 * 2, 0 }, 100 },
-    { { 16 * 3, 0 }, 100 },
-    { { 16 * 4, 0 }, 100 },
-    { { 16 * 5, 0 }, 100 }
-  });
+  player.AddComponent<ColliderComponent>(
+    Vector2D { 0, 0 }, Vector2D { 0, 0 }, ColliderComponent::Box(Vector2D { 16, 16 })
+  );
+
+  player.AddComponent<AnimationComponent>(
+    "Idle",
+    std::vector<AnimationComponent::Frame> {
+      { { 16 * 0, 0 }, 100 },
+      { { 16 * 1, 0 }, 100 },
+      { { 16 * 2, 0 }, 100 },
+      { { 16 * 3, 0 }, 100 },
+      { { 16 * 4, 0 }, 100 },
+      { { 16 * 5, 0 }, 100 }
+  }
+  );
+
+  // -------------------------------------
+  // -------------------------------------
+
+  Entity enemy01 = m_registry->NewEntity("Enemy01");
+
+  enemy01.AddComponent<TransformComponent>(Vector2D { 600, 200 }, Vector2D { 4, 4 }, 0.0F);
+  enemy01.AddComponent<RigidBodyComponent>(GameType::TopDown, -50);
+
+  enemy01.AddComponent<GraphicComponent>(
+    "Player",
+    SDL_Rect { 0, 0, 16, 16 },
+    -4 + std::to_underlying(GraphicComponent::SortLayer::FG),
+    SDL_FLIP_NONE,
+    GraphicComponent::Sprite()
+  );
+
+  enemy01.AddComponent<ColliderComponent>(
+    Vector2D { 0, 0 }, Vector2D { 0, 0 }, ColliderComponent::Box(Vector2D { 16, 16 })
+  );
+
+  enemy01.AddComponent<AnimationComponent>(
+    "Idle",
+    std::vector<AnimationComponent::Frame> {
+      { { 16 * 0, 0 }, 100 },
+      { { 16 * 1, 0 }, 100 },
+      { { 16 * 2, 0 }, 100 },
+      { { 16 * 3, 0 }, 100 },
+      { { 16 * 4, 0 }, 100 },
+      { { 16 * 5, 0 }, 100 }
+  }
+  );
+
+  Entity enemy02 = m_registry->NewEntity("Enemy02");
+
+  enemy02.AddComponent<TransformComponent>(Vector2D { 800, 200 }, Vector2D { 4, 4 }, 0.0F);
+  enemy02.AddComponent<RigidBodyComponent>(GameType::TopDown, -50);
+
+  enemy02.AddComponent<GraphicComponent>(
+    "Player",
+    SDL_Rect { 0, 0, 16, 16 },
+    -4 + std::to_underlying(GraphicComponent::SortLayer::FG),
+    SDL_FLIP_NONE,
+    GraphicComponent::Sprite()
+  );
+
+  enemy02.AddComponent<ColliderComponent>(
+    Vector2D { 0, 0 }, Vector2D { 0, 0 }, ColliderComponent::Box(Vector2D { 16, 16 })
+  );
+
+  enemy02.AddComponent<AnimationComponent>(
+    "Idle",
+    std::vector<AnimationComponent::Frame> {
+      { { 16 * 0, 0 }, 100 },
+      { { 16 * 1, 0 }, 100 },
+      { { 16 * 2, 0 }, 100 },
+      { { 16 * 3, 0 }, 100 },
+      { { 16 * 4, 0 }, 100 },
+      { { 16 * 5, 0 }, 100 }
+  }
+  );
+
+  Entity enemy03 = m_registry->NewEntity("Enemy03");
+
+  enemy03.AddComponent<TransformComponent>(Vector2D { 500, 160 }, Vector2D { 4, 4 }, 0.0F);
+  enemy03.AddComponent<RigidBodyComponent>(GameType::TopDown, -50);
+
+  enemy03.AddComponent<GraphicComponent>(
+    "Player",
+    SDL_Rect { 0, 0, 16, 16 },
+    -4 + std::to_underlying(GraphicComponent::SortLayer::FG),
+    SDL_FLIP_NONE,
+    GraphicComponent::Sprite()
+  );
+
+  enemy03.AddComponent<ColliderComponent>(
+    Vector2D { 0, 0 }, Vector2D { 0, 0 }, ColliderComponent::Circle(3)
+  );
+
+  enemy03.AddComponent<AnimationComponent>(
+    "Idle",
+    std::vector<AnimationComponent::Frame> {
+      { { 16 * 0, 0 }, 100 },
+      { { 16 * 1, 0 }, 100 },
+      { { 16 * 2, 0 }, 100 },
+      { { 16 * 3, 0 }, 100 },
+      { { 16 * 4, 0 }, 100 },
+      { { 16 * 5, 0 }, 100 }
+  }
+  );
+
+  // -------------------------------------
+  // -------------------------------------
+
+  // AnimationComponent a = player.GetComponent<AnimationComponent>();
+  // Logger::Debug(LogType::Log, "Player animname", a.name);
 
   // player.GetComponent<RigidBodyComponent>().get().ApplyFriction({ 1, 0 });
 
@@ -118,8 +220,6 @@ auto Game::LoadLevel(uint16_t level) -> void {
   // player.DisableComponent<SpriteComponent>( );
 
   m_tileMap->SelectLevel(level);
-
-  m_registry->Update();
 }
 
 auto Game::Events() -> void {
@@ -131,6 +231,7 @@ auto Game::Update(float deltaTime) -> void {
   /* ################################################# */
   Controller::Instance().Detect();
   m_registry->GetSystem<MovementSystem>().Update(deltaTime);
+  m_registry->GetSystem<CollisionSystem>().Update(deltaTime);
   m_registry->GetSystem<AnimationSystem>().Update(deltaTime);
 
   /* ################################################# */
@@ -138,7 +239,7 @@ auto Game::Update(float deltaTime) -> void {
   m_registry->Update();
 }
 
-auto Game::Render(float deltaTime) -> void {
+auto Game::Render() -> void {
   // Paint bg color
   SDL_SetRenderDrawColor(m_textureManager->GetRender(), 60, 60, 60, 255);
   SDL_RenderClear(m_textureManager->GetRender());
@@ -146,7 +247,7 @@ auto Game::Render(float deltaTime) -> void {
   /* ################################################# */
 
   // Delta time en render es para las animaciones
-  m_registry->GetSystem<RenderSystem>().Render(deltaTime);
+  m_registry->GetSystem<RenderSystem>().Render();
 
   /* ################################################# */
 

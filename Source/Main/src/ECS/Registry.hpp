@@ -134,8 +134,7 @@ template<class T> auto Registry::FindSystems() const -> T& {
 
 template<typename T, typename... Ts> auto Registry::AddSystem(Ts&&... ts) -> void {
   m_systems.emplace(
-    static_cast<std::type_index>(typeid(T)), //
-    std::make_shared<T>(std::forward<Ts>(ts)...)
+    static_cast<std::type_index>(typeid(T)), std::make_shared<T>(std::forward<Ts>(ts)...)
   );
 }
 

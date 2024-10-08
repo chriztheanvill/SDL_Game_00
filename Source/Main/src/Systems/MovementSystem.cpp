@@ -20,15 +20,15 @@ auto MovementSystem::Update(float deltaTime) -> void {
     TransformComponent& transform = entity.GetComponent<TransformComponent>();
     RigidBodyComponent& rigidbody = entity.template GetComponent<RigidBodyComponent>();
 
-    rigidbody.ApplyForceX(
-      static_cast<float>(Controller::Instance().MoveRight() - Controller::Instance().MoveLeft())
-      * m_movementSpeed
-    );
-
-    rigidbody.ApplyForceY(
-      static_cast<float>(Controller::Instance().MoveDown() - Controller::Instance().MoveUp())
-      * m_movementSpeed
-    );
+    // rigidbody.ApplyForceX(
+    //   static_cast<float>(Controller::Instance().MoveRight() - Controller::Instance().MoveLeft())
+    //   * m_movementSpeed
+    // );
+    //
+    // rigidbody.ApplyForceY(
+    //   static_cast<float>(Controller::Instance().MoveDown() - Controller::Instance().MoveUp())
+    //   * m_movementSpeed
+    // );
 
     rigidbody.Update(deltaTime);
 

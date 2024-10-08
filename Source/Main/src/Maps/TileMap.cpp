@@ -222,7 +222,7 @@ auto TileMap::AddTileMapToRegistry(uint16_t level) -> void {
             GraphicComponent::Tile(eachTile.id, level)
           );
 
-          tile.AddComponent<AnimationComponent>(eachTile.frames);
+          tile.AddComponent<AnimationComponent>("Default", eachTile.frames);
 
         } else {
           // Tiles without animations

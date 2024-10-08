@@ -25,13 +25,11 @@ class RigidBodyComponent {
  public:
   uint16_t entityID {};
 
-  RigidBodyComponent(
-    uint16_t entityid = 0, GameType gt = GameType::TopDown
-    // uint16_t entityid = 0, const float& speed = 1.0, GameType gt = GameType::TopDown
-  )
-      // : m_speed(speed)
-      : m_gameType(gt) {
-    entityID = entityid;
+  RigidBodyComponent(uint16_t entityid = 0, GameType gt = GameType::TopDown, float force_t = 0.0f)
+      : entityID(entityid)
+      , m_gameType(gt) {
+    // entityID = entityid;
+    ApplyForceX(force_t);
     // Logger::Debug(LogType::Log, "RigidBody::Constructor");
   }
 

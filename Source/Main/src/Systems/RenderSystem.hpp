@@ -17,7 +17,7 @@ class RenderSystem : public System {
   explicit RenderSystem(std::shared_ptr<TextureManager>& textureManager);
 
   auto Sort() -> void;
-  auto Render(float deltaTime) -> void;
+  auto Render() -> void;
 }; // RenderSystem
 
 #endif // RENDERSYSTEM_HPP

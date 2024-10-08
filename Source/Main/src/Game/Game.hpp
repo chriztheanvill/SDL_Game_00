@@ -30,9 +30,9 @@ class Game {
 
   auto Events() -> void;
   auto Update(float deltaTime) -> void;
-  auto Render(float deltaTime) -> void;
+  auto Render() -> void;
 
-  [[nodiscard]] auto IsRunning() const -> bool { return m_isrunning; }
+  constexpr auto IsRunning() const -> bool { return m_isrunning; }
 
   auto SetTextureManager(std::shared_ptr<TextureManager>& val) -> void { m_textureManager = val; }
 
