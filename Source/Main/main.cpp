@@ -40,14 +40,24 @@
     valgrind build/Debug/bin/sdl2_Game_00
 */
 
-#include "./src/Core/Engine.h"
-#include "./src/Core/Time.h"
-#include "./src/Game/Game.hpp"
-#include "./src/Graphics/TextureManager.h"
+// #include <Core/Core.hpp>
+#include <Core/Engine.h>
+#include <Graphics/TextureManager.h>
 
-// #include "./src/Parsers/MapFileParser.hpp"
-#include <cassert>
-#include <memory>
+#include "src/Game/Game.hpp"
+
+#include "Graphics/TextureManager.h"
+#include "imgui.h"
+#include "imgui_impl_sdl2.h"
+#include "imgui_impl_sdlrenderer2.h"
+
+#include "Input/Controller.h"
+#include "imgui_impl_opengl3.h"
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+#include <SDL_opengles2.h>
+#else
+#include <SDL_opengl.h>
+#endif
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
   /* NOTE: Do not use Singleton
@@ -55,56 +65,34 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[]) {
       e->Init( );
   */
 
-  Logger::Debug(LogType::Debug, "Main Init engine");
-
-  Cris::Time time;
+  Logger::Debug(LogType::Check, "Main Init Engine");
   Engine engine;
-  bool isvsync {};
 
-  time.SetVSync(isvsync);
+  Logger::Debug(LogType::Check, "Main Init Game");
+  engine.m_game = std::make_unique<Game>();
 
-  assert(engine.Init() || !fprintf(stderr, "Cant load SDL2 framework, INIT \n"));
-  assert(
-    engine.InitGraphics(isvsync) || !fprintf(stderr, "Cant load SDL2 framework, INIT Graphics \n")
-  );
+  engine.Init();
 
-  /* ##################################################################### */
-  /* ##################################################################### */
-
-  Logger::Debug(LogType::Debug, "Main init TextureManager");
-  std::shared_ptr<TextureManager> textureManager = std::make_shared<TextureManager>();
-
-  textureManager->SetRender(*engine.GetMainRender());
-
-  /* ##################################################################### */
-  /* ##################################################################### */
-
-  Logger::Debug(LogType::Debug, "Main Init Game");
-
-  Game game;
-
-  // game.SetVSyncTimer(false);
-  game.SetTextureManager(textureManager);
-  game.Init();
-
-  while (game.IsRunning()) {
-    const float deltaTime = time.DeltaTime();
+  while (engine.GetIsRunning()) {
+    const float deltaTime = engine.m_time.DeltaTime();
+    // const float deltaTime = engine.m_time.DeltaTime();
 
     // Logger::Debug(LogType::Debug, "Game::Update deltatime: ", deltaTime);
-    game.Events();
-    game.Update(deltaTime);
-    game.Render();
+
+    engine.Events();
+    engine.Update(deltaTime);
+    engine.Render();
   }
 
-  Logger::Debug(LogType::Warning, "Game Exit!");
+  Logger::Debug(LogType::Check, "Game Exit!");
 
   /* ##################################################################### */
   /* ##################################################################### */
 
 #ifdef NDEBUG
-  Logger::Debug(LogType::Debug, "Mode Release!");
+  Logger::Debug(LogType::Check, "Mode Release!");
 #else
-  Logger::Debug(LogType::Debug, "Mode Debug!");
+  Logger::Debug(LogType::Check, "Mode Debug!");
 #endif
 
   /* ################################################# */
@@ -130,3 +118,46 @@ Defaults | Semantic highlighting.
 
 https://devblogs.microsoft.com/cppblog/documentation-for-cpp20-ranges/
  */
+
+// Logger::Debug(LogType::Debug, "Main Init ImGui -- ");
+// Logger::Debug(LogType::Debug, "Main Init ImGui -- ");
+
+// IMGUI_CHECKVERSION();
+// ImGui::CreateContext();
+// ImGui::SetCurrentContext(ImGui::GetCurrentContext());
+// ImGuiIO m_io = ImGui::GetIO();
+// (void)m_io;
+// m_io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+// m_io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+// // m_io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos; // Enable Gamepad Controls
+//
+// // Setup Dear ImGui style
+// ImGui::StyleColorsDark();
+// // ImGui::StyleColorsLight();
+//
+// // Setup Platform/Renderer backends
+// ImGui_ImplSDL2_InitForSDLRenderer(
+//   engine.GetTextureManager()->GetWindow(), engine.GetTextureManager()->GetRender()
+// );
+// ImGui_ImplSDLRenderer2_Init(engine.GetTextureManager()->GetRender());
+//
+// auto* rr = ImGui::GetCurrentContext();
+// if (rr) {
+//   Logger::Debug(LogType::Debug, "InputSystem::Events --------------- ");
+//   Logger::Debug(LogType::Debug, "InputSystem::Events --------------- ");
+//   Logger::Debug(LogType::Debug, "InputSystem::Events --------------- ");
+//   // ImGui_ImplSDL2_ProcessEvent(&mEvent);
+// } else {
+//   Logger::Debug(LogType::Error, "InputSystem::Events --------------- ");
+//   Logger::Debug(LogType::Error, "InputSystem::Events --------------- ");
+//   Logger::Debug(LogType::Error, "InputSystem::Events --------------- ");
+// }
+//
+// Controller::Instance().SetImGuiContext(ImGui::GetCurrentContext());
+//
+// ImGui_ImplSDL2_InitForOpenGL(
+//   engine.GetTextureManager()->GetWindow(), engine.GetCore().GetMainContext()
+// );
+// ImGui_ImplOpenGL3_Init("#version 330");
+
+// ==========================

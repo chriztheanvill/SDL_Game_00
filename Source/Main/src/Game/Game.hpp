@@ -1,25 +1,34 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-// #include ""
-#include "../Core/Engine.h"
-// #include "../Graphics/TextureManager.h"
-#include "../Utils/Vector2D.h"
+#include <Core/Engine.h>
+#include <Utils/Vector2D.h>
+
+#include "imgui_impl_sdl2.h"
 
 #include <memory>
 
+#include <SQLiteCpp/SQLiteCpp.h>
+
 class TextureManager;
+class SceneManager;
+class TileMap;
+class Engine;
 
 class Game {
  private:
-  bool m_isrunning {};
   bool m_isvsync {};
+  bool m_showImgui {};
+  bool m_showImgui2 {};
 
-  std::shared_ptr<TextureManager> m_textureManager;
-  std::unique_ptr<class Registry> m_registry;
-  std::unique_ptr<class TileMap> m_tileMap;
+  std::unique_ptr<SceneManager> m_sceneManager;
 
-  auto LoadLevel(uint16_t level) -> void;
+  SQLite::Database m_db;
+  // std::string m_qInsert { "INSERT INTO ItemsStore (id_item, equipped, lv, "
+  //                         "slot_01, slot_02, slot_03, slot_04, slot_05, slot_06)"
+  //                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" };
+
+  std::string m_qGetStoreItems { "SELECT * FROM StoreItems" };
 
  protected:
  public:
@@ -30,15 +39,13 @@ class Game {
 
   auto Events() -> void;
   auto Update(float deltaTime) -> void;
-  auto Render() -> void;
-
-  constexpr auto IsRunning() const -> bool { return m_isrunning; }
-
-  auto SetTextureManager(std::shared_ptr<TextureManager>& val) -> void { m_textureManager = val; }
+  // auto Render() -> void;
 
   // https://en.cppreference.com/w/cpp/utility/functional/function
   // static std::function<void( )> dSOme;
   // static std::vector<std::function<void(std::string)>> AUpdate;
+
+  Engine* m_engine;
 };
 
 #endif // GAME_HPP

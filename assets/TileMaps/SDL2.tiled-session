@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "full tilemap.json",
+    "activeFile": "Level_00.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -24,19 +24,22 @@
             }
         },
         "Level_00.json": {
+            "expandedObjectLayers": [
+                5
+            ],
             "scale": 4,
-            "selectedLayer": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 105.625,
-                "y": 100.375
+                "x": 183,
+                "y": 134.375
             }
         },
         "Level_01.json": {
             "scale": 4,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -5.125,
-                "y": 126.375
+                "x": 128,
+                "y": 128.125
             }
         },
         "Level_01.json.tmj": {
@@ -69,12 +72,12 @@
         "Level_01.json"
     ],
     "project": "SDL2.tiled-project",
-    "property.type": "int",
+    "property.type": "TileProps",
     "recentFiles": [
         "full spritesheet.json",
+        "full tilemap.json",
         "Level_01.json",
         "Level_00.json",
-        "full tilemap.json",
         "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/32x32_map_tile.tsx",
         "/home/cris/Workspace/Kotlin/Game/src/commonMain/resources/BasicTilemap/untitled.tmx",
         "Level_01.json.tmj"

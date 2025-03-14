@@ -19,12 +19,12 @@
 # set(OpenGL_GL_PREFERENCE LEGACY) ## Un comment if doesn't work
 
 find_package(PkgConfig REQUIRED)
-#find_package(OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
 #find_package(Vulkan REQUIRED)
 find_package(SDL2 REQUIRED)
 
 # find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
-#find_package(glfw3 REQUIRED)
+find_package(glfw3 REQUIRED)
 #find_package(glm REQUIRED)
 #find_package(GLEW REQUIRED STATIC)
 
@@ -36,6 +36,7 @@ find_package(SDL2 REQUIRED)
 # FIND_PACKAGE(Lua REQUIRED)
 # endif()
 # endif()
+
 find_package(Lua REQUIRED)
 add_definitions(-DLUA)
 
@@ -76,17 +77,17 @@ set(
         OPENGL_VIDEO_LIBRARIES
 
         # # GENERAL System Libraries
-        #${OPENGL_LIBRARY}
-        #${OPENGL_LIBRARIES}
-        #${OPENGL_gl_LIBRARIES}
-        #${OPENGL_glu_LIBRARIES}
+        ${OPENGL_LIBRARY}
+        ${OPENGL_LIBRARIES}
+        ${OPENGL_gl_LIBRARIES}
+        ${OPENGL_glu_LIBRARIES}
 
         # GLFW
-        #${GLFW_LIBRARIES}
-        #${GLFW3_LIBRARY}
-        #${GLFW3_LIBRARIES}
-        #${GLEW_LIBRARIES}
-        #${GLEW_LIBRARY}
+        ${GLFW_LIBRARIES}
+        ${GLFW3_LIBRARY}
+        ${GLFW3_LIBRARIES}
+        ${GLEW_LIBRARIES}
+        ${GLEW_LIBRARY}
 
         # # SDL2
         ${SDL2_LIBRARIES}
@@ -96,11 +97,11 @@ set(
 
         # # Define Libraries
         #Vulkan::Vulkan
-        #OpenGL::GL
+        OpenGL::GL
         #GLEW::GLEW
-        #glfw
+        glfw
         #SOIL
-        #OpenGL
+        OpenGL
 
         # # SDL2
         SDL2

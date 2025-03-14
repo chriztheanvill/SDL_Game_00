@@ -1,12 +1,5 @@
 message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 
-# ###############################################################
-# # Conan v1, VS Code, sin plugin y Clion OK
-# # Include Conan-generated file
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-
-# # Introduce Conan-generated targets
-# conan_basic_setup(NO_OUTPUT_DIRS) # # No organizara
 
 # ###############################################################
 # # Conan v2
@@ -45,20 +38,38 @@ message(STATUS "\n++++++++++ CONAN v2 ++++++++++")
 # # Libs
 # https://approvaltestscpp.readthedocs.io/en/latest/generated_docs/ConanIntegration.html
 
-# find_package(catch2)
-#find_package(Catch2 REQUIRED)
-#find_package(docopt REQUIRED)
-
-# find_package(fmt)
 find_package(fmt REQUIRED)
+find_package(SQLiteCpp REQUIRED)
+#find_package(SQLite3 REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(imgui REQUIRED)
+
+#include(${CMAKE_BINARY_DIR}/conan/build/Debug/generators/conan_toolchain.cmake)
+
+#include(${CMAKE_BINARY_DIR}/build/conan_toolchain.cmake)
+
+#message(STATUS "+++ qaaaaaaaaaaaaaaaaaaaaaa " ${CONAN_LIB_DIRS_imgui})
+#message(STATUS "+++ qaaaaaaaaaaaaaaaaaaaaaa " ${CMAKE_BINARY_DIR} )
+#message(STATUS "+++ imgui " ${IMGUI_DIR} - ${SDL2_INCLUDE_DIRS})
+#include(${CMAKE_BINARY_DIR}/conan/build/Debug/generators/conan_toolchain.cmake)
+#include(${CMAKE_BINARY_DIR}/conan/build/Debug/generators/conandeps_legacy.cmake)
+#include(${CMAKE_BINARY_DIR}/build/conan_deps.cmake)
+
+#find_package(imgui REQUIRED)
+#find_package(glfw3 REQUIRED)
+#find_package(glew REQUIRED)
 
 # include_directories(${fmt_INCLUDE_DIR})
 # link_libraries(${fmt_LIBRARIES})
 # find_package(spdlog REQUIRED)
 # find_package(glew REQUIRED)
-find_package(SQLite3 REQUIRED)
-find_package(nlohmann_json REQUIRED)
-find_package(sol2 REQUIRED)
+# find_package(catch2)
+#find_package(Catch2 REQUIRED)
+#find_package(docopt REQUIRED)
+
+# find_package(fmt)
+
+#find_package(sol2 REQUIRED)
 
 # find_package(range-v3)
 

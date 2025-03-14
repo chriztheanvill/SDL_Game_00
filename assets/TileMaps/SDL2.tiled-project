@@ -10,5 +10,89 @@
     "properties": [
     ],
     "propertyTypes": [
+        {
+            "id": 3,
+            "name": "OrderLayer",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Last",
+                "BGx4",
+                "BGx2",
+                "BG",
+                "FG",
+                "FGx2",
+                "FGx4",
+                "UI"
+            ],
+            "valuesAsFlags": false
+        },
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 1,
+            "members": [
+                {
+                    "name": "FG",
+                    "type": "color",
+                    "value": ""
+                },
+                {
+                    "name": "Point",
+                    "propertyType": "Vector2D",
+                    "type": "class",
+                    "value": {
+                    }
+                },
+                {
+                    "name": "YSort",
+                    "type": "bool",
+                    "value": false
+                }
+            ],
+            "name": "TileProps",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset",
+                "project"
+            ]
+        },
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 4,
+            "members": [
+                {
+                    "name": "X",
+                    "type": "float",
+                    "value": 0
+                },
+                {
+                    "name": "Y",
+                    "type": "float",
+                    "value": 0
+                }
+            ],
+            "name": "Vector2D",
+            "type": "class",
+            "useAs": [
+                "property",
+                "map",
+                "layer",
+                "object",
+                "tile",
+                "tileset",
+                "wangcolor",
+                "wangset",
+                "project"
+            ]
+        }
     ]
 }

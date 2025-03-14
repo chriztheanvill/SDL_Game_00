@@ -1,6 +1,7 @@
 # ## Library ###
 # # Librarie always first
-# add_subdirectory(Libs)
+add_subdirectory(Libs)
+
 # ## Library ###
 
 # ## Main ###

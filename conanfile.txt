@@ -1,9 +1,14 @@
 [requires]
 fmt/11.0.2
 nlohmann_json/3.11.3
-sol2/3.3.1
-sqlite3/3.46.1
+sqlitecpp/3.3.2
+imgui/1.91.5
+opengl/system
+#glew/2.2.0
+#glfw/3.3.8
 
+#sqlite3/3.46.1
+#sol2/3.3.1
 # catch2/3.6.0
 # docopt.cpp/0.6.3
 # glew/2.2.0
@@ -17,3 +22,16 @@ CMakeToolchain
 
 [layout]
 cmake_layout
+
+#[imports]
+#./misc/bindings, imgui_impl_glfw.cpp -> ../bindings
+#./misc/bindings, imgui_impl_opengl2.cpp -> ../bindings
+#./misc/bindings, imgui_impl_glfw.h -> ../bindings
+#./misc/bindings, imgui_impl_opengl2.h -> ../bindings
+
+#[options]
+#pkg/imgui:backend_sdl2=True
+#pkg/imgui:backend_opengl3=True
+#*:shared=True  ## Make Shared libs
+
+# openssl*:shared=True

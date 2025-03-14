@@ -18,9 +18,13 @@
 
 # # Main CMAKE file
 # # CMAKE version minimun required 3.16.3
-cmake_minimum_required(VERSION 3.28.1)
+cmake_minimum_required(VERSION 3.30.5)
 
 # # Name System proyect ##
+
+
+#set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+#set(CMAKE_C_COMPILER "/usr/bin/gcc")
 project(Pikuma_00 VERSION 1.0.0 LANGUAGES CXX)
 
 add_compile_options(
@@ -72,8 +76,6 @@ include(My_Cmake/Linux_Ver.cmake)
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
     get_linux_lsb_release_information()
     message(STATUS "+++++++++++++++ GNU Linux ${LSB_RELEASE_ID_SHORT} ${LSB_RELEASE_VERSION_SHORT} ${LSB_RELEASE_CODENAME_SHORT} +++++++++++++++")
-
-    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 endif ()
 
 # enable Threads
@@ -108,14 +110,28 @@ include(My_Cmake/Conan_v2.cmake)
 
 # ###############################################################
 
-# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-# set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(CMAKE_CXX_EXTENSIONS ON)
-#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_CXX_STANDARD 23)
+# set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_COLOR_DIAGNOSTICS ON)
+#set(CMAKE_MESSAGE_LOG_LEVEL STATUS)
+# This option tells CMake to export the compile commands for the target.
+# This can be useful for debugging and profiling purposes.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_SCAN_FOR_MODULES NO)
+# This option tells CMake to generate position-independent code (PIC).
+# PIC code can be loaded and executed at any address in memory.
+# This is necessary when building shared/dynamic libraries.
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+#option(
+#        AUTOFORMAT_SRC_ON_CONFIGURE
+#        "If enabled, clang-format will be used to format all sources in src/ during configuration"
+#        ON
+#)
+# Tip: "option" arguments are basically also CMake variables, but in a easy user toggleable format.
 
 # # Set the current directory the run time folder
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
@@ -123,80 +139,55 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # ###############################################################
 # Very basic PCH example
-option(ENABLE_PCH "Enable Precompiled Headers" ON)
-
-# # option(ENABLE_PCH "Enable Precompiled Headers" OFF)
-if (ENABLE_PCH)
-    # This sets a global PCH parameter, each project will build its own PCH, which
-    # is a good idea if any #define's change
-    #
-    message(STATUS " -- Precompiled Headers ")
-
-    # target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
-    target_precompile_headers(
-            project_options
-
-            # PUBLIC
-            # "foo.h"
-            INTERFACE
-
-            # System
-            <array>
-            <iostream>
-            <fstream>
-            <map>
-            <memory>
-            <iterator>
-            <random>
-            <string>
-            <utility>
-            <vector>
-
-            # 3s
-            <SDL2/SDL.h>
-            <SDL2/SDL_image.h>
-            <SDL2/SDL_ttf.h>
-
-            # <fmt/core.h>
-            # <fmt/color.h>
-            <glm/glm.hpp>
-
-            # Boost
-            # <boost/format.hpp>
-
-            # <boost/filesystem
-    )
-endif ()
+#option(ENABLE_PCH "Enable Precompiled Headers" ON)
+#
+## # option(ENABLE_PCH "Enable Precompiled Headers" OFF)
+#if (ENABLE_PCH)
+#    # This sets a global PCH parameter, each project will build its own PCH, which
+#    # is a good idea if any #define's change
+#    #
+#    message(STATUS " -- Precompiled Headers ")
+#
+#    # target_precompile_headers(project_options INTERFACE <vector> <string> <map> <utility>)
+#    target_precompile_headers(
+#            project_options
+#
+#            # PUBLIC
+#            # "foo.h"
+#            INTERFACE
+#
+#            # System
+#            <array>
+#            <iostream>
+#            <fstream>
+#            <map>
+#            <memory>
+#            <iterator>
+#            <random>
+#            <string>
+#            <utility>
+#            <vector>
+#
+#            # 3s
+#            <SDL2/SDL.h>
+#            <SDL2/SDL_image.h>
+#            <SDL2/SDL_ttf.h>
+#
+#            # <fmt/core.h>
+#            # <fmt/color.h>
+#            <glm/glm.hpp>
+#
+#            # Boost
+#            # <boost/format.hpp>
+#
+#            # <boost/filesystem
+#    )
+#endif ()
 
 # ###############################################################
-# Enable C++20
-
-# add_definitions(-std=c++11)
-# add_definitions(-std=c++17 -DANALYSIS=ON)
-# add_definitions(-std=c++2a -DANALYSIS=ON)
-# add_definitions(-std=c++20 -DANALYSIS=ON)
-
-# # DEPRECATED
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated -Wdeprecated-declarations")
-# set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Xclang -fconcepts-ts")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Xclang -fconcepts-ts")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -fconcepts")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2a -fconcepts")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++2a ")
-
-# # Which C++ version.
-# set(CMAKE_C_STANDARD 99)
-# set(CMAKE_CXX_STANDARD 11)
-# set(CMAKE_CXX_STANDARD 14)
-# set(CMAKE_CXX_STANDARD 17)
-# set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD 23)
-
-# set(CMAKE_CXX_STANDARD 26)
 
 # # Debug flags.
-set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Debug)
 
 # set(CMAKE_BUILD_TYPE Release)
 
@@ -211,22 +202,52 @@ set(CMAKE_SYSTEM_NAME Linux)
 # set(CMAKE_CXX_COMPILER clang++)
 # set(CMAKE_C_COMPILER_TARGET ${triple})
 # set(CMAKE_CXX_COMPILER_TARGET ${triple})
-include(My_Cmake/Clang_setup.cmake)
+
+#include(My_Cmake/Clang_setup.cmake)
 
 # # For example, to build LLVM, Clang, libcxx, and libcxxabi,
 # # use -DLLVM_ENABLE_PROJECTS="clang;libcxx;libcxxabi".
 
 # ###############################################################
 
+set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=mold")
+set(CMAKE_SHARED_LINKER_FLAGS "-fuse-ld=mold")
+set(CMAKE_MODULE_LINKER_FLAGS "-fuse-ld=mold")
+
+# ###############################################################
+
 # Enable Testing
-enable_testing()
+#enable_testing()
 
 # message( "Testing enabled!!!" )
 # add_subdirectory(test)
 # add_subdirectory(googletest)
 
+## Global Flags
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+
+
+# ##### Libraries ######
+
+## https://cmake.org/cmake/help/latest/module/GenerateExportHeader.html
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
+if (BUILD_SHARED_LIBS)
+    #    add_library(example SHARED ${sources})
+    message(STATUS "\n -- BUILD_SHARED_LIBS ON ${BUILD_SHARED_LIBS}")
+else ()
+    message(STATUS "\n -- BUILD_SHARED_LIBS OFF ${BUILD_SHARED_LIBS}")
+    include(GenerateExportHeader)
+    ## Des-habilitar para que SHARED LIBS funcione
+    #    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+    set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
+    set(CMAKE_VISIBILITY_INLINES_HIDDEN "YES")
+    generate_export_header(Engine)
+endif ()
+
 # ## List Programs ###
-# # 0000 program ##
+
 add_subdirectory(Source)
 
 # ###############################################################
@@ -267,8 +288,15 @@ add_subdirectory(Source)
 # ${CMAKE_CURRENT_LIST_DIR})
 
 # ###############################################################
-message(STATUS "\n -- MY -- CMake C FLAGS ${CMAKE_C_FLAGS}")
-message(STATUS " -- MY -- CMake C++ FLAGS ${CMAKE_CXX_FLAGS} \n\n")
+message(STATUS "\n -- MY -- CMake FLAGS --")
+message(STATUS " C FLAGS ${CMAKE_C_FLAGS}")
+message(STATUS " C++ FLAGS ${CMAKE_CXX_FLAGS} ")
+message(STATUS " C++ FLAGS Debug ${CMAKE_CXX_FLAGS_DEBUG} ")
+message(STATUS " C++ FLAGS Release ${CMAKE_CXX_FLAGS_RELEASE} ")
+message(STATUS " C++ FLAGS Min ${CMAKE_CXX_FLAGS_MINSIZEREL} ")
+message(STATUS " C++ FLAGS RelWDebInfo ${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ")
+message(STATUS "\n -- MY -- CMake FLAGS --\n\n")
+
 
 # ###############################################################
 # # Features
@@ -292,6 +320,7 @@ target_compile_features(
         # C++23 ENABLED
         cxx_std_23
 )
+
 
 # ###############################################################
 
